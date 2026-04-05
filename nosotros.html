@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - TETRA 4.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gray-bg: #d5d5d5;
+            --blue-primary: #006096;
+            --blue-light: #9dbedb;
+            --white: #FFFFFF;
+            --blue-medium: #4f7da8;
+            --dark: #0a1628;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--white);
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0.8rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,96,150,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 55px;
+            max-width: 280px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--blue-primary);
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        /* HERO INTERNO */
+        .page-hero {
+            padding: 140px 3rem 80px;
+            background: linear-gradient(135deg, #e8e8e8 0%, #d5d5d5 50%, #e0e0e0 100%);
+            text-align: center;
+        }
+
+        .page-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 15px;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .page-hero h1 .highlight {
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero p {
+            font-size: 1.25rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        /* CONTENEDOR */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* MISIÓN Y VISIÓN */
+        .mv-section {
+            padding: 100px 3rem;
+            background: var(--white);
+        }
+
+        .mv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .mv-card {
+            background: linear-gradient(135deg, #f8fbfd 0%, white 100%);
+            border-radius: 24px;
+            padding: 50px 40px;
+            border: 1px solid #e8f0f5;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mv-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--blue-primary) 0%, var(--blue-medium) 50%, var(--blue-light) 100%);
+        }
+
+        .mv-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0, 96, 150, 0.12);
+        }
+
+        .mv-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 2.5rem;
+        }
+
+        .mv-card h2 {
+            font-size: 1.8rem;
+            color: var(--blue-primary);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .mv-card p {
+            color: #555;
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
+
+        /* VALORES */
+        .valores-section {
+            padding: 100px 3rem;
+            background: linear-gradient(180deg, #f8fbfd 0%, white 100%);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--blue-light) 0%, #d4e8f5 100%);
+            color: var(--blue-primary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 16px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 1.15rem;
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .valor-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.4s;
+        }
+
+        .valor-card:hover {
+            border-color: var(--blue-primary);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 96, 150, 0.12);
+        }
+
+        .valor-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--blue-light) 0%, #d4e8f5 100%);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            transition: all 0.3s;
+        }
+
+        .valor-card:hover .valor-icon {
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .valor-card h3 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .valor-card p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* ESTRATEGIA */
+        .estrategia-section {
+            padding: 100px 3rem;
+            background: var(--white);
+        }
+
+        .estrategia-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .estrategia-intro p {
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .servicio-card {
+            background: linear-gradient(135deg, #f8fbfd 0%, white 100%);
+            border-radius: 20px;
+            padding: 35px 28px;
+            border: 1px solid #e8f0f5;
+            transition: all 0.4s;
+            text-align: center;
+        }
+
+        .servicio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 96, 150, 0.12);
+            border-color: var(--blue-primary);
+        }
+
+        .servicio-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+        }
+
+        .servicio-card h3 {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .servicio-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* TECNOLOGÍA */
+        .tech-section {
+            padding: 100px 3rem;
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--dark) 100%);
+            position: relative;
+        }
+
+        .tech-section .section-header h2 {
+            color: white;
+        }
+
+        .tech-section .section-header p {
+            color: var(--blue-light);
+        }
+
+        .tech-section .section-tag {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        .como-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .como-item {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .como-item:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateY(-5px);
+        }
+
+        .como-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .como-content h3 {
+            font-size: 1.15rem;
+            color: white;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .como-content p {
+            color: var(--blue-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 100px 3rem;
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--dark) 100%);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.8rem;
+            color: white;
+            margin-bottom: 18px;
+            font-weight: 800;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--blue-light);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 20px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: 700;
+            transition: all 0.4s;
+            box-shadow: 0 10px 35px rgba(37, 211, 102, 0.3);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 45px rgba(37, 211, 102, 0.4);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 3rem 30px;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .footer-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-logo img {
+            height: 45px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--blue-primary);
+            transform: translateY(-3px);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-top: 25px;
+        }
+
+        .footer-bottom p {
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .logo img {
+                height: 42px;
+                max-width: 180px;
+            }
+
+            .nav-cta span {
+                display: none;
+            }
+
+            .page-hero {
+                padding: 120px 1.5rem 60px;
+            }
+
+            .mv-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mv-card {
+                padding: 35px 25px;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <nav>
+        <a href="tetra40-wireframe.html" class="logo">
+            <img src="Logos Tetra_Horizontal.png" alt="TETRA 4.0">
+        </a>
+        <div class="nav-links">
+            <a href="tetra40-wireframe.html" class="nav-link">Inicio</a>
+            <a href="nosotros.html" class="nav-link active">Nosotros</a>
+            <a href="blog.html" class="nav-link">Blog</a>
+            <a href="#" class="nav-cta" onclick="openWhatsApp()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                <span>Escríbenos</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="page-hero">
+        <h1>Conoce <span class="highlight">TETRA 4.0</span></h1>
+        <p>Nuestra esencia, compromiso y los valores que nos definen como tu socio tecnológico de confianza.</p>
+    </section>
+
+    <!-- MISIÓN Y VISIÓN -->
+    <section class="mv-section">
+        <div class="container">
+            <div class="mv-grid">
+                <div class="mv-card">
+                    <div class="mv-icon">🎯</div>
+                    <h2>Misión</h2>
+                    <p>Transformamos retos en soluciones tecnológicas eficientes y rentables, con atención al cliente excepcional, respaldada por experiencia y profesionalismo.</p>
+                </div>
+                <div class="mv-card">
+                    <div class="mv-icon">🚀</div>
+                    <h2>Visión</h2>
+                    <p>Liderar la innovación tecnológica (incluida IA) con soluciones que elevan estándares, impulsadas por excelencia e innovación continua para superar expectativas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALORES -->
+    <section class="valores-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Nuestros Valores</span>
+                <h2>Lo que nos define</h2>
+                <p>Los pilares que guían cada decisión y cada interacción con nuestros clientes</p>
+            </div>
+            <div class="valores-grid">
+                <div class="valor-card">
+                    <div class="valor-icon">🤝</div>
+                    <h3>Compromiso</h3>
+                    <p>Nos involucramos al 100% en cada proyecto, como si fuera nuestro propio negocio.</p>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icon">⭐</div>
+                    <h3>Calidad</h3>
+                    <p>Solo entregamos soluciones que cumplen con los más altos estándares del mercado.</p>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icon">✅</div>
+                    <h3>Responsabilidad</h3>
+                    <p>Cumplimos lo que prometemos, en tiempo y forma, sin excusas.</p>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icon">💎</div>
+                    <h3>Integridad</h3>
+                    <p>Actuamos con honestidad y transparencia en cada interacción.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESTRATEGIA A LA OPERACIÓN -->
+    <section class="estrategia-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Servicios</span>
+                <h2>Estrategia a la Operación</h2>
+            </div>
+            <div class="estrategia-intro">
+                <p>Diseñamos, implementamos y operamos soluciones tecnológicas críticas para organizaciones que requieren confiabilidad, seguridad y escalabilidad. Acompañamos a nuestros clientes desde la planeación estratégica hasta la operación continua, convirtiéndonos en un socio tecnológico de largo plazo.</p>
+            </div>
+            <div class="servicios-grid">
+                <div class="servicio-card">
+                    <div class="servicio-icon">🌐</div>
+                    <h3>Infraestructura & Redes</h3>
+                    <p>Cableado, switching, WiFi empresarial, data centers</p>
+                </div>
+                <div class="servicio-card">
+                    <div class="servicio-icon">💼</div>
+                    <h3>Colaboración & Productividad</h3>
+                    <p>Videoconferencia, pantallas interactivas, MDM</p>
+                </div>
+                <div class="servicio-card">
+                    <div class="servicio-icon">🔒</div>
+                    <h3>Seguridad Electrónica</h3>
+                    <p>CCTV, control de acceso, videowalls, analítica</p>
+                </div>
+                <div class="servicio-card">
+                    <div class="servicio-icon">⚙️</div>
+                    <h3>Servicios Administrados</h3>
+                    <p>Soporte, mantenimiento, monitoreo, mesa de ayuda</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECNOLOGÍA -->
+    <section class="tech-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Metodología</span>
+                <h2>Tecnología que funciona hoy y crece contigo mañana</h2>
+                <p>Cómo lo logramos</p>
+            </div>
+            <div class="como-grid">
+                <div class="como-item">
+                    <div class="como-number">1</div>
+                    <div class="como-content">
+                        <h3>Proyectos llave en mano</h3>
+                        <p>Entregamos la solución lista para operar: ingeniería, suministro, instalación, configuración, pruebas y documentación.</p>
+                    </div>
+                </div>
+                <div class="como-item">
+                    <div class="como-number">2</div>
+                    <div class="como-content">
+                        <h3>Ingeniería + ejecución + soporte</h3>
+                        <p>Cubrimos el ciclo completo: diseño técnico, implementación en sitio y soporte continuo (correctivo, preventivo y evolutivo).</p>
+                    </div>
+                </div>
+                <div class="como-item">
+                    <div class="como-number">3</div>
+                    <div class="como-content">
+                        <h3>Cobertura nacional</h3>
+                        <p>Atendemos proyectos y servicios en múltiples ciudades con capacidad de despliegue, atención y escalamiento.</p>
+                    </div>
+                </div>
+                <div class="como-item">
+                    <div class="como-number">4</div>
+                    <div class="como-content">
+                        <h3>Estándares internacionales</h3>
+                        <p>Implementamos con buenas prácticas y normas (seguridad, cableado, continuidad, calidad), asegurando compatibilidad y escalabilidad.</p>
+                    </div>
+                </div>
+                <div class="como-item">
+                    <div class="como-number">5</div>
+                    <div class="como-content">
+                        <h3>Alianzas estratégicas</h3>
+                        <p>Trabajamos con marcas y especialistas para garantizar mejores soluciones, disponibilidad y soporte de fabricante.</p>
+                    </div>
+                </div>
+                <div class="como-item">
+                    <div class="como-number">6</div>
+                    <div class="como-content">
+                        <h3>Soporte postventa real</h3>
+                        <p>Mesa de ayuda y atención con SLA, seguimiento, reportes y mejora continua para mantener la operación estable.</p>
+                    </div>
+                </div>
+                <div class="como-item">
+                    <div class="como-number">7</div>
+                    <div class="como-content">
+                        <h3>Enfoque en continuidad operativa</h3>
+                        <p>Diseñamos para minimizar caídas: redundancia, monitoreo, mantenimiento y planes de contingencia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>¿Listo para trabajar juntos?</h2>
+            <p>Conoce cómo podemos ayudarte a resolver tus retos tecnológicos.</p>
+            <a href="#" class="cta-btn" onclick="openWhatsApp()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Platiquemos
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-logo">
+                    <img src="Logos Tetra_Horizontal.png" alt="TETRA 4.0">
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="TikTok">
+                        <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="X">
+                        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 TETRA 4.0 - Tu socio tecnológico de confianza</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Aviso de Privacidad</a>
+                    <a href="#" class="footer-link">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function openWhatsApp() {
+            const phone = '521234567890';
+            const message = encodeURIComponent('¡Hola TETRA 4.0! Me gustaría saber más sobre sus servicios.');
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        }
+    </script>
+</body>
+</html>

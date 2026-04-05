@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TETRA 4.0 - Tu Socio Tecnológico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gray-bg: #d5d5d5;
+            --blue-primary: #006096;
+            --blue-light: #9dbedb;
+            --white: #FFFFFF;
+            --blue-medium: #4f7da8;
+            --dark: #0a1628;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--white);
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ANIMATIONS */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(20px) rotate(-5deg); }
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes attention {
+            0%, 100% { transform: scale(1); }
+            10% { transform: scale(1.1); }
+            20% { transform: scale(1); }
+            30% { transform: scale(1.1); }
+            40% { transform: scale(1); }
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0.8rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,96,150,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 55px;
+            max-width: 280px;
+            object-fit: contain;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+
+        .nav-cta.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--blue-primary);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 3rem 40px;
+            background: linear-gradient(135deg, #e8e8e8 0%, #d5d5d5 50%, #e0e0e0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative elements */
+        .hero-bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .shape-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--blue-light);
+            top: -200px;
+            right: -200px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--blue-primary);
+            bottom: -100px;
+            left: -100px;
+            opacity: 0.2;
+            animation: float-reverse 10s ease-in-out infinite;
+        }
+
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            background: #25D366;
+            top: 50%;
+            left: 10%;
+            opacity: 0.15;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Parallax container */
+        .parallax-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            transition: transform 0.1s ease-out;
+        }
+
+        .parallax-layer.depth-1 { z-index: 1; }
+        .parallax-layer.depth-2 { z-index: 2; }
+        .parallax-layer.depth-3 { z-index: 3; }
+
+        /* Floating isotipo icons */
+        .floating-icon {
+            position: absolute;
+            height: auto;
+            pointer-events: none;
+            filter: drop-shadow(0 10px 20px rgba(0, 96, 150, 0.2));
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Layer 1 - Background (slower movement) */
+        .depth-1 .floating-icon { opacity: 0.08; animation: float 10s ease-in-out infinite; }
+        .icon-1 { top: 5%; right: 5%; width: 160px; animation-delay: 0s; }
+        .icon-2 { top: 70%; right: 8%; width: 140px; animation-delay: 2s; }
+        .icon-3 { top: 10%; left: 5%; width: 150px; animation-delay: 1s; }
+        .icon-4 { bottom: 8%; left: 10%; width: 130px; animation-delay: 3s; }
+
+        /* Layer 2 - Middle */
+        .depth-2 .floating-icon { opacity: 0.12; animation: float 7s ease-in-out infinite; }
+        .icon-5 { top: 20%; right: 15%; width: 100px; animation-delay: 0.5s; }
+        .icon-6 { top: 50%; left: 8%; width: 90px; animation-delay: 1.5s; }
+        .icon-7 { bottom: 20%; right: 20%; width: 110px; animation-delay: 2.5s; }
+        .icon-8 { top: 35%; left: 15%; width: 85px; animation-delay: 0.8s; }
+
+        /* Layer 3 - Foreground (faster movement) */
+        .depth-3 .floating-icon { opacity: 0.18; animation: float 5s ease-in-out infinite; }
+        .icon-9 { top: 12%; right: 25%; width: 60px; animation-delay: 0.3s; }
+        .icon-10 { top: 60%; left: 20%; width: 55px; animation-delay: 1.2s; }
+        .icon-11 { bottom: 15%; left: 25%; width: 65px; animation-delay: 2s; }
+        .icon-12 { top: 45%; right: 10%; width: 50px; animation-delay: 0.7s; }
+
+        /* Gradient orbs for color depth */
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+            animation: float 12s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--blue-primary) 0%, transparent 70%);
+            top: -10%;
+            right: -5%;
+            opacity: 0.3;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--blue-light) 0%, transparent 70%);
+            bottom: -5%;
+            left: -5%;
+            opacity: 0.4;
+            animation-delay: 2s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--blue-medium) 0%, transparent 70%);
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.25;
+            animation-delay: 4s;
+        }
+
+        .orb-4 {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, #25D366 0%, transparent 70%);
+            bottom: 20%;
+            right: 15%;
+            opacity: 0.2;
+            animation-delay: 1s;
+        }
+
+        .orb-5 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--gray-bg) 0%, transparent 70%);
+            top: 15%;
+            left: 30%;
+            opacity: 0.3;
+            animation-delay: 3s;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-logo {
+            width: clamp(380px, 65%, 650px);
+            height: auto;
+            margin-top: -15px;
+            margin-bottom: 28px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            color: white;
+            padding: 12px 26px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 auto 16px auto;
+            width: fit-content;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: #25D366;
+            border-radius: 50%;
+            animation: pulse-ring 1.5s ease-out infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 5.5vw, 3.5rem);
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 14px;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero > .hero-content > p {
+            font-size: 1.2rem;
+            color: #444;
+            margin-bottom: 26px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        /* PROCESO EN HERO */
+        .hero-process {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 18px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .hero-step {
+            text-align: center;
+            max-width: 180px;
+        }
+
+        .hero-step-circle {
+            width: 78px;
+            height: 78px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            box-shadow: 0 10px 30px rgba(0, 96, 150, 0.15);
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .hero-step:hover .hero-step-circle {
+            transform: scale(1.08);
+            box-shadow: 0 15px 40px rgba(0, 96, 150, 0.2);
+        }
+
+        .hero-step-number {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+        }
+
+        .hero-step-icon {
+            font-size: 1.8rem;
+        }
+
+        .hero-step h4 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .hero-step p {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .hero-step-connector {
+            display: flex;
+            align-items: center;
+            padding-top: 28px;
+            color: var(--blue-light);
+            font-size: 1.3rem;
+        }
+
+        /* CTA en Hero */
+        .hero-cta-container {
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        .hero-cta-small {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 32px rgba(37, 211, 102, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta-animated {
+            animation: bounceIn 0.8s ease-out 0.7s both, attention 3s ease-in-out 2s infinite;
+        }
+
+        .hero-cta-small::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .hero-cta-small:hover::before {
+            left: 100%;
+        }
+
+        .hero-cta-small:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Trust section en Hero */
+        .hero-trust {
+            margin-top: 32px;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .hero-trust .trust-text {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 14px;
+            font-weight: 500;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--blue-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .trust-item svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* STATS */
+        .stats-section {
+            padding: 70px 3rem;
+            background: var(--blue-primary);
+            position: relative;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, white 0%, var(--blue-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
+        /* DIFERENCIADORES */
+        .diff-section {
+            padding: 100px 3rem;
+            background: var(--white);
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--blue-light) 0%, #d4e8f5 100%);
+            color: var(--blue-primary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 16px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 1.15rem;
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .diff-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e8f0f5;
+        }
+
+        .diff-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--blue-primary) 0%, var(--blue-medium) 50%, var(--blue-light) 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .diff-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .diff-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0, 96, 150, 0.15);
+        }
+
+        .diff-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--blue-light) 0%, #d4e8f5 100%);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
+            font-size: 2rem;
+            transition: all 0.3s;
+        }
+
+        .diff-card:hover .diff-icon {
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .diff-card h3 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .diff-card p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* AUDIENCIA */
+        .audience-section {
+            padding: 100px 3rem;
+            background: linear-gradient(180deg, #f8fbfd 0%, white 100%);
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .audience-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.4s;
+        }
+
+        .audience-card:hover {
+            border-color: var(--blue-primary);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 70px rgba(0, 96, 150, 0.12);
+        }
+
+        .audience-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 22px;
+        }
+
+        .audience-card h3 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+
+        .audience-card ul {
+            list-style: none;
+        }
+
+        .audience-card li {
+            padding: 10px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+            border-bottom: 1px solid #eef3f7;
+        }
+
+        .audience-card li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        /* CTA FINAL */
+        .final-cta {
+            padding: 100px 3rem;
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--dark) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--blue-medium) 0%, transparent 50%);
+            opacity: 0.1;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .final-cta .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .final-cta h2 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 18px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .final-cta p {
+            font-size: 1.2rem;
+            color: var(--blue-light);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .final-cta .hero-cta-small {
+            font-size: 1.15rem;
+            padding: 20px 45px;
+        }
+
+        .cta-sub {
+            margin-top: 20px;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        /* NOSOTROS SECTION */
+        .nosotros-section {
+            padding: 100px 3rem;
+            background: linear-gradient(180deg, #f8fbfd 0%, white 100%);
+        }
+
+        .nosotros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .nosotros-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid #e8f0f5;
+            transition: all 0.4s;
+        }
+
+        .nosotros-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 96, 150, 0.12);
+        }
+
+        .nosotros-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+        }
+
+        .nosotros-card h3 {
+            font-size: 1.4rem;
+            color: var(--blue-primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .nosotros-card p {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .valores-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .valor-item {
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .valor-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 96, 150, 0.3);
+        }
+
+        /* CLIENTES SECTION */
+        .clientes-section {
+            padding: 80px 3rem;
+            background: var(--white);
+        }
+
+        .clientes-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 40px 60px;
+            margin-top: 50px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cliente-logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #666;
+            padding: 15px 25px;
+            background: #f5f8fa;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .cliente-logo:hover {
+            color: var(--blue-primary);
+            background: var(--blue-light);
+            transform: scale(1.05);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 3rem 30px;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .footer-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-logo img {
+            height: 45px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--blue-primary);
+            transform: translateY(-3px);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-top: 25px;
+        }
+
+        .footer-bottom p {
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+        }
+
+        /* WHATSAPP FLOTANTE */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 35px;
+            right: 35px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            opacity: 0;
+            transform: scale(0.5);
+            pointer-events: none;
+        }
+
+        .whatsapp-float.visible {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+            animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .whatsapp-float.visible::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #25D366;
+            animation: pulse-ring 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+            z-index: -1;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+            box-shadow: 0 15px 50px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-float svg {
+            width: 36px;
+            height: 36px;
+            fill: white;
+        }
+
+        .whatsapp-tooltip {
+            position: absolute;
+            right: 85px;
+            background: white;
+            color: var(--dark);
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+
+        .whatsapp-float:hover .whatsapp-tooltip {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 968px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-step-connector {
+                display: none;
+            }
+
+            .hero-process {
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .logo img {
+                height: 42px;
+                max-width: 180px;
+            }
+
+            .nav-cta span {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 1.5rem 50px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .final-cta h2 {
+                font-size: 2.2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
+
+            .hero-step {
+                max-width: 160px;
+            }
+
+            .hero-step-circle {
+                width: 75px;
+                height: 75px;
+            }
+
+            .hero-step-icon {
+                font-size: 1.8rem;
+            }
+
+            .trust-badges {
+                gap: 20px;
+            }
+
+            .parallax-layer.depth-1,
+            .parallax-layer.depth-2 {
+                display: none;
+            }
+
+            .parallax-layer.depth-3 .floating-icon {
+                opacity: 0.1;
+            }
+
+            .gradient-orb {
+                opacity: 0.15;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hero-process {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-step {
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <nav>
+        <div class="logo">
+            <img src="Logos Tetra_Horizontal.png" alt="TETRA 4.0">
+        </div>
+        <div class="nav-links">
+            <a href="tetra40-wireframe.html" class="nav-link active">Inicio</a>
+            <a href="nosotros.html" class="nav-link">Nosotros</a>
+            <a href="blog.html" class="nav-link">Blog</a>
+            <a href="#" class="nav-cta" id="navCta" onclick="openWhatsApp()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                <span>Escríbenos</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="heroSection">
+        <!-- Gradient orbs for color depth -->
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="gradient-orb orb-5"></div>
+
+        <!-- Parallax Layer 1 - Background (slowest) -->
+        <div class="parallax-layer depth-1" data-speed="0.02">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-1">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-2">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-3">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-4">
+        </div>
+
+        <!-- Parallax Layer 2 - Middle -->
+        <div class="parallax-layer depth-2" data-speed="0.04">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-5">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-6">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-7">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-8">
+        </div>
+
+        <!-- Parallax Layer 3 - Foreground (fastest) -->
+        <div class="parallax-layer depth-3" data-speed="0.06">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-9">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-10">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-11">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-12">
+        </div>
+
+        <div class="hero-content">
+            <img src="Logotipo_Tetra.png" alt="TETRA 4.0" class="hero-logo">
+
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Atención personalizada 1 a 1
+            </div>
+
+            <h1>Tu departamento de TI,<br><span class="highlight">sin complicaciones</span></h1>
+
+            <p>Somos tu aliado tecnológico de confianza. Sin catálogos, sin límites. Cuéntanos qué necesitas y nosotros lo conseguimos.</p>
+
+            <!-- PROCESO EN HERO -->
+            <div class="hero-process">
+                <div class="hero-step">
+                    <div class="hero-step-circle">
+                        <span class="hero-step-number">1</span>
+                        <span class="hero-step-icon">💬</span>
+                    </div>
+                    <h4>Escríbenos</h4>
+                    <p>Cuéntanos qué necesitas por WhatsApp</p>
+                </div>
+                <div class="hero-step-connector">→</div>
+                <div class="hero-step">
+                    <div class="hero-step-circle">
+                        <span class="hero-step-number">2</span>
+                        <span class="hero-step-icon">🔍</span>
+                    </div>
+                    <h4>Te asesoramos</h4>
+                    <p>Analizamos y te damos la mejor solución</p>
+                </div>
+                <div class="hero-step-connector">→</div>
+                <div class="hero-step">
+                    <div class="hero-step-circle">
+                        <span class="hero-step-number">3</span>
+                        <span class="hero-step-icon">✅</span>
+                    </div>
+                    <h4>Lo resolvemos</h4>
+                    <p>Entrega, instalación y soporte incluido</p>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="hero-cta-container">
+                <a href="#" class="hero-cta-small hero-cta-animated" onclick="openWhatsApp()">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    Platiquemos ahora
+                </a>
+            </div>
+
+            <!-- Trust -->
+            <div class="hero-trust">
+                <p class="trust-text">Te atendemos en menos de 5 minutos y te cotizamos en menos de 2 horas</p>
+                <div class="trust-badges">
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        Atención inmediata
+                    </div>
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        Sin compromisos
+                    </div>
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                        100% confiable
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Años de experiencia</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Clientes satisfechos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Soporte disponible</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Productos disponibles</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIFERENCIADORES -->
+    <section class="diff-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Nuestra diferencia</span>
+                <h2>¿Por qué TETRA 4.0?</h2>
+                <p>No somos una tienda. Somos tu socio tecnológico de confianza.</p>
+            </div>
+            <div class="diff-grid">
+                <div class="diff-card">
+                    <div class="diff-icon">🤝</div>
+                    <h3>Trato 1 a 1</h3>
+                    <p>Un asesor dedicado que conoce tu negocio, entiende tus necesidades y te acompaña en cada paso.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="diff-icon">♾️</div>
+                    <h3>Sin catálogo</h3>
+                    <p>Lo que necesites, lo conseguimos. Hardware, software, servicios, consultoría. No hay límites.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="diff-icon">🎯</div>
+                    <h3>Soluciones a la medida</h3>
+                    <p>No vendemos productos, diseñamos soluciones que realmente funcionan para ti y tu presupuesto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUDIENCIA -->
+    <section class="audience-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Para todos</span>
+                <h2>Soluciones para cada necesidad</h2>
+                <p>Desde un solo equipo hasta infraestructura completa</p>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <div class="audience-icon">👤</div>
+                    <h3>Particulares</h3>
+                    <ul>
+                        <li><span class="check-icon">✓</span> Laptops y equipos de cómputo</li>
+                        <li><span class="check-icon">✓</span> Redes domésticas</li>
+                        <li><span class="check-icon">✓</span> Soporte técnico personalizado</li>
+                        <li><span class="check-icon">✓</span> Software y licencias</li>
+                    </ul>
+                </div>
+                <div class="audience-card">
+                    <div class="audience-icon">🏢</div>
+                    <h3>PyMEs</h3>
+                    <ul>
+                        <li><span class="check-icon">✓</span> Equipamiento de oficinas</li>
+                        <li><span class="check-icon">✓</span> Servidores y almacenamiento</li>
+                        <li><span class="check-icon">✓</span> Seguridad informática</li>
+                        <li><span class="check-icon">✓</span> Consultoría tecnológica</li>
+                    </ul>
+                </div>
+                <div class="audience-card">
+                    <div class="audience-icon">🏭</div>
+                    <h3>Corporativos</h3>
+                    <ul>
+                        <li><span class="check-icon">✓</span> Proyectos de infraestructura</li>
+                        <li><span class="check-icon">✓</span> Licenciamiento empresarial</li>
+                        <li><span class="check-icon">✓</span> Integración de sistemas</li>
+                        <li><span class="check-icon">✓</span> Soporte dedicado 24/7</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLIENTES -->
+    <section class="clientes-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Clientes</span>
+                <h2>Organizaciones que confían en nosotros</h2>
+                <p>Empresas líderes que ya son parte de nuestra familia</p>
+            </div>
+            <div class="clientes-logos">
+                <div class="cliente-logo">Santander</div>
+                <div class="cliente-logo">Mercado Libre</div>
+                <div class="cliente-logo">CEMEX</div>
+                <div class="cliente-logo">Estafeta</div>
+                <div class="cliente-logo">Grupo Salinas</div>
+                <div class="cliente-logo">Valtech</div>
+                <div class="cliente-logo">IMSS</div>
+                <div class="cliente-logo">ISSSTE</div>
+                <div class="cliente-logo">Grupo Modelo</div>
+                <div class="cliente-logo">Liverpool</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>¿Listo para platicar?</h2>
+            <p>Sin compromiso. Sin presión. Solo una conversación para entender cómo podemos ayudarte.</p>
+            <a href="#" class="hero-cta-small" onclick="openWhatsApp()">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Iniciar conversación
+            </a>
+            <p class="cta-sub">💬 Respuesta garantizada</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-logo">
+                    <img src="Logos Tetra_Horizontal.png" alt="TETRA 4.0">
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="TikTok">
+                        <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="X">
+                        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 TETRA 4.0 - Tu socio tecnológico de confianza</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Aviso de Privacidad</a>
+                    <a href="#" class="footer-link">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOTANTE -->
+    <a href="#" class="whatsapp-float" id="whatsappFloat" onclick="openWhatsApp()">
+        <span class="whatsapp-tooltip">¡Hablemos! 👋</span>
+        <svg viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <script>
+        // Reemplaza con tu número de WhatsApp
+        function openWhatsApp() {
+            const phone = '521234567890'; // ← CAMBIAR POR TU NÚMERO
+            const message = encodeURIComponent('¡Hola TETRA 4.0! Me gustaría saber más sobre sus servicios.');
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        }
+
+        // WhatsApp flotante y nav CTA aparecen al hacer scroll
+        const whatsappFloat = document.getElementById('whatsappFloat');
+        const navCta = document.getElementById('navCta');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                whatsappFloat.classList.add('visible');
+                navCta.classList.add('visible');
+            } else {
+                whatsappFloat.classList.remove('visible');
+                navCta.classList.remove('visible');
+            }
+        });
+
+        // PARALLAX EFFECT
+        const heroSection = document.getElementById('heroSection');
+        const parallaxLayers = document.querySelectorAll('.parallax-layer');
+        const gradientOrbs = document.querySelectorAll('.gradient-orb');
+
+        let mouseX = 0, mouseY = 0;
+        let currentX = 0, currentY = 0;
+
+        // Mouse movement parallax (Desktop)
+        heroSection.addEventListener('mousemove', (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            mouseX = (e.clientX - rect.left - rect.width / 2) / rect.width;
+            mouseY = (e.clientY - rect.top - rect.height / 2) / rect.height;
+        });
+
+        // Smooth animation loop
+        function animateParallax() {
+            currentX += (mouseX - currentX) * 0.08;
+            currentY += (mouseY - currentY) * 0.08;
+
+            parallaxLayers.forEach((layer, index) => {
+                const speed = parseFloat(layer.dataset.speed) || 0.03;
+                const multiplier = (index + 1) * 25;
+                const x = currentX * multiplier * speed * 100;
+                const y = currentY * multiplier * speed * 100;
+                layer.style.transform = `translate(${x}px, ${y}px)`;
+            });
+
+            // Move gradient orbs slower for depth
+            gradientOrbs.forEach((orb, index) => {
+                const speed = 0.015 * (index + 1);
+                const x = currentX * speed * 50;
+                const y = currentY * speed * 50;
+                orb.style.transform = `translate(${x}px, ${y}px)`;
+            });
+
+            requestAnimationFrame(animateParallax);
+        }
+        animateParallax();
+
+        // Device orientation parallax (Mobile)
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', (e) => {
+                if (e.gamma !== null && e.beta !== null) {
+                    // gamma: left/right tilt (-90 to 90)
+                    // beta: front/back tilt (-180 to 180)
+                    mouseX = Math.max(-1, Math.min(1, e.gamma / 30));
+                    mouseY = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
+                }
+            });
+        }
+
+        // Smooth scroll para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
