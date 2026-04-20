@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TETRA CMS — Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue:   #0e6ba8;
+            --dark:   #0a1628;
+            --mid:    #1a4a7a;
+            --light:  #f5f8fc;
+            --border: #e0e8f0;
+            --text:   #334155;
+            --red:    #e53e3e;
+            --green:  #38a169;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--light); color: var(--text); }
+
+        /* ============================
+           LOGIN
+        ============================ */
+        #login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 100%);
+        }
+        .login-box {
+            background: white;
+            border-radius: 20px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+            text-align: center;
+        }
+        .login-logo { height: 48px; margin-bottom: 24px; }
+        .login-box h2 { font-size: 1.35rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+        .login-box > p { color: #64748b; font-size: 0.88rem; margin-bottom: 28px; }
+        .login-field {
+            width: 100%; padding: 12px 16px;
+            border: 2px solid var(--border); border-radius: 10px;
+            font-family: inherit; font-size: 1rem; margin-bottom: 14px;
+            outline: none; transition: border-color .2s;
+        }
+        .login-field:focus { border-color: var(--blue); }
+        .login-btn {
+            width: 100%; padding: 13px;
+            background: var(--blue); color: white;
+            border: none; border-radius: 10px;
+            font-family: inherit; font-size: 1rem; font-weight: 700;
+            cursor: pointer; transition: background .2s;
+        }
+        .login-btn:hover { background: var(--mid); }
+        .login-error { color: var(--red); font-size: 0.82rem; margin-top: 10px; display: none; }
+
+        /* ============================
+           DASHBOARD SHELL
+        ============================ */
+        #cms-dashboard { display: none; min-height: 100vh; flex-direction: column; }
+        #cms-dashboard.active { display: flex; }
+
+        .cms-header {
+            background: var(--dark); color: white;
+            padding: 0 28px; height: 58px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+        }
+        .cms-header-left { display: flex; align-items: center; gap: 14px; }
+        .cms-header img { height: 30px; }
+        .cms-badge {
+            background: var(--blue); color: white;
+            font-size: 0.62rem; font-weight: 700; padding: 3px 9px;
+            border-radius: 20px; letter-spacing: .6px; text-transform: uppercase;
+        }
+        .cms-header-right { display: flex; align-items: center; gap: 14px; }
+        #post-count-header { font-size: .82rem; color: #94a3b8; }
+        .btn-logout {
+            background: rgba(255,255,255,0.1); color: white; border: none;
+            padding: 7px 16px; border-radius: 8px;
+            font-family: inherit; font-size: .82rem; cursor: pointer; transition: background .2s;
+        }
+        .btn-logout:hover { background: rgba(255,255,255,0.2); }
+
+        .cms-body { display: flex; flex: 1; overflow: hidden; }
+
+        .cms-sidebar {
+            width: 210px; flex-shrink: 0;
+            background: white; border-right: 1px solid var(--border);
+            padding: 20px 0; display: flex; flex-direction: column;
+            overflow-y: auto;
+        }
+        .cms-nav-label {
+            font-size: .68rem; font-weight: 700; color: #94a3b8;
+            letter-spacing: 1px; text-transform: uppercase; padding: 0 18px 7px;
+        }
+        .cms-nav-item {
+            padding: 10px 18px; cursor: pointer;
+            font-size: .88rem; font-weight: 500; color: var(--text);
+            display: flex; align-items: center; gap: 9px;
+            transition: background .15s, color .15s;
+            border-left: 3px solid transparent;
+        }
+        .cms-nav-item:hover { background: var(--light); color: var(--blue); }
+        .cms-nav-item.active { background: #eff6ff; color: var(--blue); border-left-color: var(--blue); font-weight: 600; }
+        .cms-nav-divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+        .cms-main { flex: 1; padding: 28px 32px; overflow-y: auto; }
+
+        /* ============================
+           VIEWS
+        ============================ */
+        .cms-view { display: none; }
+        .cms-view.active { display: block; }
+
+        .view-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 24px;
+        }
+        .view-header h1 { font-size: 1.45rem; font-weight: 800; color: var(--dark); }
+        .view-header p { color: #64748b; font-size: .82rem; margin-top: 3px; }
+        .view-header-actions { display: flex; gap: 10px; flex-shrink: 0; }
+
+        /* ============================
+           BUTTONS
+        ============================ */
+        .btn-primary {
+            background: var(--blue); color: white; border: none;
+            padding: 10px 20px; border-radius: 9px;
+            font-family: inherit; font-size: .88rem; font-weight: 600;
+            cursor: pointer; transition: background .2s, transform .1s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .btn-primary:hover { background: var(--mid); }
+        .btn-primary:active { transform: scale(.97); }
+
+        .btn-secondary {
+            background: white; color: var(--text); border: 1.5px solid var(--border);
+            padding: 9px 18px; border-radius: 9px;
+            font-family: inherit; font-size: .88rem; font-weight: 500;
+            cursor: pointer; transition: border-color .2s, color .2s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+
+        .btn-danger {
+            background: #fff5f5; color: var(--red); border: 1.5px solid #fed7d7;
+            padding: 7px 14px; border-radius: 8px;
+            font-family: inherit; font-size: .8rem; font-weight: 600;
+            cursor: pointer; transition: background .2s;
+        }
+        .btn-danger:hover { background: #fed7d7; }
+
+        .btn-icon {
+            background: none; border: none; cursor: pointer;
+            padding: 6px; border-radius: 6px; color: #64748b;
+            transition: background .15s, color .15s;
+            font-size: .95rem; display: inline-flex; align-items: center;
+        }
+        .btn-icon:hover { background: var(--light); color: var(--blue); }
+        .btn-icon.danger:hover { color: var(--red); }
+
+        /* ============================
+           STATS CARDS
+        ============================ */
+        .stats-row {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 14px; margin-bottom: 24px;
+        }
+        .stat-card {
+            background: white; border: 1px solid var(--border);
+            border-radius: 14px; padding: 18px 22px;
+        }
+        .stat-card .stat-val { font-size: 1.9rem; font-weight: 800; color: var(--dark); }
+        .stat-card .stat-lbl { font-size: .78rem; color: #64748b; margin-top: 2px; }
+
+        /* ============================
+           POSTS TABLE
+        ============================ */
+        .posts-table {
+            background: white; border: 1px solid var(--border);
+            border-radius: 14px; overflow: hidden;
+        }
+        .posts-table-header {
+            padding: 14px 20px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .posts-table-header h3 { font-size: .9rem; font-weight: 700; color: var(--dark); }
+
+        .post-row {
+            padding: 13px 20px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 12px; transition: background .12s;
+        }
+        .post-row:last-child { border-bottom: none; }
+        .post-row:hover { background: #fafbfd; }
+
+        .post-cat-badge {
+            font-size: .7rem; font-weight: 700; padding: 3px 9px;
+            border-radius: 20px; background: #eff6ff; color: var(--blue); white-space: nowrap;
+        }
+        .post-title-cell { flex: 1; min-width: 0; }
+        .post-title-cell strong { font-size: .88rem; font-weight: 600; color: var(--dark); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .post-title-cell span { font-size: .75rem; color: #94a3b8; }
+
+        .post-status { font-size: .72rem; font-weight: 600; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+        .post-status.published { background: #f0fdf4; color: var(--green); }
+        .post-status.draft     { background: #f8fafc; color: #94a3b8; }
+        .post-status.featured  { background: #fffbeb; color: #d97706; }
+
+        .post-actions { display: flex; align-items: center; gap: 2px; }
+
+        .empty-state { padding: 56px 20px; text-align: center; color: #94a3b8; }
+        .empty-state .empty-icon { font-size: 2.8rem; margin-bottom: 10px; }
+        .empty-state p { font-size: .88rem; }
+
+        /* ============================
+           FORM
+        ============================ */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 330px;
+            gap: 22px;
+            align-items: start;
+        }
+        .form-col { display: flex; flex-direction: column; gap: 18px; }
+
+        .form-card {
+            background: white; border: 1px solid var(--border);
+            border-radius: 14px; padding: 24px;
+        }
+        .form-card h3 {
+            font-size: .75rem; font-weight: 700; color: #94a3b8;
+            text-transform: uppercase; letter-spacing: .6px; margin-bottom: 18px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group:last-child { margin-bottom: 0; }
+
+        .form-label { display: block; font-size: .8rem; font-weight: 600; color: var(--dark); margin-bottom: 5px; }
+        .form-label .req { color: var(--red); }
+        .char-count { float: right; font-size: .74rem; color: #94a3b8; font-weight: 400; }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%; padding: 9px 13px;
+            border: 1.5px solid var(--border); border-radius: 9px;
+            font-family: inherit; font-size: .88rem; color: var(--text);
+            outline: none; transition: border-color .2s; background: white;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--blue); }
+        .form-textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+        .form-textarea.tall { min-height: 220px; }
+        .form-hint { font-size: .73rem; color: #94a3b8; margin-top: 4px; }
+
+        /* Toggles */
+        .toggle-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 11px 0; border-bottom: 1px solid var(--border);
+        }
+        .toggle-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .toggle-label { font-size: .86rem; font-weight: 500; color: var(--dark); }
+        .toggle-desc  { font-size: .74rem; color: #94a3b8; }
+        .toggle { position: relative; width: 38px; height: 21px; flex-shrink: 0; }
+        .toggle input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute; inset: 0;
+            background: #cbd5e1; border-radius: 21px;
+            cursor: pointer; transition: background .2s;
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 15px; height: 15px;
+            background: white; border-radius: 50%;
+            top: 3px; left: 3px;
+            transition: transform .2s;
+        }
+        .toggle input:checked + .toggle-slider { background: var(--blue); }
+        .toggle input:checked + .toggle-slider::before { transform: translateX(17px); }
+
+        /* ============================
+           PREVIEW CARD
+        ============================ */
+        .blog-preview-card {
+            border: 1px solid var(--border); border-radius: 14px;
+            overflow: hidden; background: white;
+        }
+        .preview-image {
+            height: 115px;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--mid) 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.4rem; overflow: hidden;
+        }
+        .preview-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ── Image uploader ── */
+        .img-upload-zone {
+            border: 2px dashed var(--border); border-radius: 10px;
+            padding: 22px 16px; text-align: center; cursor: pointer;
+            transition: border-color .2s, background .2s;
+            position: relative; overflow: hidden;
+            min-height: 100px; display: flex; align-items: center; justify-content: center;
+        }
+        .img-upload-zone:hover  { border-color: var(--blue); background: #f0f7ff; }
+        .img-upload-zone.drag-over { border-color: var(--blue); background: #e8f0fe; }
+        .img-upload-zone.has-image { padding: 0; border-style: solid; }
+        .upload-placeholder { pointer-events: none; }
+        .upload-icon { font-size: 1.8rem; margin-bottom: 6px; }
+        .upload-label { font-size: .84rem; font-weight: 600; color: var(--dark); }
+        .upload-hint  { font-size: .73rem; color: #94a3b8; margin-top: 3px; }
+        #img-preview-wrap { position: relative; width: 100%; }
+        #img-preview-thumb { width: 100%; max-height: 150px; object-fit: cover; border-radius: 7px; display: block; }
+        .img-clear-btn {
+            position: absolute; top: 7px; right: 7px;
+            background: rgba(0,0,0,0.55); color: white;
+            border: none; border-radius: 50%;
+            width: 26px; height: 26px; font-size: .78rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: background .15s;
+        }
+        .img-clear-btn:hover { background: var(--red); }
+        .img-or-row { display: flex; align-items: center; gap: 8px; margin: 10px 0 8px; }
+        .img-or-row::before, .img-or-row::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .img-or-row span { font-size: .72rem; color: #94a3b8; white-space: nowrap; }
+
+        /* ── Image editor modal ── */
+        .img-editor-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: none; align-items: center; justify-content: center;
+            z-index: 2000;
+        }
+        .img-editor-overlay.active { display: flex; }
+        .img-editor-box {
+            background: white; border-radius: 18px;
+            max-width: 580px; width: 97%;
+            overflow: hidden;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+            display: flex; flex-direction: column;
+            max-height: 95vh; overflow-y: auto;
+        }
+        .img-editor-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 20px; border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .img-editor-header h3 { font-size: .95rem; font-weight: 700; color: var(--dark); }
+        .img-editor-close {
+            background: none; border: none; cursor: pointer;
+            font-size: 1rem; color: #94a3b8; padding: 4px 8px;
+            border-radius: 6px; transition: background .15s, color .15s;
+        }
+        .img-editor-close:hover { background: var(--light); color: var(--dark); }
+
+        /* Tabs */
+        .editor-tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+        .editor-tab {
+            flex: 1; padding: 10px 8px; cursor: pointer; text-align: center;
+            font-size: .78rem; font-weight: 600; color: #64748b;
+            border-bottom: 2px solid transparent; transition: all .15s;
+            display: flex; align-items: center; justify-content: center; gap: 5px;
+        }
+        .editor-tab:hover { color: var(--dark); background: #f8fafc; }
+        .editor-tab.active { color: var(--blue); border-bottom-color: var(--blue); background: white; }
+        .tab-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--green); flex-shrink: 0; display: none;
+        }
+        .tab-dot.on { display: block; }
+
+        /* Canvas */
+        .img-editor-canvas-wrap {
+            background: #1a1a1a; position: relative;
+            cursor: grab; touch-action: none; flex-shrink: 0;
+        }
+        .img-editor-canvas-wrap:active { cursor: grabbing; }
+        #img-editor-canvas {
+            display: block; width: 100%; height: auto;
+            user-select: none; -webkit-user-drag: none;
+        }
+        .img-editor-hint {
+            position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.5); color: white;
+            font-size: .68rem; padding: 3px 10px; border-radius: 20px;
+            pointer-events: none; white-space: nowrap;
+        }
+
+        /* Controls */
+        .img-editor-controls {
+            padding: 14px 20px; display: flex; flex-direction: column; gap: 10px;
+        }
+        .ctrl-row { display: flex; align-items: center; gap: 10px; padding: 1px 0; }
+        .ctrl-label { font-size: .76rem; font-weight: 600; color: var(--dark); min-width: 62px; flex-shrink: 0; }
+        .ctrl-slider { flex: 1; accent-color: var(--blue); cursor: pointer; }
+        .ctrl-val { font-size: .73rem; color: #94a3b8; min-width: 38px; text-align: right; flex-shrink: 0; }
+        .ctrl-reset { background: none; border: none; color: #94a3b8; cursor: pointer; font-size: .72rem; text-decoration: underline; padding: 0; }
+        .ctrl-reset:hover { color: var(--blue); }
+        .ctrl-divider { height: 1px; background: var(--border); margin: 3px 0; }
+        .pill-group { display: flex; gap: 5px; flex-wrap: wrap; flex: 1; }
+        .pill-btn {
+            padding: 4px 11px; border-radius: 20px; border: 1.5px solid var(--border);
+            font-family: inherit; font-size: .73rem; font-weight: 600;
+            cursor: pointer; background: white; color: var(--text); transition: all .15s;
+        }
+        .pill-btn:hover { border-color: var(--blue); color: var(--blue); }
+        .pill-btn.active { background: var(--blue); border-color: var(--blue); color: white; }
+        .rotate-btn {
+            background: white; border: 1.5px solid var(--border); border-radius: 7px;
+            padding: 4px 10px; flex-shrink: 0; cursor: pointer; font-size: .88rem;
+            transition: border-color .15s, background .15s;
+        }
+        .rotate-btn:hover { border-color: var(--blue); background: #f0f7ff; }
+
+        /* Save-crop strip (3 thumbnails) */
+        .saved-strip {
+            border-top: 1px solid var(--border); padding: 12px 20px;
+            background: #f8fafc; flex-shrink: 0;
+        }
+        .saved-strip-label {
+            font-size: .65rem; font-weight: 700; color: #94a3b8;
+            text-transform: uppercase; letter-spacing: .7px; margin-bottom: 9px;
+        }
+        .saved-strip-row { display: flex; gap: 14px; align-items: flex-end; }
+        .saved-item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
+        .saved-thumb {
+            border-radius: 7px; overflow: hidden; border: 2px solid var(--border);
+            background: #dde4ed; transition: border-color .15s; position: relative;
+        }
+        .saved-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .saved-thumb .thumb-placeholder {
+            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+            font-size: .65rem; color: #94a3b8; text-align: center; padding: 4px;
+        }
+        .saved-item.active-ctx .saved-thumb { border-color: var(--blue); }
+        .saved-item.has-crop .saved-thumb { border-color: var(--green); }
+        .saved-item.active-ctx.has-crop .saved-thumb { border-color: var(--blue); }
+        .saved-item-label { font-size: .64rem; color: #64748b; font-weight: 500; white-space: nowrap; }
+        .saved-item-status { font-size: .6rem; color: var(--green); font-weight: 600; height: 10px; }
+
+        /* Save-this-crop inline button */
+        .save-crop-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #f0f7ff; border: 1px solid #bfdbfe;
+            border-radius: 9px; padding: 8px 12px; margin-top: 2px;
+        }
+        .save-crop-bar span { font-size: .78rem; color: var(--mid); font-weight: 500; }
+        .btn-save-crop {
+            background: var(--blue); color: white; border: none;
+            padding: 6px 14px; border-radius: 7px;
+            font-family: inherit; font-size: .78rem; font-weight: 700;
+            cursor: pointer; transition: background .2s;
+        }
+        .btn-save-crop:hover { background: var(--mid); }
+        .btn-save-crop.saved { background: var(--green); }
+
+        .img-editor-actions {
+            display: flex; gap: 10px; padding: 12px 20px;
+            border-top: 1px solid var(--border); justify-content: flex-end; flex-shrink: 0;
+        }
+
+        /* Edit button overlay on upload preview thumb */
+        .img-edit-btn {
+            position: absolute; bottom: 7px; left: 7px;
+            background: rgba(0,0,0,0.55); color: white;
+            border: none; border-radius: 6px;
+            padding: 4px 10px; font-family: inherit; font-size: .72rem; font-weight: 600;
+            cursor: pointer; transition: background .15s;
+        }
+        .img-edit-btn:hover { background: var(--blue); }
+        .preview-body { padding: 14px; }
+        .preview-cat   { font-size: .68rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
+        .preview-title { font-size: .9rem; font-weight: 700; color: var(--dark); margin-bottom: 5px; line-height: 1.35; }
+        .preview-excerpt { font-size: .77rem; color: #64748b; line-height: 1.5; margin-bottom: 8px; }
+        .preview-meta  { font-size: .72rem; color: #94a3b8; }
+
+        /* ============================
+           EXPORT VIEW
+        ============================ */
+        .export-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+        .export-card {
+            background: white; border: 1px solid var(--border);
+            border-radius: 14px; padding: 26px;
+        }
+        .export-card h3 { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+        .export-card > p { font-size: .84rem; color: #64748b; margin-bottom: 18px; line-height: 1.55; }
+        .export-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .workflow-steps { counter-reset: step; list-style: none; margin-top: 18px; }
+        .workflow-steps li {
+            counter-increment: step;
+            display: flex; gap: 12px; margin-bottom: 10px; align-items: flex-start;
+        }
+        .workflow-steps li::before {
+            content: counter(step);
+            background: var(--blue); color: white;
+            width: 20px; height: 20px; border-radius: 50%;
+            font-size: .7rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; margin-top: 2px;
+        }
+        .workflow-steps li span { font-size: .82rem; color: var(--text); line-height: 1.5; }
+        .workflow-steps li span strong { color: var(--dark); }
+
+        .warning-text { font-size: .8rem; color: #c05621; background: #fffbeb; border: 1px solid #fbd38d; border-radius: 8px; padding: 10px 14px; margin-top: 14px; }
+
+        /* ============================
+           TOAST
+        ============================ */
+        #toast {
+            position: fixed; bottom: 22px; right: 22px;
+            background: var(--dark); color: white;
+            padding: 11px 18px; border-radius: 10px;
+            font-size: .85rem; font-weight: 500;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            transform: translateY(70px); opacity: 0;
+            transition: all .3s; z-index: 9999;
+        }
+        #toast.show   { transform: translateY(0); opacity: 1; }
+        #toast.success { background: #064e3b; }
+        #toast.error   { background: #7f1d1d; }
+
+        /* ============================
+           MODAL
+        ============================ */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45);
+            display: none; align-items: center; justify-content: center;
+            z-index: 1000;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: white; border-radius: 16px;
+            padding: 32px; max-width: 400px; width: 90%; text-align: center;
+        }
+        .modal-box h3 { font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+        .modal-box p  { font-size: .86rem; color: #64748b; margin-bottom: 22px; }
+        .modal-actions { display: flex; gap: 12px; justify-content: center; }
+    </style>
+</head>
+<body>
+
+<!-- ===========================
+     LOGIN
+=========================== -->
+<div id="login-screen">
+    <div class="login-box">
+        <img src="Logotipo_Tetra.png" alt="TETRA 4.0" class="login-logo">
+        <h2>Panel de Administración</h2>
+        <p>Ingresa tu contraseña para gestionar el blog</p>
+        <form onsubmit="handleLogin(event)">
+            <input type="password" id="pwd-input" class="login-field" placeholder="Contraseña" autocomplete="current-password">
+            <button type="submit" class="login-btn">Acceder</button>
+        </form>
+        <div id="login-error" class="login-error">Contraseña incorrecta. Inténtalo de nuevo.</div>
+    </div>
+</div>
+
+<!-- ===========================
+     CMS DASHBOARD
+=========================== -->
+<div id="cms-dashboard">
+
+    <header class="cms-header">
+        <div class="cms-header-left">
+            <img src="Logotipo_Tetra.png" alt="TETRA">
+            <span class="cms-badge">CMS</span>
+        </div>
+        <div class="cms-header-right">
+            <span id="post-count-header"></span>
+            <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <div class="cms-body">
+
+        <aside class="cms-sidebar">
+            <div class="cms-nav-label">Contenido</div>
+            <div class="cms-nav-item active" onclick="showView('view-posts', this)">
+                <span>📋</span> Entradas
+            </div>
+            <div class="cms-nav-item" onclick="newPost(this)" id="nav-new">
+                <span>✏️</span> Nueva entrada
+            </div>
+            <div class="cms-nav-divider"></div>
+            <div class="cms-nav-label">Sistema</div>
+            <div class="cms-nav-item" onclick="showView('view-export', this)">
+                <span>📤</span> Exportar / Importar
+            </div>
+        </aside>
+
+        <main class="cms-main">
+
+            <!-- ---- VIEW: POSTS LIST ---- -->
+            <div id="view-posts" class="cms-view active">
+                <div class="view-header">
+                    <div>
+                        <h1>Entradas del Blog</h1>
+                        <p>Gestiona el contenido publicado y borradores</p>
+                    </div>
+                    <div class="view-header-actions">
+                        <button class="btn-primary" onclick="newPost(null)">+ Nueva entrada</button>
+                    </div>
+                </div>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-val" id="stat-total">0</div>
+                        <div class="stat-lbl">Total de entradas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val" id="stat-published">0</div>
+                        <div class="stat-lbl">Publicadas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val" id="stat-drafts">0</div>
+                        <div class="stat-lbl">Borradores</div>
+                    </div>
+                </div>
+
+                <div class="posts-table">
+                    <div class="posts-table-header">
+                        <h3>Todas las entradas</h3>
+                        <span style="font-size:.78rem;color:#94a3b8;">Más recientes primero</span>
+                    </div>
+                    <div id="posts-list"></div>
+                </div>
+            </div>
+
+            <!-- ---- VIEW: NEW / EDIT POST ---- -->
+            <div id="view-form" class="cms-view">
+                <div class="view-header">
+                    <div>
+                        <h1 id="form-view-title">Nueva entrada</h1>
+                        <p id="form-view-sub">Completa los campos para publicar en el blog</p>
+                    </div>
+                    <div class="view-header-actions">
+                        <button class="btn-secondary" onclick="cancelEdit()">Cancelar</button>
+                        <button class="btn-primary" onclick="savePost()">Guardar entrada</button>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <!-- LEFT -->
+                    <div class="form-col">
+                        <div class="form-card">
+                            <h3>Contenido</h3>
+                            <div class="form-group">
+                                <label class="form-label">Título <span class="req">*</span></label>
+                                <input type="text" id="f-title" class="form-input" placeholder="Ej. 5 tendencias de IA para 2026" oninput="updatePreview()">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Resumen <span class="req">*</span>
+                                    <span class="char-count" id="excerpt-count">0 / 140</span>
+                                </label>
+                                <textarea id="f-excerpt" class="form-textarea" maxlength="140"
+                                    placeholder="Descripción corta que aparece en la tarjeta del blog (máx. 140 caracteres)"
+                                    oninput="updateExcerptCount(); updatePreview()"></textarea>
+                                <div class="form-hint">Aparece en la tarjeta del listado.</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Cuerpo del artículo</label>
+                                <textarea id="f-body" class="form-textarea tall"
+                                    placeholder="Escribe el artículo completo aquí. Acepta HTML básico: &lt;p&gt;, &lt;strong&gt;, &lt;ul&gt;, &lt;h2&gt;, etc."></textarea>
+                                <div class="form-hint">Este contenido se mostrará en la vista de artículo individual (si se habilita).</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="form-col">
+
+                        <!-- Preview -->
+                        <div class="form-card">
+                            <h3>Vista previa de tarjeta</h3>
+                            <div class="blog-preview-card">
+                                <div class="preview-image" id="prev-image">📄</div>
+                                <div class="preview-body">
+                                    <div class="preview-cat"     id="prev-cat">Categoría</div>
+                                    <div class="preview-title"   id="prev-title">Título del artículo</div>
+                                    <div class="preview-excerpt" id="prev-excerpt">Resumen del artículo...</div>
+                                    <div class="preview-meta"    id="prev-date">—</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Meta -->
+                        <div class="form-card">
+                            <h3>Detalles</h3>
+                            <div class="form-group">
+                                <label class="form-label">Categoría <span class="req">*</span></label>
+                                <select id="f-category" class="form-select" onchange="updatePreview()">
+                                    <option value="">— Seleccionar —</option>
+                                    <option>Redes</option>
+                                    <option>Seguridad</option>
+                                    <option>Cloud</option>
+                                    <option>Infraestructura</option>
+                                    <option>IA</option>
+                                    <option>Productividad</option>
+                                    <option>Data</option>
+                                    <option>CCTV</option>
+                                    <option>Licenciamiento</option>
+                                    <option>Otros</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Fecha de publicación</label>
+                                <input type="date" id="f-date" class="form-input" oninput="updatePreview()">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Imagen</label>
+                                <!-- Drop / click zone -->
+                                <div class="img-upload-zone" id="img-upload-zone"
+                                    onclick="document.getElementById('f-image-file').click()"
+                                    ondragover="handleDragOver(event)"
+                                    ondragleave="handleDragLeave(event)"
+                                    ondrop="handleDrop(event)">
+                                    <input type="file" id="f-image-file" accept="image/*"
+                                        style="display:none" onchange="handleImageUpload(event)">
+                                    <div class="upload-placeholder" id="upload-placeholder">
+                                        <div class="upload-icon">🖼️</div>
+                                        <div class="upload-label">Haz clic o arrastra una imagen</div>
+                                        <div class="upload-hint">JPG · PNG · WebP — se comprime automáticamente</div>
+                                    </div>
+                                    <div id="img-preview-wrap" style="display:none; width:100%;">
+                                        <img id="img-preview-thumb" src="" alt="">
+                                        <button type="button" class="img-edit-btn"
+                                            onclick="reopenEditor(event)">✏️ Editar</button>
+                                        <button type="button" class="img-clear-btn"
+                                            onclick="clearImage(event)" title="Quitar imagen">✕</button>
+                                    </div>
+                                </div>
+                                <!-- URL / emoji fallback -->
+                                <div class="img-or-row"><span>o usa una URL / emoji</span></div>
+                                <input type="text" id="f-image-url" class="form-input"
+                                    placeholder="https://… o un emoji (ej. 🔒)"
+                                    oninput="handleImageURL()">
+                                <div class="form-hint">Si subes un archivo, tiene prioridad sobre este campo.</div>
+                            </div>
+                        </div>
+
+                        <!-- Options -->
+                        <div class="form-card">
+                            <h3>Opciones</h3>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="toggle-label">Publicar</div>
+                                    <div class="toggle-desc">Visible en el blog</div>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="f-published" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="toggle-label">Destacado</div>
+                                    <div class="toggle-desc">Aparece en el slot principal arriba del grid</div>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="f-featured">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ---- VIEW: EXPORT / IMPORT ---- -->
+            <div id="view-export" class="cms-view">
+                <div class="view-header">
+                    <div>
+                        <h1>Exportar / Importar</h1>
+                        <p>Despliega tu contenido al sitio web público</p>
+                    </div>
+                </div>
+
+                <div class="export-grid">
+
+                    <div class="export-card">
+                        <h3>📤 Exportar posts</h3>
+                        <p>Descarga tus entradas como <strong>posts.json</strong> y súbelo al servidor junto con blog.html para que los visitantes vean el contenido actualizado.</p>
+                        <div class="export-actions">
+                            <button class="btn-primary" onclick="exportJSON()">Descargar posts.json</button>
+                        </div>
+                        <ul class="workflow-steps">
+                            <li><span>Haz clic en <strong>Descargar posts.json</strong></span></li>
+                            <li><span>Coloca el archivo en la misma carpeta que <strong>blog.html</strong></span></li>
+                            <li><span>Sube ambos archivos a tu servidor de hosting</span></li>
+                            <li><span>El blog cargará automáticamente tus entradas</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="export-card">
+                        <h3>📥 Importar posts</h3>
+                        <p>Restaura un backup o migra entradas desde un archivo <strong>posts.json</strong> exportado anteriormente desde este CMS.</p>
+                        <div class="export-actions">
+                            <button class="btn-secondary" onclick="document.getElementById('import-file').click()">
+                                Cargar archivo JSON
+                            </button>
+                            <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)">
+                        </div>
+                        <div class="warning-text">
+                            ⚠️ Esto reemplazará <strong>todas las entradas actuales</strong> guardadas en este navegador.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- IMAGE EDITOR MODAL -->
+<div class="img-editor-overlay" id="img-editor-modal">
+    <div class="img-editor-box">
+
+        <div class="img-editor-header">
+            <h3>Editar imagen</h3>
+            <button class="img-editor-close" onclick="closeImgEditor()">✕</button>
+        </div>
+
+        <!-- Context tabs -->
+        <div class="editor-tabs">
+            <div class="editor-tab active" id="tab-card"     onclick="switchCtx('card',this)">
+                <span>Tarjeta blog</span><span class="tab-dot" id="dot-card"></span>
+            </div>
+            <div class="editor-tab"        id="tab-featured" onclick="switchCtx('featured',this)">
+                <span>Destacado</span><span class="tab-dot" id="dot-featured"></span>
+            </div>
+            <div class="editor-tab"        id="tab-article"  onclick="switchCtx('article',this)">
+                <span>Artículo</span><span class="tab-dot" id="dot-article"></span>
+            </div>
+        </div>
+
+        <!-- Canvas -->
+        <div class="img-editor-canvas-wrap" id="editor-canvas-wrap">
+            <canvas id="img-editor-canvas" width="480" height="270"></canvas>
+            <div class="img-editor-hint">Arrastra · Scroll = zoom</div>
+        </div>
+
+        <!-- Controls -->
+        <div class="img-editor-controls">
+            <div class="ctrl-row">
+                <span class="ctrl-label">Zoom</span>
+                <input type="range" id="ctrl-zoom" class="ctrl-slider" min="5" max="400" value="100" oninput="renderEditor()">
+                <span class="ctrl-val" id="val-zoom">100%</span>
+            </div>
+            <div class="ctrl-row" style="padding-left:72px; gap:8px;">
+                <button class="pill-btn" onclick="setZoomMode('fit')">Encuadrar</button>
+                <button class="pill-btn" onclick="setZoomMode('cover')">Llenar</button>
+                <button class="ctrl-reset" style="margin-left:auto;" onclick="resetEditor()">Restablecer</button>
+            </div>
+            <div class="ctrl-divider"></div>
+            <div class="ctrl-row">
+                <span class="ctrl-label">Recorte</span>
+                <div class="pill-group" id="ratio-pills">
+                    <button class="pill-btn active" data-ratio="16:9" onclick="setRatio(this,480,270)">16:9</button>
+                    <button class="pill-btn"        data-ratio="4:3"  onclick="setRatio(this,480,360)">4:3</button>
+                    <button class="pill-btn"        data-ratio="3:2"  onclick="setRatio(this,480,320)">3:2</button>
+                    <button class="pill-btn"        data-ratio="1:1"  onclick="setRatio(this,480,480)">1:1</button>
+                </div>
+            </div>
+            <div class="ctrl-divider"></div>
+            <div class="ctrl-row">
+                <span class="ctrl-label">Rotar</span>
+                <button class="rotate-btn" onclick="rotateStep(-1)">↺</button>
+                <input type="range" id="ctrl-rotate" class="ctrl-slider" min="-45" max="45" value="0" oninput="renderEditor()">
+                <button class="rotate-btn" onclick="rotateStep(1)">↻</button>
+                <span class="ctrl-val" id="val-rotate">0°</span>
+            </div>
+            <div class="ctrl-divider"></div>
+            <div class="ctrl-row">
+                <span class="ctrl-label">Fondo</span>
+                <div class="pill-group" id="bg-pills">
+                    <button class="pill-btn active" data-bg="blur"  onclick="setBg(this,'blur')">Difuminado</button>
+                    <button class="pill-btn"        data-bg="white" onclick="setBg(this,'white')">Blanco</button>
+                    <button class="pill-btn"        data-bg="black" onclick="setBg(this,'black')">Negro</button>
+                </div>
+            </div>
+            <!-- Save this crop -->
+            <div class="save-crop-bar">
+                <span>Recorte para: <strong id="ctx-label-text">Tarjeta blog</strong></span>
+                <button class="btn-save-crop" id="btn-save-this" onclick="saveCurrentCrop()">Guardar este recorte</button>
+            </div>
+        </div>
+
+        <!-- Saved thumbnails strip -->
+        <div class="saved-strip">
+            <div class="saved-strip-label">Recortes guardados</div>
+            <div class="saved-strip-row">
+                <div class="saved-item active-ctx" id="si-card" onclick="switchCtx('card', document.getElementById('tab-card'))">
+                    <div class="saved-thumb" id="st-card" style="width:110px;height:62px;">
+                        <div class="thumb-placeholder">Sin recorte</div>
+                    </div>
+                    <div class="saved-item-label">Tarjeta blog</div>
+                    <div class="saved-item-status" id="ss-card"></div>
+                </div>
+                <div class="saved-item" id="si-featured" onclick="switchCtx('featured', document.getElementById('tab-featured'))">
+                    <div class="saved-thumb" id="st-featured" style="width:90px;height:80px;">
+                        <div class="thumb-placeholder">Sin recorte</div>
+                    </div>
+                    <div class="saved-item-label">Destacado</div>
+                    <div class="saved-item-status" id="ss-featured"></div>
+                </div>
+                <div class="saved-item" id="si-article" onclick="switchCtx('article', document.getElementById('tab-article'))">
+                    <div class="saved-thumb" id="st-article" style="width:110px;height:62px;">
+                        <div class="thumb-placeholder">Sin recorte</div>
+                    </div>
+                    <div class="saved-item-label">Artículo</div>
+                    <div class="saved-item-status" id="ss-article"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="img-editor-actions">
+            <button class="btn-secondary" onclick="closeImgEditor()">Cancelar</button>
+            <button class="btn-primary"   onclick="applyImgEdit()">Aplicar todo</button>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal-overlay" id="delete-modal">
+    <div class="modal-box">
+        <h3>¿Eliminar esta entrada?</h3>
+        <p>Esta acción no se puede deshacer. La entrada desaparecerá del blog al próximo export.</p>
+        <div class="modal-actions">
+            <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+            <button class="btn-danger"    onclick="confirmDelete()">Sí, eliminar</button>
+        </div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// =============================================
+//  CONSTANTS
+// =============================================
+const STORAGE_KEY = 'tetra_blog_posts';
+const PASSWORD    = 'tetra2026'; // ← Cambia aquí la contraseña
+
+let posts                = [];
+let editingId            = null;
+let deletingId           = null;
+let currentImageB64      = ''; // blog card crop
+let currentImageFeatured = ''; // featured slot crop
+let currentImageArticle  = ''; // article hero crop
+let currentImageOriginal = ''; // original full-res (for re-editing)
+
+// =============================================
+//  AUTH
+// =============================================
+function handleLogin(e) {
+    e.preventDefault();
+    if (document.getElementById('pwd-input').value === PASSWORD) {
+        document.getElementById('login-screen').style.display  = 'none';
+        document.getElementById('cms-dashboard').style.display = 'flex';
+        loadPosts();
+        renderPostsList();
+    } else {
+        document.getElementById('login-error').style.display = 'block';
+        document.getElementById('pwd-input').value = '';
+        document.getElementById('pwd-input').focus();
+    }
+}
+
+document.getElementById('pwd-input').addEventListener('input', () => {
+    document.getElementById('login-error').style.display = 'none';
+});
+
+function logout() {
+    document.getElementById('cms-dashboard').style.display = 'none';
+    document.getElementById('login-screen').style.display  = 'flex';
+    document.getElementById('pwd-input').value = '';
+}
+
+// =============================================
+//  STORAGE
+// =============================================
+function loadPosts() {
+    try { posts = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch (e) { posts = []; }
+    posts.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+}
+
+function savePosts() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+}
+
+// =============================================
+//  NAVIGATION
+// =============================================
+function showView(viewId, navEl) {
+    document.querySelectorAll('.cms-view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.cms-nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
+    if (navEl) navEl.classList.add('active');
+    if (viewId === 'view-posts') renderPostsList();
+}
+
+// =============================================
+//  RENDER POSTS LIST
+// =============================================
+function renderPostsList() {
+    loadPosts();
+    const total     = posts.length;
+    const published = posts.filter(p => p.published).length;
+    document.getElementById('stat-total').textContent     = total;
+    document.getElementById('stat-published').textContent = published;
+    document.getElementById('stat-drafts').textContent    = total - published;
+    document.getElementById('post-count-header').textContent = total + ' entrada' + (total !== 1 ? 's' : '');
+
+    const container = document.getElementById('posts-list');
+    if (posts.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📝</div>
+                <p>No hay entradas todavía. ¡Crea la primera!</p>
+            </div>`;
+        return;
+    }
+
+    container.innerHTML = posts.map(post => `
+        <div class="post-row">
+            <span class="post-cat-badge">${esc(post.category || 'Sin cat.')}</span>
+            <div class="post-title-cell">
+                <strong>${esc(post.title)}</strong>
+                <span>${esc(post.date || '')}${post.featured ? ' · ⭐ Destacado' : ''}</span>
+            </div>
+            <span class="post-status ${post.published ? 'published' : 'draft'}">
+                ${post.published ? 'Publicado' : 'Borrador'}
+            </span>
+            <div class="post-actions">
+                <button class="btn-icon" onclick="editPost('${post.id}')" title="Editar">✏️</button>
+                <button class="btn-icon danger" onclick="deletePost('${post.id}')" title="Eliminar">🗑️</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// =============================================
+//  NEW / EDIT
+// =============================================
+function newPost(navEl) {
+    editingId = null;
+    document.getElementById('form-view-title').textContent = 'Nueva entrada';
+    document.getElementById('form-view-sub').textContent   = 'Completa los campos para publicar en el blog';
+    clearForm();
+    document.getElementById('f-date').value = todayISO();
+    updatePreview();
+    showView('view-form', navEl || document.getElementById('nav-new'));
+}
+
+function editPost(id) {
+    const post = posts.find(p => p.id === id);
+    if (!post) return;
+    editingId = id;
+    document.getElementById('form-view-title').textContent = 'Editar entrada';
+    document.getElementById('form-view-sub').textContent   = 'Modifica los campos y guarda los cambios';
+
+    document.getElementById('f-title').value      = post.title    || '';
+    document.getElementById('f-excerpt').value    = post.excerpt  || '';
+    document.getElementById('f-body').value       = post.body     || '';
+    document.getElementById('f-category').value   = post.category || '';
+    document.getElementById('f-date').value       = post.dateISO  || '';
+    document.getElementById('f-published').checked = post.published !== false;
+    document.getElementById('f-featured').checked  = post.featured  === true;
+
+    // Restore images
+    currentImageB64      = post.image         || '';
+    currentImageFeatured = post.imageFeatured || '';
+    currentImageArticle  = post.imageArticle  || '';
+    currentImageOriginal = post.imageOriginal || '';
+    const displayImg = currentImageB64 || currentImageOriginal || '';
+    if (displayImg && displayImg.startsWith('data:')) {
+        document.getElementById('f-image-url').value = '';
+        setUploadPreview(displayImg);
+    } else {
+        document.getElementById('f-image-url').value = displayImg;
+        clearUploadPreview();
+    }
+
+    updateExcerptCount();
+    updatePreview();
+    showView('view-form', null);
+    // highlight nav
+    document.querySelectorAll('.cms-nav-item').forEach(n => n.classList.remove('active'));
+}
+
+function clearForm() {
+    ['f-title','f-excerpt','f-body','f-image-url'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('f-category').value    = '';
+    document.getElementById('f-date').value        = '';
+    document.getElementById('f-published').checked = true;
+    document.getElementById('f-featured').checked  = false;
+    currentImageB64 = ''; currentImageFeatured = '';
+    currentImageArticle = ''; currentImageOriginal = '';
+    clearUploadPreview();
+    updateExcerptCount();
+}
+
+function cancelEdit() {
+    editingId = null;
+    showView('view-posts', document.querySelectorAll('.cms-nav-item')[0]);
+}
+
+function savePost() {
+    const title    = document.getElementById('f-title').value.trim();
+    const excerpt  = document.getElementById('f-excerpt').value.trim();
+    const category = document.getElementById('f-category').value;
+
+    if (!title)    { toast('El título es obligatorio', 'error');         document.getElementById('f-title').focus();   return; }
+    if (!excerpt)  { toast('El resumen es obligatorio', 'error');        document.getElementById('f-excerpt').focus(); return; }
+    if (!category) { toast('Selecciona una categoría', 'error');                                                        return; }
+
+    const dateISO = document.getElementById('f-date').value || todayISO();
+    const dateStr = formatDate(dateISO);
+
+    const data = {
+        title,
+        excerpt,
+        body:      document.getElementById('f-body').value.trim(),
+        category,
+        dateISO,
+        date:      dateStr,
+        image:         currentImageB64      || document.getElementById('f-image-url').value.trim(),
+        imageFeatured: currentImageFeatured || currentImageB64 || document.getElementById('f-image-url').value.trim(),
+        imageArticle:  currentImageArticle  || currentImageB64 || document.getElementById('f-image-url').value.trim(),
+        imageOriginal: currentImageOriginal || currentImageB64 || document.getElementById('f-image-url').value.trim(),
+        published: document.getElementById('f-published').checked,
+        featured:  document.getElementById('f-featured').checked,
+    };
+
+    if (editingId) {
+        const idx = posts.findIndex(p => p.id === editingId);
+        posts[idx] = { ...posts[idx], ...data };
+        toast('Entrada actualizada', 'success');
+    } else {
+        data.id        = Date.now().toString();
+        data.createdAt = Date.now();
+        posts.unshift(data);
+        toast('Entrada creada y guardada', 'success');
+    }
+
+    savePosts();
+    editingId = null;
+    showView('view-posts', document.querySelectorAll('.cms-nav-item')[0]);
+}
+
+// =============================================
+//  DELETE
+// =============================================
+function deletePost(id) {
+    deletingId = id;
+    document.getElementById('delete-modal').classList.add('active');
+}
+function confirmDelete() {
+    posts = posts.filter(p => p.id !== deletingId);
+    savePosts();
+    closeModal();
+    renderPostsList();
+    toast('Entrada eliminada');
+}
+function closeModal() {
+    document.getElementById('delete-modal').classList.remove('active');
+    deletingId = null;
+}
+
+// =============================================
+//  IMAGE UPLOADER
+// =============================================
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    compressAndStore(file);
+    event.target.value = '';
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    document.getElementById('img-upload-zone').classList.add('drag-over');
+}
+function handleDragLeave(e) {
+    document.getElementById('img-upload-zone').classList.remove('drag-over');
+}
+function handleDrop(e) {
+    e.preventDefault();
+    document.getElementById('img-upload-zone').classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) compressAndStore(file);
+}
+
+function compressAndStore(file) {
+    const reader = new FileReader();
+    reader.onload = evt => {
+        const img = new Image();
+        img.onload = () => {
+            // Resize to max 1600px, keep original for editor
+            const MAX = 1600;
+            let w = img.width, h = img.height;
+            if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+            const canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            const b64 = canvas.toDataURL('image/jpeg', 0.97); // source master — alta calidad
+            document.getElementById('f-image-url').value = '';
+            openImgEditor(b64); // open editor instead of setting directly
+        };
+        img.src = evt.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function reopenEditor(e) {
+    e.stopPropagation();
+    const src = currentImageOriginal || currentImageB64;
+    if (src) openImgEditor(src);
+}
+
+function setUploadPreview(src) {
+    document.getElementById('img-preview-thumb').src = src;
+    document.getElementById('upload-placeholder').style.display = 'none';
+    document.getElementById('img-preview-wrap').style.display   = 'block';
+    document.getElementById('img-upload-zone').classList.add('has-image');
+}
+
+function clearUploadPreview() {
+    document.getElementById('img-preview-thumb').src = '';
+    document.getElementById('upload-placeholder').style.display = '';
+    document.getElementById('img-preview-wrap').style.display   = 'none';
+    document.getElementById('img-upload-zone').classList.remove('has-image');
+}
+
+function clearImage(e) {
+    e.stopPropagation(); // don't trigger zone click
+    currentImageB64 = '';
+    clearUploadPreview();
+    updatePreview();
+}
+
+function handleImageURL() {
+    // When user types a URL, clear any uploaded file
+    currentImageB64 = '';
+    clearUploadPreview();
+    updatePreview();
+}
+
+// =============================================
+//  IMAGE EDITOR — per-context crop states
+// =============================================
+const CTX_DEFS = {
+    card:     { label: 'Tarjeta blog', defW: 480, defH: 270  },
+    featured: { label: 'Destacado',    defW: 480, defH: 360  },
+    article:  { label: 'Artículo',     defW: 480, defH: 270  },
+};
+function blankCtxState() {
+    return { offX:0, offY:0, zoom:100, rotDeg:0, rotFine:0, bg:'blur',
+             cW:480, cH:270, saved:null };
+}
+
+let editorSourceB64 = '';
+let activeCtx       = 'card';
+let ctxStates       = { card: blankCtxState(), featured: blankCtxState(), article: blankCtxState() };
+let editorDragging  = false, editorDragSX = 0, editorDragSY = 0;
+let editorTouchSX   = 0, editorTouchSY = 0;
+const editorImg     = new Image();
+
+/* ── Open ── */
+function openImgEditor(src) {
+    editorSourceB64 = src;
+    editorImg.onload = () => {
+        // Init all 3 contexts from scratch
+        ctxStates = { card: blankCtxState(), featured: blankCtxState(), article: blankCtxState() };
+        ctxStates.card.cW     = 480; ctxStates.card.cH     = 270;
+        ctxStates.featured.cW = 480; ctxStates.featured.cH = 360;
+        ctxStates.article.cW  = 480; ctxStates.article.cH  = 270;
+        // Auto-cover zoom for each
+        ['card','featured','article'].forEach(c => {
+            const s = ctxStates[c];
+            const scale = Math.max(s.cW / editorImg.width, s.cH / editorImg.height);
+            s.zoom = Math.min(400, Math.max(5, Math.round(scale * 100)));
+        });
+        activeCtx = 'card';
+        loadCtxToUI('card');
+        refreshSavedStrip();
+        document.getElementById('img-editor-modal').classList.add('active');
+    };
+    editorImg.src = src;
+}
+
+function closeImgEditor() {
+    document.getElementById('img-editor-modal').classList.remove('active');
+}
+
+/* ── Tab switching ── */
+function switchCtx(ctx, tabEl) {
+    saveUIToCtx(activeCtx);         // persist current sliders
+    activeCtx = ctx;
+    document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+    if (tabEl) tabEl.classList.add('active');
+    document.querySelectorAll('.saved-item').forEach(el => el.classList.remove('active-ctx'));
+    const si = document.getElementById('si-' + ctx);
+    if (si) si.classList.add('active-ctx');
+    loadCtxToUI(ctx);
+}
+
+function saveUIToCtx(ctx) {
+    const s = ctxStates[ctx];
+    s.zoom    = parseInt(document.getElementById('ctrl-zoom').value);
+    s.rotFine = parseInt(document.getElementById('ctrl-rotate').value);
+    const canvas = document.getElementById('img-editor-canvas');
+    s.cW = canvas.width; s.cH = canvas.height;
+    // offsets already tracked via drag
+}
+
+function loadCtxToUI(ctx) {
+    const s = ctxStates[ctx];
+    const canvas = document.getElementById('img-editor-canvas');
+    canvas.width = s.cW; canvas.height = s.cH;
+
+    document.getElementById('ctrl-zoom').value   = s.zoom;
+    document.getElementById('ctrl-rotate').value = s.rotFine;
+
+    // Ratio pills — match closest
+    const r = (s.cW / s.cH).toFixed(2);
+    document.querySelectorAll('#ratio-pills [data-ratio]').forEach(b => {
+        const [rw, rh] = b.dataset.ratio.split(':').map(Number);
+        b.classList.toggle('active', (rw/rh).toFixed(2) === r);
+    });
+    // Bg pills
+    document.querySelectorAll('#bg-pills [data-bg]').forEach(b => {
+        b.classList.toggle('active', b.dataset.bg === s.bg);
+    });
+    // Ctx label
+    document.getElementById('ctx-label-text').textContent = CTX_DEFS[ctx].label;
+    // Save button state
+    const btn = document.getElementById('btn-save-this');
+    btn.textContent = s.saved ? '✓ Guardado' : 'Guardar este recorte';
+    btn.classList.toggle('saved', !!s.saved);
+
+    renderEditor();
+}
+
+/* ── Controls ── */
+function setRatio(btn, w, h) {
+    document.querySelectorAll('#ratio-pills [data-ratio]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const canvas = document.getElementById('img-editor-canvas');
+    canvas.width = w; canvas.height = h;
+    ctxStates[activeCtx].offX = 0; ctxStates[activeCtx].offY = 0;
+    setZoomMode('cover');
+}
+
+function setZoomMode(mode) {
+    const canvas = document.getElementById('img-editor-canvas');
+    const s = ctxStates[activeCtx];
+    const rad = (s.rotDeg + parseInt(document.getElementById('ctrl-rotate').value)) * Math.PI / 180;
+    const absC = Math.abs(Math.cos(rad)), absS = Math.abs(Math.sin(rad));
+    const ew = editorImg.width * absC + editorImg.height * absS;
+    const eh = editorImg.width * absS + editorImg.height * absC;
+    const scale = mode === 'cover'
+        ? Math.max(canvas.width / ew, canvas.height / eh)
+        : Math.min(canvas.width / ew, canvas.height / eh);
+    document.getElementById('ctrl-zoom').value = Math.min(400, Math.max(5, Math.round(scale * 100)));
+    ctxStates[activeCtx].offX = 0; ctxStates[activeCtx].offY = 0;
+    renderEditor();
+}
+
+function rotateStep(dir) {
+    ctxStates[activeCtx].rotDeg = (ctxStates[activeCtx].rotDeg + dir * 90 + 360) % 360;
+    renderEditor();
+}
+
+function setBg(btn, mode) {
+    document.querySelectorAll('#bg-pills [data-bg]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    ctxStates[activeCtx].bg = mode;
+    renderEditor();
+}
+
+function resetEditor() {
+    const s = ctxStates[activeCtx];
+    s.offX = 0; s.offY = 0; s.rotDeg = 0; s.rotFine = 0;
+    document.getElementById('ctrl-rotate').value = 0;
+    setZoomMode('cover');
+}
+
+/* ── Render ── */
+function renderEditor() {
+    const canvas = document.getElementById('img-editor-canvas');
+    const ctx    = canvas.getContext('2d');
+    const cW = canvas.width, cH = canvas.height;
+    const s       = ctxStates[activeCtx];
+    const zoom    = parseInt(document.getElementById('ctrl-zoom').value) / 100;
+    const fineDeg = parseInt(document.getElementById('ctrl-rotate').value);
+    const totalRad = (s.rotDeg + fineDeg) * Math.PI / 180;
+    const drawW = editorImg.width * zoom, drawH = editorImg.height * zoom;
+
+    document.getElementById('val-zoom').textContent   = Math.round(zoom * 100) + '%';
+    document.getElementById('val-rotate').textContent = (fineDeg >= 0 ? '+' : '') + fineDeg + '°';
+
+    ctx.clearRect(0, 0, cW, cH);
+
+    // Background
+    if (s.bg === 'white') {
+        ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cW, cH);
+    } else if (s.bg === 'black') {
+        ctx.fillStyle = '#111111'; ctx.fillRect(0, 0, cW, cH);
+    } else {
+        ctx.save();
+        const bgScale = Math.max(cW / editorImg.width, cH / editorImg.height) * 1.15;
+        ctx.filter = 'blur(18px) brightness(0.65)';
+        ctx.drawImage(editorImg,
+            cW/2 - editorImg.width*bgScale/2, cH/2 - editorImg.height*bgScale/2,
+            editorImg.width*bgScale, editorImg.height*bgScale);
+        ctx.filter = 'none';
+        ctx.restore();
+    }
+
+    // Image
+    ctx.save();
+    ctx.translate(cW/2 + s.offX, cH/2 + s.offY);
+    ctx.rotate(totalRad);
+    ctx.drawImage(editorImg, -drawW/2, -drawH/2, drawW, drawH);
+    ctx.restore();
+
+    // Grid of thirds
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 0.7;
+    for (let i = 1; i < 3; i++) {
+        ctx.beginPath(); ctx.moveTo(cW*i/3, 0); ctx.lineTo(cW*i/3, cH); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, cH*i/3); ctx.lineTo(cW, cH*i/3); ctx.stroke();
+    }
+    ctx.strokeStyle = 'rgba(255,255,255,0.45)'; ctx.lineWidth = 1.2;
+    ctx.strokeRect(0.6, 0.6, cW-1.2, cH-1.2);
+    ctx.restore();
+}
+
+/* ── Save current crop ── */
+function saveCurrentCrop() {
+    saveUIToCtx(activeCtx);
+    const canvas = document.getElementById('img-editor-canvas');
+    ctxStates[activeCtx].saved = canvas.toDataURL('image/jpeg', 0.95);
+    // Update button
+    const btn = document.getElementById('btn-save-this');
+    btn.textContent = '✓ Guardado'; btn.classList.add('saved');
+    // Update saved strip thumbnail
+    refreshSavedStrip();
+}
+
+function refreshSavedStrip() {
+    ['card','featured','article'].forEach(ctx => {
+        const s   = ctxStates[ctx];
+        const box = document.getElementById('st-' + ctx);
+        const si  = document.getElementById('si-' + ctx);
+        const ss  = document.getElementById('ss-' + ctx);
+        const dot = document.getElementById('dot-' + ctx);
+        if (s.saved) {
+            box.innerHTML = `<img src="${s.saved}" alt="">`;
+            si.classList.add('has-crop');
+            if (ss) ss.textContent = '✓ Listo';
+            if (dot) dot.classList.add('on');
+        } else {
+            box.innerHTML = `<div class="thumb-placeholder">Sin recorte</div>`;
+            si.classList.remove('has-crop');
+            if (ss) ss.textContent = '';
+            if (dot) dot.classList.remove('on');
+        }
+    });
+}
+
+/* ── Apply all ── */
+function applyImgEdit() {
+    // Auto-save current context if not yet saved
+    saveUIToCtx(activeCtx);
+    const canvas = document.getElementById('img-editor-canvas');
+    if (!ctxStates[activeCtx].saved)
+        ctxStates[activeCtx].saved = canvas.toDataURL('image/jpeg', 0.95);
+
+    // Store per-context results
+    currentImageB64      = ctxStates.card.saved     || editorSourceB64;
+    currentImageFeatured = ctxStates.featured.saved  || editorSourceB64;
+    currentImageArticle  = ctxStates.article.saved   || editorSourceB64;
+    currentImageOriginal = editorSourceB64;
+
+    setUploadPreview(currentImageB64);
+    updatePreview();
+    closeImgEditor();
+}
+
+/* ── Interaction ── */
+(function() {
+    const wrap = document.getElementById('editor-canvas-wrap');
+
+    wrap.addEventListener('mousedown', e => {
+        editorDragging = true;
+        editorDragSX = e.clientX - ctxStates[activeCtx].offX;
+        editorDragSY = e.clientY - ctxStates[activeCtx].offY;
+        wrap.style.cursor = 'grabbing'; e.preventDefault();
+    });
+    window.addEventListener('mousemove', e => {
+        if (!editorDragging) return;
+        ctxStates[activeCtx].offX = e.clientX - editorDragSX;
+        ctxStates[activeCtx].offY = e.clientY - editorDragSY;
+        renderEditor();
+    });
+    window.addEventListener('mouseup', () => { editorDragging = false; wrap.style.cursor = 'grab'; });
+
+    wrap.addEventListener('touchstart', e => {
+        editorTouchSX = e.touches[0].clientX - ctxStates[activeCtx].offX;
+        editorTouchSY = e.touches[0].clientY - ctxStates[activeCtx].offY;
+    }, { passive: true });
+    wrap.addEventListener('touchmove', e => {
+        e.preventDefault();
+        ctxStates[activeCtx].offX = e.touches[0].clientX - editorTouchSX;
+        ctxStates[activeCtx].offY = e.touches[0].clientY - editorTouchSY;
+        renderEditor();
+    }, { passive: false });
+
+    wrap.addEventListener('wheel', e => {
+        e.preventDefault();
+        const s = document.getElementById('ctrl-zoom');
+        s.value = Math.min(400, Math.max(5, parseInt(s.value) - Math.sign(e.deltaY) * 6));
+        renderEditor();
+    }, { passive: false });
+})();
+
+// =============================================
+//  LIVE PREVIEW
+// =============================================
+function updatePreview() {
+    const title   = document.getElementById('f-title').value   || 'Título del artículo';
+    const excerpt = document.getElementById('f-excerpt').value || 'Resumen del artículo...';
+    const cat     = document.getElementById('f-category').value || 'Categoría';
+    const dateVal = document.getElementById('f-date').value;
+    const image   = currentImageB64 || document.getElementById('f-image-url').value.trim();
+
+    document.getElementById('prev-title').textContent   = title;
+    document.getElementById('prev-excerpt').textContent = excerpt;
+    document.getElementById('prev-cat').textContent     = cat;
+    document.getElementById('prev-date').textContent    = dateVal ? formatDate(dateVal) : '—';
+
+    const imgEl = document.getElementById('prev-image');
+    if (image && (image.startsWith('data:') || image.startsWith('http') || image.startsWith('/') || image.startsWith('.'))) {
+        imgEl.innerHTML = `<img src="${esc(image)}" alt="" style="width:100%;height:100%;object-fit:cover;">`;
+    } else {
+        imgEl.innerHTML = image || '📄';
+    }
+}
+
+function updateExcerptCount() {
+    const len = document.getElementById('f-excerpt').value.length;
+    document.getElementById('excerpt-count').textContent = len + ' / 140';
+    document.getElementById('excerpt-count').style.color = len >= 130 ? '#e53e3e' : '#94a3b8';
+}
+
+// =============================================
+//  EXPORT / IMPORT
+// =============================================
+function exportJSON() {
+    loadPosts();
+    const blob = new Blob([JSON.stringify(posts, null, 2)], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = 'posts.json'; a.click();
+    URL.revokeObjectURL(url);
+    toast('posts.json descargado', 'success');
+}
+
+function importJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        try {
+            const imported = JSON.parse(e.target.result);
+            if (!Array.isArray(imported)) throw new Error('Formato inválido');
+            posts = imported;
+            savePosts();
+            renderPostsList();
+            toast(imported.length + ' entradas importadas', 'success');
+        } catch (err) {
+            toast('Error: archivo JSON inválido', 'error');
+        }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+}
+
+// =============================================
+//  HELPERS
+// =============================================
+function formatDate(iso) {
+    const d = new Date(iso + 'T12:00:00');
+    return d.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+function todayISO() {
+    return new Date().toISOString().split('T')[0];
+}
+function esc(str) {
+    return String(str)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function toast(msg, type = '') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'show ' + type;
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.className = type; }, 3200);
+}
+
+// =============================================
+//  INIT
+// =============================================
+document.getElementById('f-date').value = todayISO();
+</script>
+</body>
+</html>

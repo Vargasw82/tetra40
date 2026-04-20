@@ -4,14 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TETRA 4.0 - Tu Socio Tecnológico</title>
+    <link rel="icon" type="image/png" href="T40Favico.png">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="visual-boost.css">
+    <style>
+        /* FONDO GLOBAL DE PÁGINA */
+        #page-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(34, 163, 255, 0.12), transparent 24%),
+                radial-gradient(circle at 85% 72%, rgba(14, 107, 168, 0.10), transparent 28%),
+                linear-gradient(180deg, #fbfdff 0%, #f4f8fc 100%);
+        }
+        #page-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(14, 107, 168, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14, 107, 168, 0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(circle at 50% 25%, rgba(0,0,0,1) 44%, rgba(0,0,0,0) 92%);
+            -webkit-mask-image: radial-gradient(circle at 50% 25%, rgba(0,0,0,1) 44%, rgba(0,0,0,0) 92%);
+            opacity: 0.4;
+        }
+        .pg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            animation: float 10s ease-in-out infinite;
+        }
+        .pg-orb-1 { width: 540px; height: 540px; background: radial-gradient(circle, #c8e2f2 0%, transparent 70%); top: -8%; right: -4%; opacity: 0.5; animation-delay: 0s; }
+        .pg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(34,163,255,0.35) 0%, transparent 70%); bottom: 12%; left: -5%; opacity: 0.3; animation-delay: 3s; }
+        .pg-orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(14,107,168,0.3) 0%, transparent 70%); top: 42%; right: 14%; opacity: 0.22; animation-delay: 5s; }
+        .pg-orb-4 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(200,220,240,0.5) 0%, transparent 70%); top: 18%; left: 6%; opacity: 0.28; animation-delay: 2s; }
+        .pg-orb-5 { width: 270px; height: 270px; background: radial-gradient(circle, rgba(34,163,255,0.25) 0%, transparent 70%); bottom: 6%; right: 22%; opacity: 0.22; animation-delay: 4s; }
+        .pg-icon {
+            position: absolute;
+            pointer-events: none;
+            filter: drop-shadow(0 8px 16px rgba(0, 96, 150, 0.08));
+            opacity: 0.065;
+        }
+        .pg-icon-1 { width: 190px; top: 3%;  right: 9%;  animation-delay: 0s;   }
+        .pg-icon-2 { width: 135px; top: 26%; left: 2%;   animation-delay: 2.5s; }
+        .pg-icon-3 { width: 100px; bottom: 20%; right: 4%;  animation-delay: 4s;   }
+        .pg-icon-4 { width: 160px; bottom: 3%; left: 11%; animation-delay: 1s;   }
+        .pg-icon-5 { width: 80px;  top: 50%; right: 20%; animation-delay: 3.5s; }
+        .pg-icon-6 { width: 115px; top: 13%; left: 17%; animation-delay: 6s;   }
+        .pg-icon-7 { width: 70px;  bottom: 38%; left: 38%; animation-delay: 5s;   }
+        .pg-icon-8 { width: 90px;  top: 68%; right: 36%; animation-delay: 1.5s; }
+
+        /* Secciones que muestran el fondo de parallax */
+        .hero          { background: transparent !important; }
+        .diff-section  { background: transparent !important; }
+        .audience-section { background: transparent !important; }
+    </style>
 </head>
 <body>
+    <!-- FONDO PARALLAX GLOBAL -->
+    <div id="page-bg" aria-hidden="true">
+        <div class="pg-orb pg-orb-1"></div>
+        <div class="pg-orb pg-orb-2"></div>
+        <div class="pg-orb pg-orb-3"></div>
+        <div class="pg-orb pg-orb-4"></div>
+        <div class="pg-orb pg-orb-5"></div>
+        <img src="Isotipo_tetra.png" alt="" class="pg-icon pg-icon-1">
+        <img src="Isotipo_tetra.png" alt="" class="pg-icon pg-icon-2">
+        <img src="Isotipo_tetra.png" alt="" class="pg-icon pg-icon-3">
+        <img src="Isotipo_tetra.png" alt="" class="pg-icon pg-icon-4">
+        <img src="Isotipo_tetra.png" alt="" class="pg-icon pg-icon-5">
+        <img src="Isotipo_tetra.png" alt="" class="pg-icon pg-icon-6">
+        <img src="Isotipo_tetra.png" alt="" class="pg-icon pg-icon-7">
+        <img src="Isotipo_tetra.png" alt="" class="pg-icon pg-icon-8">
+    </div>
+
     <!-- NAV -->
     <nav>
         <div class="logo">
-            <img src="Isotipo_tetra.png" alt="TETRA">
+            <a href="index.html"><img src="Isotipo_tetra.png" alt="TETRA"></a>
         </div>
         <div class="nav-links">
             <a href="index.html" class="nav-link active">Inicio</a>
@@ -28,12 +103,6 @@
 
     <!-- HERO -->
     <section class="hero" id="heroSection">
-        <!-- Gradient orbs for color depth -->
-        <div class="gradient-orb orb-1"></div>
-        <div class="gradient-orb orb-2"></div>
-        <div class="gradient-orb orb-3"></div>
-        <div class="gradient-orb orb-4"></div>
-        <div class="gradient-orb orb-5"></div>
 
         <!-- Parallax Layer 1 - Background (slowest) -->
         <div class="parallax-layer depth-1" data-speed="0.02">
@@ -78,7 +147,7 @@
                 <div class="hero-step">
                     <div class="hero-step-circle">
                         <span class="hero-step-number">1</span>
-                        <img src="FichaWA.png" alt="Escríbenos" class="hero-step-img">
+                        <img src="Icons_Inicio/fichaWA.png" alt="Escríbenos" class="hero-step-img">
                     </div>
                     <h4>Escríbenos</h4>
                     <p>Cuéntanos qué necesitas por WhatsApp</p>
@@ -92,7 +161,7 @@
                 <div class="hero-step">
                     <div class="hero-step-circle">
                         <span class="hero-step-number">2</span>
-                        <img src="FichaLupa.png" alt="Te asesoramos" class="hero-step-img">
+                        <img src="Icons_Inicio/FichaLupa.png" alt="Te asesoramos" class="hero-step-img">
                     </div>
                     <h4>Te asesoramos</h4>
                     <p>Analizamos y te damos la mejor solución</p>
@@ -106,7 +175,7 @@
                 <div class="hero-step">
                     <div class="hero-step-circle">
                         <span class="hero-step-number">3</span>
-                        <img src="Ficha_Ok.png" alt="Lo resolvemos" class="hero-step-img">
+                        <img src="Icons_Inicio/Ficha_Ok.png" alt="Lo resolvemos" class="hero-step-img">
                     </div>
                     <h4>Lo resolvemos</h4>
                     <p>Entrega, instalación y soporte incluido</p>
@@ -163,11 +232,11 @@
                 <div class="stat-label">Clientes satisfechos</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">24/7</div>
+                <div class="stat-number">24 / 7</div>
                 <div class="stat-label">Soporte disponible</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">∞</div>
+                <div class="stat-number" style="font-size: 5rem; line-height: 0.6;">∞</div>
                 <div class="stat-label">Productos disponibles</div>
             </div>
         </div>
@@ -183,17 +252,17 @@
             </div>
             <div class="diff-grid">
                 <div class="diff-card">
-                    <div class="diff-icon"><img src="Saludo.png" alt="Trato 1 a 1"></div>
+                    <div class="diff-icon"><img src="Icons_Inicio/Saludo.png" alt="Trato 1 a 1"></div>
                     <h3>Trato 1 a 1</h3>
                     <p>Un asesor dedicado que conoce tu negocio, entiende tus necesidades y te acompaña en cada paso.</p>
                 </div>
                 <div class="diff-card">
-                    <div class="diff-icon"><div class="diff-icon-inner"></div><img src="Infinito.png" alt="Sin catálogo"></div>
+                    <div class="diff-icon"><div class="diff-icon-inner"></div><img src="Icons_Inicio/Infinito.png" alt="Sin catálogo"></div>
                     <h3>Sin catálogo</h3>
                     <p>Lo que necesites, lo conseguimos. Hardware, software, servicios, consultoría. No hay límites.</p>
                 </div>
                 <div class="diff-card">
-                    <div class="diff-icon"><div class="diff-icon-inner"></div><img src="Diana.png" alt="Soluciones a la medida"></div>
+                    <div class="diff-icon"><div class="diff-icon-inner"></div><img src="Icons_Inicio/Diana.png" alt="Soluciones a la medida"></div>
                     <h3>Soluciones a la medida</h3>
                     <p>No vendemos productos, diseñamos soluciones que realmente funcionan para ti y tu presupuesto.</p>
                 </div>
@@ -211,7 +280,7 @@
             </div>
             <div class="audience-grid">
                 <div class="audience-card">
-                    <div class="audience-icon"><img src="FichaUser.png" alt="Particulares"></div>
+                    <div class="audience-icon"><img src="Icons_Inicio/FichaUser.png" alt="Particulares"></div>
                     <h3>Particulares</h3>
                     <ul>
                         <li><span class="check-icon">✓</span> Laptops y equipos de cómputo</li>
@@ -221,7 +290,7 @@
                     </ul>
                 </div>
                 <div class="audience-card">
-                    <div class="audience-icon"><img src="FichaPyme.png" alt="PyMEs"></div>
+                    <div class="audience-icon"><img src="Icons_Inicio/FichaPyme.png" alt="PyMEs"></div>
                     <h3>PyMEs</h3>
                     <ul>
                         <li><span class="check-icon">✓</span> Equipamiento de oficinas</li>
@@ -231,7 +300,7 @@
                     </ul>
                 </div>
                 <div class="audience-card">
-                    <div class="audience-icon"><img src="FichaCorpo.png" alt="Corporativos"></div>
+                    <div class="audience-icon"><img src="Icons_Inicio/FichaCorpo.png" alt="Corporativos"></div>
                     <h3>Corporativos</h3>
                     <ul>
                         <li><span class="check-icon">✓</span> Proyectos de infraestructura</li>
@@ -253,16 +322,40 @@
                 <p>Empresas líderes que ya son parte de nuestra familia</p>
             </div>
             <div class="clientes-logos">
-                <div class="cliente-logo">Santander</div>
-                <div class="cliente-logo">Mercado Libre</div>
-                <div class="cliente-logo">CEMEX</div>
-                <div class="cliente-logo">Estafeta</div>
-                <div class="cliente-logo">Grupo Salinas</div>
-                <div class="cliente-logo">Valtech</div>
-                <div class="cliente-logo">IMSS</div>
-                <div class="cliente-logo">ISSSTE</div>
-                <div class="cliente-logo">Grupo Modelo</div>
-                <div class="cliente-logo">Liverpool</div>
+                <img src="LogosClientes/9Fingers.png"                               alt="9Fingers"                        class="cliente-logo-img">
+                <img src="LogosClientes/Archer.png"                                 alt="Archer"                          class="cliente-logo-img">
+                <img src="LogosClientes/ATL.png"                                    alt="ATL"                             class="cliente-logo-img">
+                <img src="LogosClientes/Bankaool.png"                               alt="Bankaool"                        class="cliente-logo-img">
+                <img src="LogosClientes/Blackbox-Logo.png"                          alt="Blackbox"                        class="cliente-logo-img">
+                <img src="LogosClientes/caem.png"                                   alt="CAEM"                            class="cliente-logo-img">
+                <img src="LogosClientes/Comisión.png"                               alt="CDHCM"                           class="cliente-logo-img">
+                <img src="LogosClientes/Cemex_logo.svg.png"                         alt="CEMEX"                           class="cliente-logo-img">
+                <img src="LogosClientes/Censys.png"                                 alt="Censys"                          class="cliente-logo-img">
+                <img src="LogosClientes/commando.png"                               alt="Commando"                        class="cliente-logo-img">
+                <img src="LogosClientes/cosmeticos_trujillo_logo.png"               alt="Cosméticos Trujillo"             class="cliente-logo-img">
+                <img src="LogosClientes/CréditoFácil.png"                           alt="Crédito Fácil"                   class="cliente-logo-img">
+                <img src="LogosClientes/EEE.png"                                    alt="Especialistas en Esterilización" class="cliente-logo-img">
+                <img src="LogosClientes/estafeta-logo.png"                          alt="Estafeta"                        class="cliente-logo-img">
+                <img src="LogosClientes/FanaFesa.png"                               alt="FanaFesa"                        class="cliente-logo-img">
+                <img src="LogosClientes/Gabor.webp"                                 alt="Gabor"                           class="cliente-logo-img">
+                <img src="LogosClientes/GIDEAS.png"                                 alt="GIDEAS"                          class="cliente-logo-img">
+                <img src="LogosClientes/gobierno_de_la_ciudad_de_mexico.png"        alt="Gobierno CDMX"                   class="cliente-logo-img">
+                <img src="LogosClientes/EdomexGob.png"                              alt="Gobierno Edomex"                 class="cliente-logo-img">
+                <img src="LogosClientes/Grupo_Salinas.png"                          alt="Grupo Salinas"                   class="cliente-logo-img">
+                <img src="LogosClientes/krediya_pa_nuevo.webp"                      alt="Krediya"                         class="cliente-logo-img">
+                <img src="LogosClientes/llyc.png"                                   alt="LLYC"                            class="cliente-logo-img">
+                <img src="LogosClientes/mercado-libre-logo-png_seeklogo-434131.png" alt="Mercado Libre"                   class="cliente-logo-img">
+                <img src="LogosClientes/nativo.png"                                 alt="Nativo"                          class="cliente-logo-img">
+                <img src="LogosClientes/Santander-logo.png"                         alt="Santander"                       class="cliente-logo-img">
+                <img src="LogosClientes/Logo_snte.png"                              alt="SNTE"                            class="cliente-logo-img">
+                <img src="LogosClientes/TIM.png"                                    alt="TIM"                             class="cliente-logo-img">
+                <img src="LogosClientes/Tolka.png"                                  alt="Tolka"                           class="cliente-logo-img">
+                <img src="LogosClientes/universidad-tecnologica-de-tecamac.png"     alt="UT Tecámac"                      class="cliente-logo-img">
+                <img src="LogosClientes/Valtech_logo.png"                           alt="Valtech"                         class="cliente-logo-img">
+                <img src="LogosClientes/Vidanta.png"                                alt="Vidanta"                         class="cliente-logo-img">
+                <img src="LogosClientes/Visceral.png"                               alt="Visceral"                        class="cliente-logo-img">
+                <img src="LogosClientes/wesco.png"                                  alt="Wesco"                           class="cliente-logo-img">
+                <img src="LogosClientes/wip.webp"                                   alt="WIP"                             class="cliente-logo-img">
             </div>
         </div>
     </section>
@@ -325,71 +418,76 @@
     <script>
         // Reemplaza con tu número de WhatsApp
         function openWhatsApp() {
-            const phone = '521234567890'; // ← CAMBIAR POR TU NÚMERO
-            const message = encodeURIComponent('¡Hola TETRA 4.0! Me gustaría saber más sobre sus servicios.');
+            const phone = '525610584845';
+            const message = encodeURIComponent('Hola 👋 Estoy buscando apoyo con temas de TI. Necesito ayuda con...');
             window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
         }
 
-        // WhatsApp flotante y nav CTA aparecen al hacer scroll
+        // WhatsApp flotante y nav CTA
         const whatsappFloat = document.getElementById('whatsappFloat');
-        const navCta = document.getElementById('navCta');
+        const navCta        = document.getElementById('navCta');
+        let ctaInView = false;
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                whatsappFloat.classList.add('visible');
-                navCta.classList.add('visible');
-            } else {
-                whatsappFloat.classList.remove('visible');
-                navCta.classList.remove('visible');
-            }
-        });
-
-        // PARALLAX EFFECT
-        const heroSection = document.getElementById('heroSection');
-        const parallaxLayers = document.querySelectorAll('.parallax-layer');
-        const gradientOrbs = document.querySelectorAll('.gradient-orb');
-
-        let mouseX = 0, mouseY = 0;
-        let currentX = 0, currentY = 0;
-
-        // Mouse movement parallax (Desktop)
-        heroSection.addEventListener('mousemove', (e) => {
-            const rect = heroSection.getBoundingClientRect();
-            mouseX = (e.clientX - rect.left - rect.width / 2) / rect.width;
-            mouseY = (e.clientY - rect.top - rect.height / 2) / rect.height;
-        });
-
-        // Smooth animation loop
-        function animateParallax() {
-            currentX += (mouseX - currentX) * 0.08;
-            currentY += (mouseY - currentY) * 0.08;
-
-            parallaxLayers.forEach((layer, index) => {
-                const speed = parseFloat(layer.dataset.speed) || 0.03;
-                const multiplier = (index + 1) * 25;
-                const x = currentX * multiplier * speed * 100;
-                const y = currentY * multiplier * speed * 100;
-                layer.style.transform = `translate(${x}px, ${y}px)`;
-            });
-
-            // Move gradient orbs slower for depth
-            gradientOrbs.forEach((orb, index) => {
-                const speed = 0.015 * (index + 1);
-                const x = currentX * speed * 50;
-                const y = currentY * speed * 50;
-                orb.style.transform = `translate(${x}px, ${y}px)`;
-            });
-
-            requestAnimationFrame(animateParallax);
+        function updateFloat() {
+            const scrolled = window.scrollY > 300;
+            navCta.classList.toggle('visible', scrolled);
+            whatsappFloat.classList.toggle('visible', scrolled && !ctaInView);
         }
-        animateParallax();
 
-        // Device orientation parallax (Mobile)
+        window.addEventListener('scroll', updateFloat);
+
+        // Ocultar el flotante cuando el CTA de contacto es visible en pantalla
+        const ctaSection = document.querySelector('.final-cta');
+        if (ctaSection) {
+            new IntersectionObserver(([entry]) => {
+                ctaInView = entry.isIntersecting;
+                updateFloat();
+            }, { threshold: 0.15 }).observe(ctaSection);
+        }
+
+        // PARALLAX UNIFICADO — hero + fondo continuo en todo el scroll
+        const heroSection  = document.getElementById('heroSection');
+        const heroLayers   = heroSection ? heroSection.querySelectorAll('.parallax-layer') : [];
+        const bgIcons      = [...document.querySelectorAll('#page-bg .pg-icon')];
+        const bgMouseRates = [0.9, 1.4, 0.6, 1.1, 0.5, 0.8, 1.2, 0.7];
+
+        let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+
+        // Mouse global — activo en toda la página, no solo el hero
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX - window.innerWidth  / 2) / window.innerWidth;
+            mouseY = (e.clientY - window.innerHeight / 2) / window.innerHeight;
+        });
+
+        function animateAll() {
+            curX += (mouseX - curX) * 0.07;
+            curY += (mouseY - curY) * 0.07;
+            const sy = window.scrollY;
+
+            // Capas del hero (profundidad interactiva)
+            heroLayers.forEach((layer, i) => {
+                const speed = parseFloat(layer.dataset.speed) || 0.03;
+                const mult  = (i + 1) * 25;
+                layer.style.transform =
+                    `translate(${curX * mult * speed * 100}px, ${curY * mult * speed * 100}px)`;
+            });
+
+            // Isotipos del fondo global — siguen el scroll y el mouse en toda la página
+            bgIcons.forEach((icon, i) => {
+                const mr = bgMouseRates[i] || 0.9;
+                const tx = curX * mr * 28 + Math.cos(sy * 0.001  + i * 0.9) * 14;
+                const ty = curY * mr * 28 + Math.sin(sy * 0.0012 + i * 1.1) * 20;
+                icon.style.transform = `translate(${tx}px, ${ty}px)`;
+            });
+
+            requestAnimationFrame(animateAll);
+        }
+        animateAll();
+
+        // Orientación móvil
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', (e) => {
                 if (e.gamma !== null && e.beta !== null) {
-                    // gamma: left/right tilt (-90 to 90)
-                    // beta: front/back tilt (-180 to 180)
                     mouseX = Math.max(-1, Math.min(1, e.gamma / 30));
                     mouseY = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
                 }

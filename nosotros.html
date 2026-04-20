@@ -4,68 +4,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nosotros - TETRA 4.0</title>
+    <link rel="icon" type="image/png" href="T40Favico.png">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="visual-boost.css">
     <style>
-        :root {
-            --gray-bg: #d5d5d5;
-            --blue-primary: #006096;
-            --blue-light: #9dbedb;
-            --white: #FFFFFF;
-            --blue-medium: #4f7da8;
-            --dark: #0a1628;
+        /* FONDO GLOBAL GRIS */
+        #nosotros-page-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(14, 107, 168, 0.05), transparent 30%),
+                radial-gradient(circle at 82% 72%, rgba(14, 107, 168, 0.04), transparent 32%),
+                linear-gradient(160deg, #ffffff 0%, #f6f9fb 55%, #f9fbfd 100%);
         }
+        #nosotros-page-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(14, 107, 168, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14, 107, 168, 0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(circle at 50% 25%, rgba(0,0,0,1) 44%, rgba(0,0,0,0) 92%);
+            -webkit-mask-image: radial-gradient(circle at 50% 25%, rgba(0,0,0,1) 44%, rgba(0,0,0,0) 92%);
+            opacity: 0.5;
+        }
+        .nos-pg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            animation: float 12s ease-in-out infinite;
+        }
+        .nos-pg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(14,107,168,0.18) 0%, transparent 70%);  top: -12%; right: -4%; opacity: 1; animation-delay: 0s; }
+        .nos-pg-orb-2 { width: 420px; height: 420px; background: radial-gradient(circle, rgba(14,107,168,0.12) 0%, transparent 70%);  bottom: -8%; left: -4%; opacity: 1; animation-delay: 2s; }
+        .nos-pg-orb-3 { width: 340px; height: 340px; background: radial-gradient(circle, rgba(34,163,255,0.10) 0%, transparent 70%);  top: 38%; left: 38%;   opacity: 1; animation-delay: 4s; }
+        .nos-pg-orb-4 { width: 280px; height: 280px; background: radial-gradient(circle, rgba(14,107,168,0.08) 0%, transparent 70%);  bottom: 8%; right: 10%; opacity: 1; animation-delay: 1s; }
+        .nos-pg-icon {
+            position: absolute;
+            pointer-events: none;
+            filter: sepia(1) hue-rotate(162deg) saturate(3) brightness(0.5);
+            opacity: 0.20;
+        }
+        .nos-pg-icon-1 { width: 170px; top: 4%;  right: 10%; animation-delay: 0s;   }
+        .nos-pg-icon-2 { width: 120px; top: 30%; left: 2%;   animation-delay: 3s;   }
+        .nos-pg-icon-3 { width: 90px;  bottom: 18%; right: 5%; animation-delay: 5s; }
+        .nos-pg-icon-4 { width: 145px; bottom: 4%; left: 10%; animation-delay: 1.5s;}
+        .nos-pg-icon-5 { width: 75px;  top: 55%; right: 22%; animation-delay: 4s;   }
+        .nos-pg-icon-6 { width: 105px; top: 16%; left: 18%; animation-delay: 6.5s; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--white);
-            color: #1a1a1a;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        /* Secciones que muestran el fondo gris */
+        .page-hero     { background: transparent !important; }
+        .valores-section  { background: transparent !important; }
+        .estrategia-section { background: transparent !important; }
 
         /* HERO INTERNO */
         .page-hero {
-            padding: 140px 3rem 80px;
-            background: linear-gradient(135deg, #e8e8e8 0%, #d5d5d5 50%, #e0e0e0 100%);
+            padding: 140px 3rem 100px;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(170, 170, 170, 0.28), transparent 30%),
+                radial-gradient(circle at 85% 72%, rgba(140, 140, 140, 0.20), transparent 35%),
+                linear-gradient(135deg, #ebebeb 0%, #d5d5d5 50%, #e2e2e2 100%);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 64px;
+            min-height: 100vh;
         }
 
+        /* MV grid flotando sobre el parallax */
+        .page-hero .mv-grid {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+            max-width: 1100px;
+            padding: 0 1rem;
+        }
+
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(14, 107, 168, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14, 107, 168, 0.06) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 44%, rgba(0,0,0,0) 92%);
+            -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 44%, rgba(0,0,0,0) 92%);
+            pointer-events: none;
+            opacity: 0.55;
+            z-index: 1;
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Orbs grises */
+        .grey-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            pointer-events: none;
+            animation: float 12s ease-in-out infinite;
+        }
+
+        .grey-orb-1 {
+            width: 420px; height: 420px;
+            background: radial-gradient(circle, #a0a0a0 0%, transparent 70%);
+            top: -15%; right: -5%; opacity: 0.32;
+        }
+
+        .grey-orb-2 {
+            width: 360px; height: 360px;
+            background: radial-gradient(circle, #c0c0c0 0%, transparent 70%);
+            bottom: -10%; left: -5%; opacity: 0.40; animation-delay: 2s;
+        }
+
+        .grey-orb-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, #909090 0%, transparent 70%);
+            top: 35%; left: 40%; opacity: 0.18; animation-delay: 4s;
+        }
+
+        .grey-orb-4 {
+            width: 260px; height: 260px;
+            background: radial-gradient(circle, #d0d0d0 0%, transparent 70%);
+            bottom: 5%; right: 12%; opacity: 0.28; animation-delay: 1s;
+        }
+
+        /* Iconos flotantes en azul oscuro de la marca */
+        .page-hero .floating-icon {
+            filter: sepia(1) hue-rotate(162deg) saturate(3) brightness(0.5);
+        }
+
+        .page-hero .depth-1 .floating-icon { opacity: 0.10; }
+        .page-hero .depth-2 .floating-icon { opacity: 0.15; }
+        .page-hero .depth-3 .floating-icon { opacity: 0.22; }
+
+        /* Nosotros — posiciones únicas de íconos */
+        .page-hero .icon-1  { top: 3%;     right: 18%;  width: 145px; }
+        .page-hero .icon-2  { bottom: 3%;  right: 5%;   width: 125px; }
+        .page-hero .icon-3  { top: 20%;    left: 2%;    width: 155px; }
+        .page-hero .icon-4  { bottom: 15%; left: 20%;   width: 115px; }
+        .page-hero .icon-5  { top: 8%;     right: 5%;   width: 85px;  }
+        .page-hero .icon-6  { top: 55%;    left: 18%;   width: 100px; }
+        .page-hero .icon-7  { bottom: 5%;  right: 28%;  width: 90px;  }
+        .page-hero .icon-8  { top: 30%;    left: 8%;    width: 80px;  }
+        .page-hero .icon-9  { top: 25%;    right: 35%;  width: 55px;  }
+        .page-hero .icon-10 { top: 65%;    left: 35%;   width: 65px;  }
+        .page-hero .icon-11 { top: 5%;     left: 35%;   width: 45px;  }
+        .page-hero .icon-12 { bottom: 20%; right: 5%;   width: 60px;  }
+
         .page-hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 800;
-            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
             margin-bottom: 15px;
-            letter-spacing: -2px;
             animation: fadeInUp 0.8s ease-out;
         }
 
-        .page-hero h1 .highlight {
-            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .page-hero h1 .hero-prefix {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .page-hero h1 .hero-logo {
+            max-height: 88px;
+            width: auto;
+            max-width: 360px;
         }
 
         .page-hero p {
@@ -76,18 +195,7 @@
             animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
-        /* CONTENEDOR */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
         /* MISIÓN Y VISIÓN */
-        .mv-section {
-            padding: 100px 3rem;
-            background: var(--white);
-        }
-
         .mv-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -99,9 +207,13 @@
             border-radius: 24px;
             padding: 50px 40px;
             border: 1px solid #e8f0f5;
+            text-align: center;
             transition: all 0.4s;
             position: relative;
             overflow: hidden;
+            box-shadow:
+                0 24px 64px rgba(0, 0, 0, 0.22),
+                0 8px 24px rgba(0, 0, 0, 0.14);
         }
 
         .mv-card::before {
@@ -116,19 +228,30 @@
 
         .mv-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 30px 80px rgba(0, 96, 150, 0.12);
+            box-shadow:
+                0 44px 100px rgba(0, 0, 0, 0.30),
+                0 16px 40px rgba(0, 0, 0, 0.18);
         }
 
         .mv-icon {
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
-            border-radius: 50%;
+            width: 140px;
+            height: 140px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 25px;
-            font-size: 2.5rem;
+            margin: 0 auto 28px;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .mv-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 6px 18px rgba(0, 96, 150, 0.18));
+        }
+
+        .mv-card:hover .mv-icon {
+            transform: scale(1.08);
         }
 
         .mv-card h2 {
@@ -144,43 +267,20 @@
             line-height: 1.8;
         }
 
+        /* Scroll indicator adaptado al hero gris */
+        .page-hero .scroll-indicator {
+            color: var(--dark);
+            border-color: rgba(10, 22, 40, 0.3);
+        }
+
+        .page-hero .scroll-indicator:hover {
+            border-color: var(--dark);
+        }
+
         /* VALORES */
         .valores-section {
             padding: 100px 3rem;
             background: linear-gradient(180deg, #f8fbfd 0%, white 100%);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-tag {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--blue-light) 0%, #d4e8f5 100%);
-            color: var(--blue-primary);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-
-        .section-header h2 {
-            font-size: 2.8rem;
-            color: var(--dark);
-            margin-bottom: 16px;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
-
-        .section-header p {
-            color: #666;
-            font-size: 1.15rem;
-            max-width: 550px;
-            margin: 0 auto;
         }
 
         .valores-grid {
@@ -205,20 +305,25 @@
         }
 
         .valor-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--blue-light) 0%, #d4e8f5 100%);
-            border-radius: 18px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #e8e8e8 0%, #d4d4d4 100%);
+            border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
-            font-size: 2rem;
             transition: all 0.3s;
         }
 
+        .valor-icon img {
+            width: 72%;
+            height: 72%;
+            object-fit: contain;
+        }
+
         .valor-card:hover .valor-icon {
-            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            background: linear-gradient(135deg, #d8d8d8 0%, #c4c4c4 100%);
             transform: scale(1.1) rotate(-5deg);
         }
 
@@ -275,15 +380,23 @@
         }
 
         .servicio-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
-            border-radius: 18px;
+            width: 88px;
+            height: 88px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
-            font-size: 1.8rem;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .servicio-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .servicio-card:hover .servicio-icon {
+            transform: scale(1.1);
         }
 
         .servicio-card h3 {
@@ -412,109 +525,12 @@
             box-shadow: 0 15px 45px rgba(37, 211, 102, 0.4);
         }
 
-        /* FOOTER */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 50px 3rem 30px;
-        }
-
-        .footer-content {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .footer-main {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .footer-logo img {
-            height: 45px;
-            filter: brightness(0) invert(1);
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-link {
-            width: 45px;
-            height: 45px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-
-        .social-link:hover {
-            background: var(--blue-primary);
-            transform: translateY(-3px);
-        }
-
-        .social-link svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-        }
-
-        .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding-top: 25px;
-        }
-
-        .footer-bottom p {
-            opacity: 0.6;
-            font-size: 0.9rem;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .footer-link {
-            color: white;
-            text-decoration: none;
-            font-size: 0.9rem;
-            opacity: 0.6;
-            transition: opacity 0.3s;
-        }
-
-        .footer-link:hover {
-            opacity: 1;
-        }
-
         /* RESPONSIVE */
         @media (max-width: 768px) {
-            nav {
-                padding: 0.8rem 1.5rem;
-            }
-
-            .logo img {
-                height: 42px;
-                max-width: 180px;
-            }
-
-            .nav-cta span {
-                display: none;
-            }
-
             .page-hero {
                 padding: 120px 1.5rem 60px;
+                min-height: auto;
+                gap: 40px;
             }
 
             .mv-grid {
@@ -525,10 +541,6 @@
                 padding: 35px 25px;
             }
 
-            .section-header h2 {
-                font-size: 2rem;
-            }
-
             .cta-section h2 {
                 font-size: 2rem;
             }
@@ -536,17 +548,31 @@
     </style>
 </head>
 <body>
+    <!-- FONDO PARALLAX GLOBAL GRIS -->
+    <div id="nosotros-page-bg" aria-hidden="true">
+        <div class="nos-pg-orb nos-pg-orb-1"></div>
+        <div class="nos-pg-orb nos-pg-orb-2"></div>
+        <div class="nos-pg-orb nos-pg-orb-3"></div>
+        <div class="nos-pg-orb nos-pg-orb-4"></div>
+        <img src="Isotipo_tetra.png" alt="" class="nos-pg-icon nos-pg-icon-1">
+        <img src="Isotipo_tetra.png" alt="" class="nos-pg-icon nos-pg-icon-2">
+        <img src="Isotipo_tetra.png" alt="" class="nos-pg-icon nos-pg-icon-3">
+        <img src="Isotipo_tetra.png" alt="" class="nos-pg-icon nos-pg-icon-4">
+        <img src="Isotipo_tetra.png" alt="" class="nos-pg-icon nos-pg-icon-5">
+        <img src="Isotipo_tetra.png" alt="" class="nos-pg-icon nos-pg-icon-6">
+    </div>
+
     <!-- NAV -->
     <nav>
         <div class="logo">
-            <img src="Isotipo_tetra.png" alt="TETRA">
+            <a href="index.html"><img src="Isotipo_tetra.png" alt="TETRA"></a>
         </div>
         <div class="nav-links">
             <a href="index.html" class="nav-link">Inicio</a>
             <a href="nosotros.html" class="nav-link active">Nosotros</a>
             <a href="blog.html" class="nav-link">Blog</a>
         </div>
-        <a href="#" class="nav-cta" onclick="openWhatsApp()">
+        <a href="#" class="nav-cta" id="navCta" onclick="openWhatsApp()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
@@ -555,31 +581,66 @@
     </nav>
 
     <!-- HERO -->
-    <section class="page-hero">
-        <h1>Conoce <span class="highlight">TETRA 4.0</span></h1>
-        <p>Nuestra esencia, compromiso y los valores que nos definen como tu socio tecnológico de confianza.</p>
-    </section>
+    <section class="page-hero" id="nosotrosHero">
 
-    <!-- MISIÓN Y VISIÓN -->
-    <section class="mv-section">
-        <div class="container">
-            <div class="mv-grid">
-                <div class="mv-card">
-                    <div class="mv-icon">🎯</div>
-                    <h2>Misión</h2>
-                    <p>Transformamos retos en soluciones tecnológicas eficientes y rentables, con atención al cliente excepcional, respaldada por experiencia y profesionalismo.</p>
+        <!-- Parallax Layer 1 - Fondo (más lento) -->
+        <div class="parallax-layer depth-1" data-speed="0.02">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-1">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-2">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-3">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-4">
+        </div>
+
+        <!-- Parallax Layer 2 - Medio -->
+        <div class="parallax-layer depth-2" data-speed="0.04">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-5">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-6">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-7">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-8">
+        </div>
+
+        <!-- Parallax Layer 3 - Frente (más rápido) -->
+        <div class="parallax-layer depth-3" data-speed="0.06">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-9">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-10">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-11">
+            <img src="Isotipo_tetra.png" alt="" class="floating-icon icon-12">
+        </div>
+
+        <div class="page-hero-content">
+            <h1>
+                <span class="hero-prefix">Conoce</span>
+                <img src="Logotipo_Tetra.png" alt="TETRA 4.0" class="hero-logo">
+            </h1>
+            <p>Nuestra esencia, compromiso y los valores que nos definen como tu socio tecnológico de confianza.</p>
+        </div>
+
+        <div class="mv-grid">
+            <div class="mv-card">
+                <div class="mv-icon">
+                    <img src="Icons_Nosotros/Mision.png" alt="Misión">
                 </div>
-                <div class="mv-card">
-                    <div class="mv-icon">🚀</div>
-                    <h2>Visión</h2>
-                    <p>Liderar la innovación tecnológica (incluida IA) con soluciones que elevan estándares, impulsadas por excelencia e innovación continua para superar expectativas.</p>
+                <h2>Misión</h2>
+                <p>Transformamos retos en soluciones tecnológicas eficientes y rentables, con atención al cliente excepcional, respaldada por experiencia y profesionalismo.</p>
+            </div>
+            <div class="mv-card">
+                <div class="mv-icon">
+                    <img src="Icons_Nosotros/vision.png" alt="Visión">
                 </div>
+                <h2>Visión</h2>
+                <p>Liderar la innovación tecnológica (incluida IA) con soluciones que elevan estándares, impulsadas por excelencia e innovación continua para superar expectativas.</p>
             </div>
         </div>
+
+        <a href="#valores" class="scroll-indicator" aria-label="Scroll hacia abajo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </a>
     </section>
 
     <!-- VALORES -->
-    <section class="valores-section">
+    <section class="valores-section" id="valores">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Nuestros Valores</span>
@@ -588,22 +649,22 @@
             </div>
             <div class="valores-grid">
                 <div class="valor-card">
-                    <div class="valor-icon">🤝</div>
+                    <div class="valor-icon"><img src="Icons_Nosotros/compromiso_nos.png" alt="Compromiso"></div>
                     <h3>Compromiso</h3>
                     <p>Nos involucramos al 100% en cada proyecto, como si fuera nuestro propio negocio.</p>
                 </div>
                 <div class="valor-card">
-                    <div class="valor-icon">⭐</div>
+                    <div class="valor-icon"><img src="Icons_Nosotros/calidad_nos.png" alt="Calidad"></div>
                     <h3>Calidad</h3>
                     <p>Solo entregamos soluciones que cumplen con los más altos estándares del mercado.</p>
                 </div>
                 <div class="valor-card">
-                    <div class="valor-icon">✅</div>
+                    <div class="valor-icon"><img src="Icons_Nosotros/responsabilidad_nos.png" alt="Responsabilidad"></div>
                     <h3>Responsabilidad</h3>
                     <p>Cumplimos lo que prometemos, en tiempo y forma, sin excusas.</p>
                 </div>
                 <div class="valor-card">
-                    <div class="valor-icon">💎</div>
+                    <div class="valor-icon"><img src="Icons_Nosotros/integridad_nos.png" alt="Integridad"></div>
                     <h3>Integridad</h3>
                     <p>Actuamos con honestidad y transparencia en cada interacción.</p>
                 </div>
@@ -623,22 +684,22 @@
             </div>
             <div class="servicios-grid">
                 <div class="servicio-card">
-                    <div class="servicio-icon">🌐</div>
+                    <div class="servicio-icon"><img src="Icons_Nosotros/InfraRedes_nos.png" alt="Infraestructura & Redes"></div>
                     <h3>Infraestructura & Redes</h3>
                     <p>Cableado, switching, WiFi empresarial, data centers</p>
                 </div>
                 <div class="servicio-card">
-                    <div class="servicio-icon">💼</div>
+                    <div class="servicio-icon"><img src="Icons_Nosotros/colaboracion_nos.png" alt="Colaboración & Productividad"></div>
                     <h3>Colaboración & Productividad</h3>
                     <p>Videoconferencia, pantallas interactivas, MDM</p>
                 </div>
                 <div class="servicio-card">
-                    <div class="servicio-icon">🔒</div>
+                    <div class="servicio-icon"><img src="Icons_Nosotros/seguridad_nos.png" alt="Seguridad Electrónica"></div>
                     <h3>Seguridad Electrónica</h3>
                     <p>CCTV, control de acceso, videowalls, analítica</p>
                 </div>
                 <div class="servicio-card">
-                    <div class="servicio-icon">⚙️</div>
+                    <div class="servicio-icon"><img src="Icons_Nosotros/Servicios_nos.png" alt="Servicios Administrados"></div>
                     <h3>Servicios Administrados</h3>
                     <p>Soporte, mantenimiento, monitoreo, mesa de ayuda</p>
                 </div>
@@ -722,6 +783,14 @@
         </div>
     </section>
 
+    <!-- WHATSAPP FLOTANTE -->
+    <a href="#" class="whatsapp-float" id="whatsappFloat" onclick="openWhatsApp()">
+        <span class="whatsapp-tooltip">¡Hablemos! 👋</span>
+        <svg viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
     <!-- FOOTER -->
     <footer>
         <div class="footer-content">
@@ -755,6 +824,28 @@
     </footer>
 
     <script>
+        // WhatsApp flotante y nav CTA
+        const whatsappFloat = document.getElementById('whatsappFloat');
+        const navCta        = document.getElementById('navCta');
+        let ctaInView = false;
+
+        function updateFloat() {
+            const scrolled = window.scrollY > 300;
+            navCta.classList.toggle('visible', scrolled);
+            whatsappFloat.classList.toggle('visible', scrolled && !ctaInView);
+        }
+
+        window.addEventListener('scroll', updateFloat);
+
+        // Ocultar el flotante cuando la sección CTA es visible
+        const ctaSection = document.querySelector('.cta-section');
+        if (ctaSection) {
+            new IntersectionObserver(([entry]) => {
+                ctaInView = entry.isIntersecting;
+                updateFloat();
+            }, { threshold: 0.15 }).observe(ctaSection);
+        }
+
         // Animación scroll-down en hover del nav
         document.querySelectorAll('.nav-link').forEach(link => {
             const text = link.textContent.trim();
@@ -762,9 +853,58 @@
         });
 
         function openWhatsApp() {
-            const phone = '521234567890';
-            const message = encodeURIComponent('¡Hola TETRA 4.0! Me gustaría saber más sobre sus servicios.');
+            const phone = '525610584845';
+            const message = encodeURIComponent('Hola 👋 Estoy buscando apoyo con temas de TI. Necesito ayuda con...');
             window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        }
+
+        // PARALLAX UNIFICADO — hero + fondo continuo en todo el scroll
+        const nosotrosHero = document.getElementById('nosotrosHero');
+        const heroLayers   = nosotrosHero ? nosotrosHero.querySelectorAll('.parallax-layer') : [];
+        const bgIcons      = [...document.querySelectorAll('#nosotros-page-bg .nos-pg-icon')];
+        const bgMouseRates = [0.9, 1.3, 0.6, 1.1, 0.5, 0.8];
+
+        let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+
+        // Mouse global — activo en toda la página
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX - window.innerWidth  / 2) / window.innerWidth;
+            mouseY = (e.clientY - window.innerHeight / 2) / window.innerHeight;
+        });
+
+        function animateAll() {
+            curX += (mouseX - curX) * 0.07;
+            curY += (mouseY - curY) * 0.07;
+            const sy = window.scrollY;
+
+            // Capas del hero
+            heroLayers.forEach((layer, i) => {
+                const speed = parseFloat(layer.dataset.speed) || 0.03;
+                const mult  = (i + 1) * 25;
+                layer.style.transform =
+                    `translate(${curX * mult * speed * 100}px, ${curY * mult * speed * 100}px)`;
+            });
+
+            // Isotipos del fondo global — siguen el scroll y el mouse en toda la página
+            bgIcons.forEach((icon, i) => {
+                const mr = bgMouseRates[i] || 0.9;
+                const tx = curX * mr * 28 + Math.cos(sy * 0.001  + i * 0.9) * 14;
+                const ty = curY * mr * 28 + Math.sin(sy * 0.0012 + i * 1.1) * 20;
+                icon.style.transform = `translate(${tx}px, ${ty}px)`;
+            });
+
+            requestAnimationFrame(animateAll);
+        }
+        animateAll();
+
+        // Orientación móvil
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', (e) => {
+                if (e.gamma !== null && e.beta !== null) {
+                    mouseX = Math.max(-1, Math.min(1, e.gamma / 30));
+                    mouseY = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
+                }
+            });
         }
     </script>
 </body>
