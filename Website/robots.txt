@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Páginas privadas / no indexables
+Disallow: /admin.html
+Disallow: /index(old).html
+Disallow: /visual-boost(old).css
+
+Sitemap: https://www.tetra40.com/sitemap.xml

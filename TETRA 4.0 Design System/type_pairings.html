@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><title>Type Pairings — TETRA 4.0</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{padding:64px 56px;background:#fbfdff;font-family:var(--font-body);color:var(--tetra-dark)}
+.ds-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border-line)}
+.ds-kicker{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--tetra-blue);background:var(--tetra-blue-wash);padding:6px 12px;border-radius:6px;margin-bottom:14px}
+.ds-title{font-size:44px;font-weight:800;letter-spacing:-1.2px;line-height:1.05;margin-bottom:10px}
+.ds-sub{font-size:17px;color:var(--fg-muted);max-width:720px;line-height:1.55}
+.ds-section{margin-top:48px}
+.ds-section-title{font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--tetra-blue);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.ds-section-title::before{content:"";width:24px;height:2px;background:var(--tetra-blue)}
+.ds-section-h{font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px}
+.ds-section-p{font-size:14px;color:var(--fg-muted);margin-bottom:24px;max-width:680px}
+
+.mono-demo{background:var(--tetra-dark);border-radius:16px;padding:28px 32px;color:#fff}
+.mono-demo .mlabel{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--tetra-blue-tint);margin-bottom:14px;font-family:var(--font-body)}
+.mono-demo pre{font-family:var(--font-mono);font-size:14px;line-height:1.9;color:#cfe6f7}
+.mono-demo .k{color:#8fd0ff}.mono-demo .v{color:#ffd479}.mono-demo .c{color:#6b8299}
+
+/* Pairing cards */
+.pair{border:1px solid var(--border-line);border-radius:22px;background:#fff;overflow:hidden;margin-bottom:28px}
+.pair-head{display:flex;align-items:center;justify-content:space-between;padding:22px 30px;background:linear-gradient(135deg,#f8fbfd,#eaf4fb);border-bottom:1px solid var(--border-line)}
+.pair-id{display:flex;align-items:center;gap:14px}
+.pair-letter{width:44px;height:44px;border-radius:12px;background:var(--tetra-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px}
+.pair-name{font-size:20px;font-weight:800;letter-spacing:-0.4px}
+.pair-tagline{font-size:13px;color:var(--fg-muted);margin-top:2px}
+.pair-fonts{display:flex;gap:8px}
+.pair-chip{font-size:12px;font-weight:700;font-family:var(--font-mono);padding:7px 14px;border-radius:8px;background:#fff;border:1px solid var(--border-soft);color:var(--tetra-blue)}
+.pair-body{padding:36px 40px}
+.pair-spec{display:grid;grid-template-columns:1fr;gap:0}
+.spec-line{padding:16px 0;border-top:1px solid var(--border-line)}
+.spec-line:first-child{border-top:none;padding-top:0}
+.spec-tag{font-size:11px;font-weight:700;color:var(--fg-faint);font-family:var(--font-mono);margin-bottom:6px}
+
+/* Sample column layout */
+.samples{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:start}
+.sample-body p{font-size:15px;line-height:1.7;color:var(--fg-subtle);margin-bottom:14px}
+.sample-meta{font-size:13px;color:var(--fg-faint);font-family:var(--font-mono)}
+
+/* PAIRING A — Space Grotesk display */
+.a-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--tetra-blue);margin-bottom:14px;display:block}
+.a-h1{font-family:'Space Grotesk',sans-serif;font-size:52px;font-weight:700;letter-spacing:-1.5px;line-height:1.05;color:var(--tetra-dark);margin-bottom:14px}
+.a-h2{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:600;letter-spacing:-0.5px;color:var(--tetra-dark);margin-bottom:10px}
+
+/* PAIRING B — Newsreader serif display */
+.b-eyebrow{font-family:var(--font-body);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--tetra-blue);margin-bottom:14px;display:block}
+.b-h1{font-family:'Newsreader',serif;font-size:56px;font-weight:500;letter-spacing:-1px;line-height:1.04;color:var(--tetra-dark);margin-bottom:14px}
+.b-h1 em{font-style:italic;color:var(--tetra-blue);font-weight:400}
+.b-h2{font-family:'Newsreader',serif;font-size:30px;font-weight:500;letter-spacing:-0.3px;color:var(--tetra-dark);margin-bottom:10px}
+
+.verdict{display:flex;gap:14px;padding:18px 22px;border-radius:14px;background:var(--tetra-blue-wash);margin-top:24px}
+.verdict .vi{width:34px;height:34px;border-radius:9px;background:var(--tetra-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.verdict p{font-size:13.5px;color:var(--fg-muted);line-height:1.6}
+.verdict strong{color:var(--tetra-dark)}
+
+.weights{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.weight{font-size:13px;padding:6px 14px;border-radius:8px;background:#f4f8fc;border:1px solid var(--border-line)}
+</style></head><body>
+
+<div class="ds-header">
+<span class="ds-kicker">TETRA 4.0 · Foundations</span>
+<h1 class="ds-title">Tipografía — Mono &amp; Parejas</h1>
+<p class="ds-sub">Se adopta <strong>JetBrains Mono</strong> como fuente monoespaciada web del sistema (tokens, código, specs). Abajo, dos propuestas de pareja tipográfica — ambas <strong>conservan Plus Jakarta Sans en el cuerpo</strong> y solo cambian la fuente de titulares, para no romper la continuidad de marca.</p>
+</div>
+
+<!-- MONO -->
+<section class="ds-section">
+<div class="ds-section-title">00 — Mono web (adoptada)</div>
+<h2 class="ds-section-h">JetBrains Mono</h2>
+<p class="ds-section-p">Reemplaza al stack de sistema. Garantiza que tokens y bloques de código se vean idénticos en cualquier máquina. Token: <code>--font-mono</code>.</p>
+<div class="mono-demo">
+<div class="mlabel">colors_and_type.css</div>
+<pre><span class="c">/* Brand primaries */</span>
+<span class="k">--tetra-blue</span>:        <span class="v">#006096</span>;
+<span class="k">--tetra-blue-light</span>:  <span class="v">#9dbedb</span>;
+<span class="k">--font-mono</span>:         <span class="v">'JetBrains Mono'</span>;
+<span class="k">--radius-pill</span>:        <span class="v">50px</span>;</pre>
+</div>
+</section>
+
+<!-- PAIRING A -->
+<section class="ds-section">
+<div class="ds-section-title">Pareja A</div>
+<div class="pair">
+<div class="pair-head">
+<div class="pair-id"><div class="pair-letter">A</div><div><div class="pair-name">Técnico</div><div class="pair-tagline">Space Grotesk · Plus Jakarta Sans</div></div></div>
+<div class="pair-fonts"><span class="pair-chip">Space Grotesk → titulares</span><span class="pair-chip">Jakarta → cuerpo</span></div>
+</div>
+<div class="pair-body">
+<div class="samples">
+<div>
+<span class="a-eyebrow">Nuestra diferencia</span>
+<div class="a-h1">Tu departamento de TI, sin complicaciones</div>
+<div class="weights"><span class="weight" style="font-family:'Space Grotesk';font-weight:400">Regular</span><span class="weight" style="font-family:'Space Grotesk';font-weight:500">Medium</span><span class="weight" style="font-family:'Space Grotesk';font-weight:600">Semibold</span><span class="weight" style="font-family:'Space Grotesk';font-weight:700">Bold</span></div>
+</div>
+<div class="sample-body">
+<div class="a-h2">Soluciones a la medida</div>
+<p>Space Grotesk es una grotesca geométrica con detalles técnicos (la "a" de doble piso, terminaciones rectas). Aporta carácter de ingeniería a los titulares sin sacrificar legibilidad. El cuerpo sigue en Plus Jakarta Sans, así que la lectura larga no cambia.</p>
+<p class="sample-meta">H1 700 / -1.5px · body Jakarta 400</p>
+</div>
+</div>
+<div class="verdict"><div class="vi">A</div><p><strong>Cuándo elegirla:</strong> si TETRA quiere proyectar precisión técnica y modernidad — landing de producto, dashboards, material de ingeniería. Refuerza el "4.0" y el lenguaje hexagonal/tech-chip que ya tiene la marca.</p></div>
+</div>
+</div>
+</section>
+
+<!-- PAIRING B -->
+<section class="ds-section">
+<div class="ds-section-title">Pareja B</div>
+<div class="pair">
+<div class="pair-head">
+<div class="pair-id"><div class="pair-letter" style="background:var(--tetra-blue-medium)">B</div><div><div class="pair-name">Editorial cálido</div><div class="pair-tagline">Newsreader · Plus Jakarta Sans</div></div></div>
+<div class="pair-fonts"><span class="pair-chip">Newsreader → titulares</span><span class="pair-chip">Jakarta → cuerpo</span></div>
+</div>
+<div class="pair-body">
+<div class="samples">
+<div>
+<span class="b-eyebrow">Nuestra diferencia</span>
+<div class="b-h1">Somos tu <em>aliado</em> tecnológico de confianza</div>
+<div class="weights"><span class="weight" style="font-family:'Newsreader';font-weight:400">Regular</span><span class="weight" style="font-family:'Newsreader';font-weight:500">Medium</span><span class="weight" style="font-family:'Newsreader';font-weight:400;font-style:italic">Italic</span></div>
+</div>
+<div class="sample-body">
+<div class="b-h2">Estrategia a la operación</div>
+<p>Newsreader es una serif humanista con cursivas elegantes. Aporta calidez, cercanía y un tono editorial que combina con la voz "de tú" de TETRA — ideal para el blog, la página Nosotros y comunicación de confianza.</p>
+<p class="sample-meta">H1 500 + italic · body Jakarta 400</p>
+</div>
+</div>
+<div class="verdict"><div class="vi" style="background:var(--tetra-blue-medium)">B</div><p><strong>Cuándo elegirla:</strong> si TETRA quiere sonar más humano y consultor que vendedor de hardware. El contraste serif/sans da jerarquía editorial y suaviza el tono — perfecto para contenido largo y relación de largo plazo.</p></div>
+</div>
+</div>
+</section>
+
+<!-- CURRENT for reference -->
+<section class="ds-section">
+<div class="ds-section-title">Referencia — actual</div>
+<h2 class="ds-section-h">Mono-familia (Plus Jakarta Sans sola)</h2>
+<p class="ds-section-p">Lo que hay hoy: una sola familia para todo. Limpio y neutral, sin contraste tipográfico. Sigue siendo una opción válida si prefieres no añadir una segunda fuente.</p>
+<div style="background:#fff;border:1px solid var(--border-line);border-radius:18px;padding:36px 40px">
+<span class="eyebrow" style="margin-bottom:14px">Nuestra diferencia</span>
+<div style="font-family:var(--font-display);font-size:50px;font-weight:800;letter-spacing:-1.5px;line-height:1.05;margin:14px 0">Tu departamento de TI, sin complicaciones</div>
+<p style="font-size:15px;line-height:1.7;color:var(--fg-subtle);max-width:620px">Todo en Plus Jakarta Sans. La jerarquía se logra solo con peso y tamaño.</p>
+</div>
+</section>
+
+</body></html>

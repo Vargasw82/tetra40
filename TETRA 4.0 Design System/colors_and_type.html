@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Colors & Type — TETRA 4.0</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{padding:64px 56px;background:#fbfdff;color:var(--fg-primary);font-family:var(--font-body)}
+  .ds-header{margin-bottom:48px;padding-bottom:24px;border-bottom:1px solid var(--border-line)}
+  .ds-kicker{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--tetra-blue);background:var(--tetra-blue-wash);padding:6px 12px;border-radius:6px;margin-bottom:14px}
+  .ds-title{font-size:44px;font-weight:800;letter-spacing:-1.2px;line-height:1.05;color:var(--tetra-dark);margin-bottom:10px}
+  .ds-sub{font-size:17px;color:var(--fg-muted);max-width:680px;line-height:1.55}
+  .ds-section{margin-top:56px}
+  .ds-section-title{font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--tetra-blue);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .ds-section-title::before{content:"";width:24px;height:2px;background:var(--tetra-blue)}
+  .ds-section-h{font-size:26px;font-weight:800;letter-spacing:-0.5px;color:var(--tetra-dark);margin-bottom:6px}
+  .ds-section-p{font-size:14px;color:var(--fg-muted);margin-bottom:24px;max-width:640px}
+
+  /* Color tiles */
+  .swatch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .swatch{border-radius:14px;overflow:hidden;border:1px solid var(--border-line);background:#fff;box-shadow:0 1px 2px rgba(10,22,40,0.04)}
+  .swatch-color{height:130px;display:flex;align-items:flex-end;padding:14px;position:relative}
+  .swatch-color.has-stripe::after{content:"";position:absolute;inset:auto 0 0 0;height:6px;background:rgba(255,255,255,0.4)}
+  .swatch-meta{padding:14px 16px}
+  .swatch-name{font-size:13px;font-weight:700;color:var(--tetra-dark);margin-bottom:2px}
+  .swatch-token{font-size:11px;color:var(--fg-faint);font-family:ui-monospace,Menlo,monospace;margin-bottom:6px}
+  .swatch-hex{font-size:12px;color:var(--fg-muted);font-family:ui-monospace,Menlo,monospace}
+
+  /* Type specimens */
+  .type-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  .type-row{display:grid;grid-template-columns:200px 1fr;gap:32px;padding:22px 0;border-top:1px solid var(--border-line);align-items:baseline}
+  .type-row:first-child{border-top:none}
+  .type-meta{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--fg-muted);line-height:1.7}
+  .type-meta strong{display:block;color:var(--tetra-dark);font-family:var(--font-body);font-size:13px;margin-bottom:4px;letter-spacing:0}
+  .type-sample{color:var(--tetra-dark)}
+
+  /* Geometry tiles */
+  .geom-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .geom-tile{border:1px solid var(--border-line);border-radius:14px;padding:24px;background:#fff;text-align:center}
+  .geom-shape{width:88px;height:88px;margin:0 auto 14px;background:linear-gradient(135deg,var(--tetra-blue) 0%,var(--tetra-blue-medium) 100%)}
+  .geom-shape.r-sm{border-radius:10px}
+  .geom-shape.r-lg{border-radius:20px}
+  .geom-shape.r-xl{border-radius:24px}
+  .geom-shape.hex{clip-path:var(--clip-hexagon)}
+  .geom-shape.chip{clip-path:var(--clip-techchip-md)}
+  .geom-name{font-size:13px;font-weight:700;color:var(--tetra-dark);margin-bottom:2px}
+  .geom-token{font-size:11px;color:var(--fg-faint);font-family:ui-monospace,Menlo,monospace}
+
+  /* Shadow tiles */
+  .shadow-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .shadow-tile{background:#fff;border-radius:14px;padding:30px;text-align:center;border:1px solid transparent}
+  .shadow-tile.s-sm{box-shadow:var(--shadow-sm)}
+  .shadow-tile.s-md{box-shadow:var(--shadow-md)}
+  .shadow-tile.s-lg{box-shadow:var(--shadow-lg)}
+  .shadow-name{font-size:13px;font-weight:700;color:var(--tetra-dark);margin-bottom:2px}
+  .shadow-token{font-size:11px;color:var(--fg-faint);font-family:ui-monospace,Menlo,monospace}
+</style>
+</head>
+<body>
+
+<div class="ds-header">
+  <span class="ds-kicker">TETRA 4.0 · Foundations</span>
+  <h1 class="ds-title">Colors &amp; Typography</h1>
+  <p class="ds-sub">Tokens base de la marca: paleta primaria azul tecnológica, tipografía Plus Jakarta Sans, geometría hexagonal/octagonal y sistema de elevación. Todos los componentes se construyen sobre estos valores.</p>
+</div>
+
+<!-- BRAND CORE -->
+<section class="ds-section">
+  <div class="ds-section-title">01 — Brand Core</div>
+  <h2 class="ds-section-h">Azul TETRA</h2>
+  <p class="ds-section-p">El azul es la firma. Va de profundo (#006096) a aire (#eaf4fb) para construir profundidad sin perder confianza técnica.</p>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch-color has-stripe" style="background:#006096"></div>
+      <div class="swatch-meta"><div class="swatch-name">Tetra Blue</div><div class="swatch-token">--tetra-blue</div><div class="swatch-hex">#006096</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color has-stripe" style="background:#4f7da8"></div>
+      <div class="swatch-meta"><div class="swatch-name">Blue Medium</div><div class="swatch-token">--tetra-blue-medium</div><div class="swatch-hex">#4F7DA8</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#9dbedb"></div>
+      <div class="swatch-meta"><div class="swatch-name">Blue Light</div><div class="swatch-token">--tetra-blue-light</div><div class="swatch-hex">#9DBEDB</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#c8e2f2"></div>
+      <div class="swatch-meta"><div class="swatch-name">Blue Tint</div><div class="swatch-token">--tetra-blue-tint</div><div class="swatch-hex">#C8E2F2</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#eaf4fb"></div>
+      <div class="swatch-meta"><div class="swatch-name">Blue Wash</div><div class="swatch-token">--tetra-blue-wash</div><div class="swatch-hex">#EAF4FB</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color has-stripe" style="background:#0a1628"></div>
+      <div class="swatch-meta"><div class="swatch-name">Deep Navy</div><div class="swatch-token">--tetra-dark</div><div class="swatch-hex">#0A1628</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#d5d5d5"></div>
+      <div class="swatch-meta"><div class="swatch-name">Brand Gray</div><div class="swatch-token">--tetra-gray</div><div class="swatch-hex">#D5D5D5</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color has-stripe" style="background:#25D366"></div>
+      <div class="swatch-meta"><div class="swatch-name">WhatsApp Green</div><div class="swatch-token">--whatsapp-green</div><div class="swatch-hex">#25D366</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPOGRAPHY -->
+<section class="ds-section">
+  <div class="ds-section-title">02 — Typography</div>
+  <h2 class="ds-section-h">Plus Jakarta Sans</h2>
+  <p class="ds-section-p">Geométrica y legible. Usamos pesos 400 / 500 / 600 / 700 / 800 con tracking ajustado en titulares (-1.5px) para densidad técnica.</p>
+  <div class="type-grid">
+    <div class="type-row">
+      <div class="type-meta"><strong>Display H1</strong>70px · 800 · -1.5px<br>line-height 1.1</div>
+      <div class="type-sample" style="font-size:64px;font-weight:800;letter-spacing:-1.5px;line-height:1.05">Tu socio tecnológico</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><strong>Heading H2</strong>44px · 900 · -1px<br>line-height 1.15</div>
+      <div class="type-sample" style="font-size:44px;font-weight:900;letter-spacing:-1px;line-height:1.1;color:#0a2540">Soluciones a la medida</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><strong>Heading H3</strong>24px · 800 · -0.2px</div>
+      <div class="type-sample" style="font-size:24px;font-weight:800;letter-spacing:-0.2px">Infraestructura &amp; Redes</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><strong>Lead</strong>20px · 500 · 1.6</div>
+      <div class="type-sample" style="font-size:20px;font-weight:500;color:#555;line-height:1.5">Cuéntanos qué necesitas y nosotros lo conseguimos.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><strong>Body</strong>16px · 400 · 1.6</div>
+      <div class="type-sample" style="font-size:16px;color:#555;line-height:1.6;max-width:560px">Diseñamos, implementamos y operamos soluciones tecnológicas críticas para organizaciones que requieren confiabilidad, seguridad y escalabilidad.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><strong>Eyebrow</strong>12px · 800 · 1.8px<br>UPPERCASE</div>
+      <div class="type-sample"><span class="eyebrow">Nuestra diferencia</span></div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><strong>Micro / Meta</strong>14px · 400 · #888</div>
+      <div class="type-sample" style="font-size:14px;color:#888">1 Febrero, 2026 · Tendencias IA</div>
+    </div>
+  </div>
+</section>
+
+<!-- GEOMETRY -->
+<section class="ds-section">
+  <div class="ds-section-title">03 — Geometry</div>
+  <h2 class="ds-section-h">Radios y formas</h2>
+  <p class="ds-section-p">El hexágono es el símbolo de marca y aparece en el isotipo y badges. La forma "tech-chip" octagonal acentúa CTAs y eyebrows.</p>
+  <div class="geom-grid">
+    <div class="geom-tile"><div class="geom-shape r-sm"></div><div class="geom-name">Radius SM</div><div class="geom-token">10px</div></div>
+    <div class="geom-tile"><div class="geom-shape r-lg"></div><div class="geom-name">Radius LG</div><div class="geom-token">20px</div></div>
+    <div class="geom-tile"><div class="geom-shape r-xl"></div><div class="geom-name">Radius XL</div><div class="geom-token">24px</div></div>
+    <div class="geom-tile"><div class="geom-shape" style="border-radius:50%"></div><div class="geom-name">Circle</div><div class="geom-token">50%</div></div>
+    <div class="geom-tile"><div class="geom-shape hex"></div><div class="geom-name">Hexagon</div><div class="geom-token">--clip-hexagon</div></div>
+    <div class="geom-tile"><div class="geom-shape chip"></div><div class="geom-name">Tech Chip</div><div class="geom-token">--clip-techchip-md</div></div>
+  </div>
+</section>
+
+<!-- SHADOWS -->
+<section class="ds-section">
+  <div class="ds-section-title">04 — Elevation</div>
+  <h2 class="ds-section-h">Sombras tintadas en azul</h2>
+  <p class="ds-section-p">Todas las sombras llevan tinte azul (rgba(0,96,150,…)) en lugar de negro puro, para reforzar la firma de marca incluso en la profundidad.</p>
+  <div class="shadow-grid">
+    <div class="shadow-tile s-sm"><div class="shadow-name">Shadow SM</div><div class="shadow-token">--shadow-sm</div></div>
+    <div class="shadow-tile s-md"><div class="shadow-name">Shadow MD</div><div class="shadow-token">--shadow-md</div></div>
+    <div class="shadow-tile s-lg"><div class="shadow-name">Shadow LG</div><div class="shadow-token">--shadow-lg</div></div>
+  </div>
+</section>
+
+</body>
+</html>

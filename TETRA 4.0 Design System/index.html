@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sistema de Diseño — TETRA 4.0</title>
+<link rel="icon" type="image/png" href="assets/T40FavIco.png">
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:linear-gradient(180deg,#fbfdff 0%,#f4f8fc 100%);font-family:var(--font-body);color:var(--tetra-dark);min-height:100vh}
+
+/* Background atmosphere */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(14,107,168,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(14,107,168,0.035) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(circle at 50% 20%,#000 40%,transparent 90%)}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:float 14s ease-in-out infinite}
+.orb1{width:520px;height:520px;background:radial-gradient(circle,rgba(34,163,255,0.18),transparent 70%);top:-12%;right:-6%}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,rgba(0,96,150,0.12),transparent 70%);bottom:6%;left:-5%;animation-delay:4s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-26px)}}
+
+.wrap{max-width:1240px;margin:0 auto;padding:72px 48px 96px}
+
+/* Hero */
+.hero{text-align:center;margin-bottom:72px}
+.hero-iso{width:88px;height:88px;margin:0 auto 28px;display:block;filter:drop-shadow(0 12px 28px rgba(0,96,150,0.22))}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--tetra-blue);background:linear-gradient(135deg,#deeef8,var(--tetra-blue-tint));padding:9px 22px;clip-path:var(--clip-techchip-sm);margin-bottom:26px}
+.hero h1{font-size:clamp(40px,6vw,68px);font-weight:800;letter-spacing:-2px;line-height:1.02;margin-bottom:20px}
+.hero h1 .accent{background:linear-gradient(135deg,var(--tetra-blue),var(--tetra-blue-medium));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:19px;color:var(--fg-muted);max-width:620px;margin:0 auto;line-height:1.6}
+.hero-meta{display:flex;gap:14px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+.hero-stat{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--fg-muted)}
+.hero-stat b{font-size:22px;font-weight:800;color:var(--tetra-blue)}
+
+/* Group heading */
+.group{margin-bottom:48px}
+.group-head{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.group-num{font-size:13px;font-weight:800;font-family:ui-monospace,Menlo,monospace;color:#fff;background:var(--tetra-blue);width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center}
+.group-title{font-size:22px;font-weight:800;letter-spacing:-0.5px}
+.group-line{flex:1;height:1px;background:var(--border-soft)}
+
+/* Cards grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:#fff;border:1px solid var(--border-line);border-radius:20px;overflow:hidden;text-decoration:none;color:inherit;transition:transform 0.35s var(--ease-spring),box-shadow 0.35s,border-color 0.35s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--tetra-blue-light)}
+.card-vis{height:150px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border-line)}
+.card-body{padding:22px 24px 26px}
+.card-name{font-size:18px;font-weight:800;letter-spacing:-0.3px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.card-desc{font-size:13.5px;color:var(--fg-muted);line-height:1.55}
+.card-arrow{margin-left:auto;color:var(--tetra-blue);transition:transform 0.3s}
+.card:hover .card-arrow{transform:translate(3px,-3px)}
+
+/* Visual previews per card */
+.v-colors{background:linear-gradient(135deg,#006096,#4f7da8)}
+.v-colors .sw{position:absolute;bottom:0;height:100%;width:20%}
+.v-type{background:#fff;flex-direction:column;gap:2px}
+.v-type .t1{font-size:46px;font-weight:800;letter-spacing:-2px;line-height:1;color:var(--tetra-dark)}
+.v-type .t2{font-size:13px;font-weight:500;color:var(--fg-faint);letter-spacing:3px}
+.v-logo{background:linear-gradient(135deg,#f8fbfd,#eaf4fb)}
+.v-logo img{width:62%;max-height:90px;object-fit:contain}
+.v-icons{background:#fff;gap:14px}
+.v-icons img{width:62px;height:62px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,96,150,0.18))}
+.v-btn{background:linear-gradient(160deg,#f8fbfd,#fff);gap:10px;flex-direction:column}
+.v-btn .b{padding:11px 24px;border-radius:50px;font-size:13px;font-weight:700;color:#fff}
+.v-btn .b1{background:linear-gradient(135deg,#25D366,#128C7E)}
+.v-btn .b2{background:var(--tetra-blue)}
+.v-cards{background:linear-gradient(160deg,#eaf4fb,#fff);gap:10px}
+.v-cards .mini{width:64px;height:80px;background:#fff;border-radius:10px;box-shadow:var(--shadow-md);border:1px solid var(--border-line)}
+.v-cards .mini.brand{background:linear-gradient(135deg,#006096,#0a1628)}
+.v-nav{background:#fff;flex-direction:column;gap:8px;padding:0 24px}
+.v-nav .bar{width:100%;height:32px;background:#fff;border:1px solid var(--border-soft);border-radius:10px;box-shadow:var(--shadow-xs)}
+.v-nav .field{width:100%;height:24px;background:var(--tetra-blue-wash);border-radius:8px}
+.v-bg{background:linear-gradient(135deg,#0a1628,#1a3a5e);position:relative}
+.v-bg .o{position:absolute;border-radius:50%;filter:blur(20px)}
+.v-bg .o1{width:90px;height:90px;background:rgba(34,163,255,0.6);top:10px;left:20px}
+.v-bg .o2{width:70px;height:70px;background:rgba(0,96,150,0.7);bottom:10px;right:30px}
+.v-space{background:#fff;flex-direction:column;gap:5px;align-items:flex-start;padding-left:30px}
+.v-space .ln{height:9px;border-radius:3px;background:linear-gradient(90deg,#006096,#9dbedb)}
+.v-badge{background:linear-gradient(160deg,#f8fbfd,#fff);gap:8px;flex-wrap:wrap;padding:0 24px}
+.v-badge .p{padding:6px 14px;border-radius:50px;font-size:11px;font-weight:700;background:var(--tetra-blue-wash);color:var(--tetra-blue)}
+.v-badge .p.solid{background:var(--tetra-blue);color:#fff}
+.v-badge .hex{width:38px;height:43px;background:linear-gradient(135deg,#006096,#4f7da8);clip-path:polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%)}
+.v-voice{background:linear-gradient(160deg,#eaf4fb,#fff);flex-direction:column;padding:0 28px}
+.v-voice .q{font-size:19px;font-weight:800;letter-spacing:-0.5px;color:var(--tetra-dark);text-align:center;line-height:1.2}
+.v-voice .q em{color:var(--tetra-blue);font-style:normal}
+
+.tag-found{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;border-radius:5px;background:var(--tetra-blue-wash);color:var(--tetra-blue)}
+
+/* Footer */
+.foot{margin-top:80px;padding-top:36px;border-top:1px solid var(--border-soft);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.foot img{height:34px;filter:none}
+.foot p{font-size:13px;color:var(--fg-faint)}
+.foot-css{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-family:ui-monospace,Menlo,monospace;color:var(--tetra-blue);background:var(--tetra-blue-wash);padding:8px 14px;border-radius:8px;text-decoration:none}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.wrap{padding:48px 24px}}
+</style></head><body>
+
+<div class="bg"><div class="orb orb1"></div><div class="orb orb2"></div></div>
+
+<div class="wrap">
+
+<header class="hero">
+<img src="assets/Isotipo_tetra.png" alt="TETRA" class="hero-iso">
+<div class="hero-eyebrow">Design System · v1.0</div>
+<h1>Sistema de Diseño<br><span class="accent">TETRA 4.0</span></h1>
+<p>La fuente única de verdad para construir productos, materiales y comunicación de TETRA — coherentes, técnicos y cercanos.</p>
+<div class="hero-meta">
+<span class="hero-stat"><b>10</b> tarjetas</span>
+<span class="hero-stat"><b>3</b> grupos</span>
+<span class="hero-stat"><b>1</b> hoja de tokens</span>
+</div>
+</header>
+
+<!-- FOUNDATIONS -->
+<section class="group">
+<div class="group-head"><div class="group-num">01</div><div class="group-title">Fundamentos</div><div class="group-line"></div></div>
+<div class="grid">
+<a class="card" href="colors_and_type.html">
+<div class="card-vis v-colors"><div class="sw" style="background:#006096;left:0"></div><div class="sw" style="background:#4f7da8;left:20%"></div><div class="sw" style="background:#9dbedb;left:40%"></div><div class="sw" style="background:#c8e2f2;left:60%"></div><div class="sw" style="background:#eaf4fb;left:80%"></div></div>
+<div class="card-body"><div class="card-name">Colors &amp; Type <span class="card-arrow">↗</span></div><div class="card-desc">Paleta de marca, escala tipográfica Plus Jakarta Sans, geometría y elevación.</div></div>
+</a>
+<a class="card" href="spacing_layout.html">
+<div class="card-vis v-space"><div class="ln" style="width:18px"></div><div class="ln" style="width:32px"></div><div class="ln" style="width:54px"></div><div class="ln" style="width:80px"></div><div class="ln" style="width:110px"></div></div>
+<div class="card-body"><div class="card-name">Spacing &amp; Layout <span class="card-arrow">↗</span></div><div class="card-desc">Escala de 8pt, grid de 12 columnas, contenedores y breakpoints.</div></div>
+</a>
+<a class="card" href="backgrounds_motion.html">
+<div class="card-vis v-bg"><div class="o o1"></div><div class="o o2"></div></div>
+<div class="card-body"><div class="card-name">Backgrounds &amp; Motion <span class="card-arrow">↗</span></div><div class="card-desc">Gradientes, patterns geométricos, parallax y curvas de animación.</div></div>
+</a>
+</div>
+</section>
+
+<!-- BRAND -->
+<section class="group">
+<div class="group-head"><div class="group-num">02</div><div class="group-title">Marca</div><div class="group-line"></div></div>
+<div class="grid">
+<a class="card" href="brand_logos.html">
+<div class="card-vis v-logo"><img src="assets/Logos_Tetra_Horizontal.png" alt=""></div>
+<div class="card-body"><div class="card-name">Logos &amp; Identity <span class="card-arrow">↗</span></div><div class="card-desc">Lockups, isotipo hexagonal, zona de protección y reglas de uso.</div></div>
+</a>
+<a class="card" href="iconography.html">
+<div class="card-vis v-icons"><img src="assets/Icons_Inicio/Saludo.png" alt=""><img src="assets/Icons_Inicio/Diana.png" alt=""><img src="assets/Icons_Inicio/Infinito.png" alt=""></div>
+<div class="card-body"><div class="card-name">Iconography <span class="card-arrow">↗</span></div><div class="card-desc">Sets de íconos ilustrados 3D + iconografía vectorial mono de UI.</div></div>
+</a>
+<a class="card" href="voice_tone.html">
+<div class="card-vis v-voice"><div class="q">Sin catálogos,<br><em>sin límites.</em></div></div>
+<div class="card-body"><div class="card-name">Voz y Tono <span class="card-arrow">↗</span></div><div class="card-desc">Principios de voz, do's &amp; don'ts, glosario y banco de palabras.</div></div>
+</a>
+</div>
+</section>
+
+<!-- COMPONENTS -->
+<section class="group">
+<div class="group-head"><div class="group-num">03</div><div class="group-title">Componentes</div><div class="group-line"></div></div>
+<div class="grid">
+<a class="card" href="buttons_ctas.html">
+<div class="card-vis v-btn"><div class="b b1">Escríbenos</div><div class="b b2">Ver servicios</div></div>
+<div class="card-body"><div class="card-name">Buttons &amp; CTAs <span class="card-arrow">↗</span></div><div class="card-desc">Jerarquía de acción, tamaños, estados y variante tech-chip.</div></div>
+</a>
+<a class="card" href="cards_surfaces.html">
+<div class="card-vis v-cards"><div class="mini"></div><div class="mini brand"></div><div class="mini"></div></div>
+<div class="card-body"><div class="card-name">Cards &amp; Surfaces <span class="card-arrow">↗</span></div><div class="card-desc">7 patrones de card, escala de elevación tintada y radii.</div></div>
+</a>
+<a class="card" href="navigation_forms.html">
+<div class="card-vis v-nav"><div class="bar"></div><div class="field"></div><div class="field" style="width:60%"></div></div>
+<div class="card-body"><div class="card-name">Navigation &amp; Forms <span class="card-arrow">↗</span></div><div class="card-desc">Navbar, footer, tabs, formularios y FAB de WhatsApp.</div></div>
+</a>
+<a class="card" href="badges_tags.html">
+<div class="card-vis v-badge"><div class="hex"></div><span class="p solid">Cloud</span><span class="p">Redes</span><span class="p">IA</span></div>
+<div class="card-body"><div class="card-name">Badges, Pills &amp; Tags <span class="card-arrow">↗</span></div><div class="card-desc">Eyebrows octagonales, pills, status, badges hexagonales y tags.</div></div>
+</a>
+</div>
+</section>
+
+<footer class="foot">
+<img src="assets/Logos_Tetra_Horizontal.png" alt="TETRA 4.0">
+<a class="foot-css" href="colors_and_type.css">📄 colors_and_type.css — fuente de tokens</a>
+<p>© 2026 TETRA 4.0 · Tu socio tecnológico de confianza</p>
+</footer>
+
+</div>
+</body></html>

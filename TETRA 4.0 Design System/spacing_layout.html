@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><title>Spacing, Grid & Layout — TETRA 4.0</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{padding:64px 56px;background:#fbfdff;font-family:var(--font-body);color:var(--tetra-dark)}
+.ds-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border-line)}
+.ds-kicker{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--tetra-blue);background:var(--tetra-blue-wash);padding:6px 12px;border-radius:6px;margin-bottom:14px}
+.ds-title{font-size:44px;font-weight:800;letter-spacing:-1.2px;line-height:1.05;margin-bottom:10px}
+.ds-sub{font-size:17px;color:var(--fg-muted);max-width:680px;line-height:1.55}
+.ds-section{margin-top:48px}
+.ds-section-title{font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--tetra-blue);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.ds-section-title::before{content:"";width:24px;height:2px;background:var(--tetra-blue)}
+.ds-section-h{font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px}
+.ds-section-p{font-size:14px;color:var(--fg-muted);margin-bottom:24px;max-width:640px}
+
+/* Spacing scale */
+.space-row{display:flex;flex-direction:column;gap:10px}
+.space-item{display:flex;align-items:center;gap:20px}
+.space-bar{height:28px;background:linear-gradient(90deg,var(--tetra-blue),var(--tetra-blue-medium));border-radius:6px}
+.space-meta{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--fg-muted);min-width:180px}
+.space-meta strong{color:var(--tetra-dark);font-family:var(--font-body);font-weight:700;margin-right:8px}
+
+/* 8pt base */
+.base-note{display:flex;gap:14px;padding:18px 22px;background:var(--tetra-blue-wash);border-radius:14px;align-items:center;margin-bottom:24px}
+.base-note .b{width:40px;height:40px;border-radius:10px;background:var(--tetra-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0}
+.base-note p{font-size:14px;color:var(--fg-muted)}
+.base-note strong{color:var(--tetra-dark)}
+
+/* Grid demo */
+.grid-demo{background:#fff;border:1px solid var(--border-line);border-radius:18px;padding:28px}
+.grid-12{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-bottom:16px}
+.grid-12 .col{height:60px;background:linear-gradient(160deg,var(--tetra-blue-tint),#deeef8);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tetra-blue)}
+.grid-label{font-size:12px;color:var(--fg-faint);font-family:ui-monospace,Menlo,monospace;margin-bottom:10px}
+
+/* Container widths */
+.cont-row{display:flex;flex-direction:column;gap:12px}
+.cont{height:44px;border-radius:10px;background:linear-gradient(90deg,var(--tetra-blue-wash),#fff);border:1px solid var(--border-soft);display:flex;align-items:center;padding-left:18px;font-size:13px;font-weight:700;color:var(--tetra-blue);position:relative}
+.cont span{position:absolute;right:16px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--fg-faint);font-weight:400}
+
+/* Section rhythm */
+.rhythm{background:#fff;border:1px solid var(--border-line);border-radius:18px;overflow:hidden}
+.rhythm-band{padding:0 28px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:ui-monospace,Menlo,monospace;border-bottom:1px dashed var(--border-soft)}
+.rhythm-band:last-child{border-bottom:none}
+
+/* Breakpoints */
+.bp-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.bp{padding:24px;border:1px solid var(--border-line);border-radius:14px;background:#fff;text-align:center}
+.bp-icon{width:100%;height:60px;border:2px solid var(--tetra-blue-light);border-radius:8px;margin:0 auto 14px;background:var(--tetra-blue-wash)}
+.bp-mobile{width:38px}
+.bp-tablet{width:80px}
+.bp-laptop{width:100%}
+.bp-name{font-size:14px;font-weight:800;color:var(--tetra-dark);margin-bottom:2px}
+.bp-val{font-size:12px;color:var(--fg-faint);font-family:ui-monospace,Menlo,monospace}
+
+/* Inset / padding tokens */
+.pad-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pad-tile{border:1px solid var(--border-line);border-radius:14px;background:var(--tetra-blue-wash);position:relative}
+.pad-inner{background:#fff;border:1px dashed var(--tetra-blue-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--tetra-blue);min-height:70px}
+.pad-name{position:absolute;top:8px;left:12px;font-size:11px;font-weight:800;color:var(--tetra-blue);font-family:ui-monospace,Menlo,monospace}
+</style></head><body>
+
+<div class="ds-header">
+<span class="ds-kicker">TETRA 4.0 · Foundations</span>
+<h1 class="ds-title">Spacing, Grid &amp; Layout</h1>
+<p class="ds-sub">Ritmo basado en una escala de 8&nbsp;puntos, grid de 12 columnas, anchos de contenedor consistentes y cuatro breakpoints. La disciplina espacial es lo que hace que la marca se sienta ordenada y técnica.</p>
+</div>
+
+<section class="ds-section">
+<div class="ds-section-title">01 — Escala de espaciado</div>
+<h2 class="ds-section-h">Base 8 (con paso 4 inicial)</h2>
+<div class="base-note"><div class="b">8</div><p><strong>Todo múltiplo de 8.</strong> La única excepción es <strong>--space-1 (4px)</strong> para ajustes finos (gaps de íconos, micro-padding). Nunca uses valores arbitrarios como 7, 13 o 25px.</p></div>
+<div class="space-row">
+<div class="space-item"><div class="space-meta"><strong>--space-1</strong> 4px</div><div class="space-bar" style="width:4px"></div></div>
+<div class="space-item"><div class="space-meta"><strong>--space-2</strong> 8px</div><div class="space-bar" style="width:8px"></div></div>
+<div class="space-item"><div class="space-meta"><strong>--space-3</strong> 12px</div><div class="space-bar" style="width:12px"></div></div>
+<div class="space-item"><div class="space-meta"><strong>--space-4</strong> 16px</div><div class="space-bar" style="width:16px"></div></div>
+<div class="space-item"><div class="space-meta"><strong>--space-5</strong> 24px</div><div class="space-bar" style="width:24px"></div></div>
+<div class="space-item"><div class="space-meta"><strong>--space-6</strong> 32px</div><div class="space-bar" style="width:32px"></div></div>
+<div class="space-item"><div class="space-meta"><strong>--space-7</strong> 48px</div><div class="space-bar" style="width:48px"></div></div>
+<div class="space-item"><div class="space-meta"><strong>--space-8</strong> 64px</div><div class="space-bar" style="width:64px"></div></div>
+<div class="space-item"><div class="space-meta"><strong>--space-9</strong> 100px</div><div class="space-bar" style="width:100px"></div></div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">02 — Grid de 12 columnas</div>
+<h2 class="ds-section-h">Gutter 24px · gap fluido</h2>
+<p class="ds-section-p">El grid maestro es de 12 columnas. Las composiciones comunes derivan de él.</p>
+<div class="grid-demo">
+<div class="grid-label">12 columnas · gutter 24px</div>
+<div class="grid-12">
+<div class="col">1</div><div class="col">2</div><div class="col">3</div><div class="col">4</div><div class="col">5</div><div class="col">6</div><div class="col">7</div><div class="col">8</div><div class="col">9</div><div class="col">10</div><div class="col">11</div><div class="col">12</div>
+</div>
+<div class="grid-label">Cards de servicio · 3 × 4 col</div>
+<div class="grid-12">
+<div class="col" style="grid-column:span 4">4</div><div class="col" style="grid-column:span 4">4</div><div class="col" style="grid-column:span 4">4</div>
+</div>
+<div class="grid-label">Contenido + sidebar · 8 / 4</div>
+<div class="grid-12">
+<div class="col" style="grid-column:span 8">8</div><div class="col" style="grid-column:span 4">4</div>
+</div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">03 — Anchos de contenedor</div>
+<h2 class="ds-section-h">Máximos por tipo de contenido</h2>
+<div class="cont-row">
+<div class="cont" style="width:100%">Nav capsule <span>1300px</span></div>
+<div class="cont" style="width:92%">Container general <span>1200px</span></div>
+<div class="cont" style="width:85%">Stats / hero content <span>1100px</span></div>
+<div class="cont" style="width:62%">Texto largo (prosa) <span>800px</span></div>
+<div class="cont" style="width:44%">Formularios <span>560px</span></div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">04 — Ritmo de secciones</div>
+<h2 class="ds-section-h">Padding vertical por sección</h2>
+<p class="ds-section-p">El aire vertical de cada bloque escala según su jerarquía narrativa.</p>
+<div class="rhythm">
+<div class="rhythm-band" style="height:120px;background:var(--tetra-blue-wash);color:var(--tetra-blue)">Hero · padding 100px+ (--space-9)</div>
+<div class="rhythm-band" style="height:96px;background:#f4f8fc;color:var(--fg-muted)">Sección estándar · 64px (--space-8)</div>
+<div class="rhythm-band" style="height:70px;background:#f8fbfd;color:var(--fg-muted)">Sección compacta · 48px (--space-7)</div>
+<div class="rhythm-band" style="height:54px;background:#fff;color:var(--fg-faint)">Banda / CTA inline · 32px (--space-6)</div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">05 — Padding interno (insets)</div>
+<h2 class="ds-section-h">Cards y contenedores</h2>
+<div class="pad-row">
+<div class="pad-tile" style="padding:16px"><div class="pad-name">16</div><div class="pad-inner">Chip / badge</div></div>
+<div class="pad-tile" style="padding:28px"><div class="pad-name">28</div><div class="pad-inner">Card estándar</div></div>
+<div class="pad-tile" style="padding:48px"><div class="pad-name">48</div><div class="pad-inner">Panel / feature</div></div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">06 — Breakpoints</div>
+<h2 class="ds-section-h">Responsive</h2>
+<div class="bp-row">
+<div class="bp"><div class="bp-icon bp-mobile"></div><div class="bp-name">Mobile</div><div class="bp-val">&lt; 480px</div></div>
+<div class="bp"><div class="bp-icon bp-tablet"></div><div class="bp-name">Tablet</div><div class="bp-val">481 – 768px</div></div>
+<div class="bp"><div class="bp-icon bp-laptop" style="width:90%"></div><div class="bp-name">Laptop</div><div class="bp-val">769 – 1024px</div></div>
+<div class="bp"><div class="bp-icon bp-laptop"></div><div class="bp-name">Desktop</div><div class="bp-val">&gt; 1024px</div></div>
+</div>
+</section>
+
+</body></html>

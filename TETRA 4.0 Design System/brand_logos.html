@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><title>Brand Logos — TETRA 4.0</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{padding:64px 56px;background:#fbfdff;font-family:var(--font-body);color:var(--tetra-dark)}
+.ds-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border-line)}
+.ds-kicker{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--tetra-blue);background:var(--tetra-blue-wash);padding:6px 12px;border-radius:6px;margin-bottom:14px}
+.ds-title{font-size:44px;font-weight:800;letter-spacing:-1.2px;line-height:1.05;margin-bottom:10px}
+.ds-sub{font-size:17px;color:var(--fg-muted);max-width:680px;line-height:1.55}
+.ds-section{margin-top:48px}
+.ds-section-title{font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--tetra-blue);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.ds-section-title::before{content:"";width:24px;height:2px;background:var(--tetra-blue)}
+.ds-section-h{font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px}
+.ds-section-p{font-size:14px;color:var(--fg-muted);margin-bottom:24px;max-width:640px}
+.logo-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.logo-tile{border:1px solid var(--border-line);border-radius:18px;padding:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:240px;background:#fff;position:relative;overflow:hidden}
+.logo-tile.dark{background:var(--tetra-dark);border-color:var(--tetra-dark)}
+.logo-tile.brand{background:var(--tetra-blue);border-color:var(--tetra-blue)}
+.logo-tile.gray{background:var(--tetra-gray)}
+.logo-tile img{max-width:80%;max-height:140px;object-fit:contain}
+.logo-tile.dark img,.logo-tile.brand img{filter:brightness(0) invert(1)}
+.logo-meta{position:absolute;top:14px;left:16px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--fg-faint);font-weight:600}
+.logo-tile.dark .logo-meta,.logo-tile.brand .logo-meta{color:rgba(255,255,255,0.5)}
+.logo-name{margin-top:20px;font-size:13px;font-weight:700;color:inherit}
+.logo-tile.dark .logo-name,.logo-tile.brand .logo-name{color:#fff}
+.iso-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;align-items:end}
+.iso-tile{border:1px solid var(--border-line);border-radius:14px;padding:18px;text-align:center;background:#fff}
+.iso-tile img{display:block;margin:0 auto 10px;object-fit:contain}
+.iso-name{font-size:11px;color:var(--fg-faint);font-family:ui-monospace,Menlo,monospace}
+.protect{position:relative;padding:50px;border:1px dashed var(--tetra-blue-light);border-radius:18px;background:#fff;display:flex;justify-content:center;align-items:center}
+.protect-zone{position:relative;padding:60px}
+.protect-zone::before{content:"";position:absolute;inset:0;border:1px dashed var(--tetra-blue);border-radius:8px}
+.protect-zone img{height:80px;display:block}
+.protect-x{position:absolute;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--tetra-blue);font-weight:700;background:#fff;padding:0 6px}
+.protect-x.t{top:-7px;left:50%;transform:translateX(-50%)}
+.protect-x.b{bottom:-7px;left:50%;transform:translateX(-50%)}
+.protect-x.l{left:-12px;top:50%;transform:translateY(-50%)}
+.protect-x.r{right:-12px;top:50%;transform:translateY(-50%)}
+.usage-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.usage-tile{padding:24px;border-radius:14px;border:1px solid var(--border-line);background:#fff;display:flex;gap:18px;align-items:center}
+.usage-tile.do{border-left:4px solid #25D366}
+.usage-tile.dont{border-left:4px solid #ef4444}
+.usage-vis{width:120px;height:90px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#f4f8fc}
+.usage-vis img{max-width:80%;max-height:60px;object-fit:contain}
+.usage-vis.bad-stretch img{transform:scaleX(1.6)}
+.usage-vis.bad-rotate img{transform:rotate(15deg)}
+.usage-vis.bad-color{background:#ff6b00}
+.usage-vis.bad-color img{filter:hue-rotate(120deg)}
+.usage-text strong{display:block;font-size:13px;margin-bottom:4px}
+.usage-text strong.do{color:#16a34a}
+.usage-text strong.dont{color:#ef4444}
+.usage-text p{font-size:13px;color:var(--fg-muted);line-height:1.5}
+</style></head><body>
+
+<div class="ds-header">
+<span class="ds-kicker">TETRA 4.0 · Brand</span>
+<h1 class="ds-title">Logos &amp; Identity</h1>
+<p class="ds-sub">El sistema de marca TETRA 4.0 se construye sobre el hexágono. Tres lockups (horizontal, vertical, isotipo) más variantes de fondo cubren el 100% de los usos.</p>
+</div>
+
+<section class="ds-section">
+<div class="ds-section-title">01 — Lockups principales</div>
+<h2 class="ds-section-h">Logotipo en sus tres formas</h2>
+<p class="ds-section-p">Vertical (hero), horizontal (footer y firma de email), isotipo (favicon, redes, badges).</p>
+<div class="logo-grid">
+<div class="logo-tile"><span class="logo-meta">vertical · positivo</span><img src="assets/Logotipo_Tetra.png" alt=""><div class="logo-name">Logotipo vertical</div></div>
+<div class="logo-tile dark"><span class="logo-meta">vertical · sobre oscuro</span><img src="assets/Logotipo_Tetra.png" alt=""><div class="logo-name">Versión negativa</div></div>
+<div class="logo-tile"><span class="logo-meta">horizontal</span><img src="assets/Logos_Tetra_Horizontal.png" alt="" style="max-height:90px"><div class="logo-name">Logotipo horizontal</div></div>
+<div class="logo-tile brand"><span class="logo-meta">horizontal · sobre brand</span><img src="assets/Logos_Tetra_Horizontal.png" alt="" style="max-height:90px"><div class="logo-name">Versión negativa</div></div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">02 — Isotipo</div>
+<h2 class="ds-section-h">Hexágono — el símbolo</h2>
+<p class="ds-section-p">El hexágono es el activo más reconocible. Se usa solo a partir de 32px y debe respirar.</p>
+<div class="iso-row">
+<div class="iso-tile"><img src="assets/Isotipo_tetra.png" alt="" style="height:32px"><div class="iso-name">32px · min</div></div>
+<div class="iso-tile"><img src="assets/Isotipo_tetra.png" alt="" style="height:48px"><div class="iso-name">48px</div></div>
+<div class="iso-tile"><img src="assets/Isotipo_tetra.png" alt="" style="height:72px"><div class="iso-name">72px</div></div>
+<div class="iso-tile"><img src="assets/Isotipo_tetra.png" alt="" style="height:104px"><div class="iso-name">104px</div></div>
+<div class="iso-tile" style="background:var(--tetra-blue)"><img src="assets/Isotipo_tetra.png" alt="" style="height:104px;filter:brightness(0) invert(1)"><div class="iso-name" style="color:rgba(255,255,255,0.7)">sobre brand</div></div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">03 — Zona de protección</div>
+<h2 class="ds-section-h">Aire mínimo</h2>
+<p class="ds-section-p">El espacio libre alrededor del logo equivale a la altura del isotipo (1× hex). Nunca menos.</p>
+<div class="protect">
+<div class="protect-zone">
+<img src="assets/Logos_Tetra_Horizontal.png" alt="">
+<span class="protect-x t">1×</span><span class="protect-x b">1×</span><span class="protect-x l">1×</span><span class="protect-x r">1×</span>
+</div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">04 — Do's &amp; Don'ts</div>
+<h2 class="ds-section-h">Reglas de uso</h2>
+<div class="usage-grid">
+<div class="usage-tile do"><div class="usage-vis"><img src="assets/Logos_Tetra_Horizontal.png" alt=""></div><div class="usage-text"><strong class="do">✓ Sobre fondo claro</strong><p>Versión positiva sobre blanco o tintes ligeros del azul wash.</p></div></div>
+<div class="usage-tile do"><div class="usage-vis" style="background:var(--tetra-dark)"><img src="assets/Logos_Tetra_Horizontal.png" alt="" style="filter:brightness(0) invert(1)"></div><div class="usage-text"><strong class="do">✓ Sobre fondo oscuro</strong><p>Negativo en blanco sólido sobre navy o azul brand.</p></div></div>
+<div class="usage-tile dont"><div class="usage-vis bad-stretch"><img src="assets/Logos_Tetra_Horizontal.png" alt=""></div><div class="usage-text"><strong class="dont">✗ No deformar</strong><p>Mantén siempre la proporción original del lockup.</p></div></div>
+<div class="usage-tile dont"><div class="usage-vis bad-rotate"><img src="assets/Logos_Tetra_Horizontal.png" alt=""></div><div class="usage-text"><strong class="dont">✗ No rotar</strong><p>El logo siempre va horizontal, nunca en ángulo.</p></div></div>
+<div class="usage-tile dont"><div class="usage-vis bad-color"><img src="assets/Logos_Tetra_Horizontal.png" alt=""></div><div class="usage-text"><strong class="dont">✗ No recolorear</strong><p>Solo blanco, azul brand o navy. No otros colores.</p></div></div>
+<div class="usage-tile dont"><div class="usage-vis" style="background:linear-gradient(45deg,#ff0,#f0f)"><img src="assets/Logos_Tetra_Horizontal.png" alt=""></div><div class="usage-text"><strong class="dont">✗ No fondos ruidosos</strong><p>El logo necesita contraste limpio para leerse.</p></div></div>
+</div>
+</section>
+
+</body></html>

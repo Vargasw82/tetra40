@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><title>Backgrounds & Motion — TETRA 4.0</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{padding:64px 56px;background:#fbfdff;font-family:var(--font-body);color:var(--tetra-dark)}
+.ds-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border-line)}
+.ds-kicker{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--tetra-blue);background:var(--tetra-blue-wash);padding:6px 12px;border-radius:6px;margin-bottom:14px}
+.ds-title{font-size:44px;font-weight:800;letter-spacing:-1.2px;line-height:1.05;margin-bottom:10px}
+.ds-sub{font-size:17px;color:var(--fg-muted);max-width:680px;line-height:1.55}
+.ds-section{margin-top:48px}
+.ds-section-title{font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--tetra-blue);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.ds-section-title::before{content:"";width:24px;height:2px;background:var(--tetra-blue)}
+.ds-section-h{font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px}
+.ds-section-p{font-size:14px;color:var(--fg-muted);margin-bottom:24px;max-width:640px}
+
+.row{display:grid;gap:20px}
+.row-2{grid-template-columns:1fr 1fr}
+.row-3{grid-template-columns:repeat(3,1fr)}
+
+.bg-tile{height:240px;border-radius:18px;position:relative;overflow:hidden;border:1px solid var(--border-line)}
+.bg-meta{position:absolute;left:18px;bottom:18px;font-family:ui-monospace,Menlo,monospace;font-size:11px;background:rgba(255,255,255,0.92);padding:6px 10px;border-radius:6px;font-weight:700;color:var(--tetra-blue);z-index:5}
+.bg-meta.dark{background:rgba(10,22,40,0.85);color:#fff}
+.bg-name{position:absolute;left:18px;top:18px;font-size:13px;font-weight:800;color:var(--tetra-dark);z-index:5}
+.bg-name.dark{color:#fff}
+
+/* === Hero gradient (Inicio) === */
+.bg-hero{background:linear-gradient(180deg,#fbfdff 0%,#f4f8fc 100%)}
+
+/* === Section soft === */
+.bg-section-soft{background:linear-gradient(160deg,#f8fbfd 0%,#ffffff 55%,#f4f9fc 100%)}
+
+/* === Brand section === */
+.bg-brand{background:linear-gradient(135deg,#006096 0%,#0a1628 100%)}
+
+/* === Nosotros gray === */
+.bg-gray{background:linear-gradient(135deg,#ebebeb 0%,#d5d5d5 50%,#e2e2e2 100%)}
+
+/* === Mesh / orb hero === */
+.bg-mesh{background:#0a1628;position:relative}
+.bg-mesh::before{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(34,163,255,0.6),transparent 60%);top:-80px;left:-60px;filter:blur(20px)}
+.bg-mesh::after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(0,96,150,0.7),transparent 60%);bottom:-60px;right:-40px;filter:blur(30px)}
+
+/* === Hex pattern === */
+.bg-hex{background:#fbfdff;position:relative}
+.bg-hex::before{content:"";position:absolute;inset:0;background-image:
+  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 52'><polygon points='30,2 56,15 56,40 30,53 4,40 4,15' fill='none' stroke='%239dbedb' stroke-width='1' opacity='0.5'/></svg>");
+  background-size:60px 52px;opacity:0.45}
+
+/* === Dot grid === */
+.bg-dots{background:#fff;background-image:radial-gradient(circle,#9dbedb 1px,transparent 1.5px);background-size:18px 18px;background-position:0 0}
+
+/* === Diagonal stripes === */
+.bg-stripes{background:linear-gradient(135deg,#f4f8fc 25%,transparent 25%,transparent 50%,#f4f8fc 50%,#f4f8fc 75%,transparent 75%,transparent);background-size:30px 30px;background-color:#fff}
+
+/* === Floating orbs animation === */
+.bg-orbs{background:#0a1628;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(40px);opacity:0.7}
+.orb1{width:200px;height:200px;background:#22a3ff;top:-40px;left:-40px;animation:float1 8s ease-in-out infinite}
+.orb2{width:160px;height:160px;background:#006096;bottom:-30px;right:30px;animation:float2 10s ease-in-out infinite}
+.orb3{width:120px;height:120px;background:#9dbedb;top:40%;left:50%;animation:float3 12s ease-in-out infinite}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,40px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,-30px)}}
+@keyframes float3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-20px,30px) scale(1.1)}}
+
+/* === Tech grid === */
+.bg-techgrid{background:#0a1628;position:relative}
+.bg-techgrid::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(157,190,219,0.15) 1px,transparent 1px),linear-gradient(90deg,rgba(157,190,219,0.15) 1px,transparent 1px);background-size:30px 30px;mask-image:radial-gradient(circle at center,#000 30%,transparent 80%)}
+
+/* === Wash blob === */
+.bg-blob{background:#fff;position:relative;overflow:hidden}
+.bg-blob::before{content:"";position:absolute;width:380px;height:380px;background:radial-gradient(circle,var(--tetra-blue-tint),transparent 70%);top:-100px;right:-100px;border-radius:50%}
+.bg-blob::after{content:"";position:absolute;width:240px;height:240px;background:radial-gradient(circle,#deeef8,transparent 70%);bottom:-80px;left:-60px;border-radius:50%}
+
+/* === MOTION === */
+.motion-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.motion-tile{padding:32px;border:1px solid var(--border-line);border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.motion-tile h4{font-size:15px;font-weight:800;color:var(--tetra-dark)}
+.motion-tile code{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:var(--tetra-blue-wash);color:var(--tetra-blue);padding:6px 10px;border-radius:6px;font-weight:600}
+.motion-tile p{font-size:13px;color:var(--fg-muted);line-height:1.6}
+.motion-demo{width:100%;height:80px;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#f8fbfd,#fff);border-radius:10px}
+.demo-box{width:60px;height:60px;background:linear-gradient(135deg,var(--tetra-blue),var(--tetra-blue-medium));border-radius:14px;box-shadow:var(--shadow-md)}
+.demo-box.spring{animation:spring 2s var(--ease-spring) infinite}
+.demo-box.fade{animation:fadeIn 2s var(--ease-out) infinite}
+.demo-box.lift:hover{transform:translateY(-8px)}
+.demo-box.lift{transition:all 0.3s var(--ease-out)}
+.demo-box.float{animation:floatY 3s ease-in-out infinite}
+@keyframes spring{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@keyframes fadeIn{0%,100%{opacity:0.3;transform:translateY(10px)}50%{opacity:1;transform:translateY(0)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* === Parallax === */
+.par-wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:stretch}
+.par{position:relative;height:380px;border-radius:18px;overflow:hidden;background:linear-gradient(160deg,#0a1628 0%,#0e2240 50%,#1a3a5e 100%);padding:48px}
+.par::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(157,190,219,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(157,190,219,0.08) 1px,transparent 1px);background-size:30px 30px;pointer-events:none}
+.par-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:230px;font-weight:900;color:rgba(34,163,255,0.10);font-family:var(--font-display);letter-spacing:-8px;line-height:1;pointer-events:none;user-select:none}
+.par-orb{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(34,163,255,0.5),transparent 65%);filter:blur(20px);top:-60px;right:-40px;pointer-events:none}
+.par-mid{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.par-mid img{width:160px;height:160px;filter:drop-shadow(0 16px 36px rgba(0,150,255,0.55))}
+.par-fg{position:absolute;left:48px;bottom:44px;color:#fff;max-width:62%;z-index:3}
+.par-fg .par-eye{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--tetra-blue-tint);margin-bottom:12px;background:rgba(34,163,255,0.12);padding:6px 12px;border-radius:6px;border:1px solid rgba(34,163,255,0.3)}
+.par-fg h3{font-size:28px;font-weight:800;letter-spacing:-0.6px;color:#fff;line-height:1.15;margin-bottom:8px}
+.par-fg p{font-size:13px;color:rgba(255,255,255,0.72);line-height:1.55}
+.par-legend{display:flex;flex-direction:column;gap:10px;padding:24px;background:#fff;border:1px solid var(--border-line);border-radius:18px}
+.par-legend-h{font-size:11px;font-weight:800;color:var(--tetra-blue);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.par-step{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fbfdff;border:1px solid var(--border-line);border-radius:12px}
+.par-step-num{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--tetra-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+.par-step-body strong{display:block;font-size:13px;font-weight:800;color:var(--tetra-dark);margin-bottom:2px}
+.par-step-body span{font-size:12px;color:var(--fg-muted);line-height:1.5}
+</style></head><body>
+
+<div class="ds-header">
+<span class="ds-kicker">TETRA 4.0 · Backgrounds &amp; Motion</span>
+<h1 class="ds-title">Backgrounds &amp; Motion</h1>
+<p class="ds-sub">Sistema de fondos: gradientes brand, washes suaves, patterns geométricos (hex, dots) y orbes flotantes para hero. Motion con curvas spring y ease-out consistentes.</p>
+</div>
+
+<section class="ds-section">
+<div class="ds-section-title">01 — Gradientes de marca</div>
+<h2 class="ds-section-h">Backgrounds primarios</h2>
+<div class="row row-3">
+<div class="bg-tile bg-hero"><span class="bg-name">Hero soft</span><span class="bg-meta">--bg-page-soft → tint</span></div>
+<div class="bg-tile bg-section-soft"><span class="bg-name">Section soft</span><span class="bg-meta">--bg-section-soft</span></div>
+<div class="bg-tile bg-brand"><span class="bg-name dark">Brand section</span><span class="bg-meta dark">--bg-section-blue</span></div>
+<div class="bg-tile bg-gray"><span class="bg-name">Nosotros gray</span><span class="bg-meta">--bg-hero-gray</span></div>
+<div class="bg-tile bg-mesh"><span class="bg-name dark">Mesh / orbs blur</span><span class="bg-meta dark">radial-gradient × blur(20-30)</span></div>
+<div class="bg-tile bg-blob"><span class="bg-name">Wash blob</span><span class="bg-meta">tetra-blue-tint orbs</span></div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">02 — Patterns</div>
+<h2 class="ds-section-h">Geometría sutil</h2>
+<div class="row row-3">
+<div class="bg-tile bg-hex"><span class="bg-name">Hex pattern</span><span class="bg-meta">SVG hex tile · opacity 0.45</span></div>
+<div class="bg-tile bg-dots"><span class="bg-name">Dot grid</span><span class="bg-meta">radial-gradient 18×18</span></div>
+<div class="bg-tile bg-stripes"><span class="bg-name">Diagonal wash</span><span class="bg-meta">linear 135deg 30×30</span></div>
+<div class="bg-tile bg-techgrid"><span class="bg-name dark">Tech grid (radial mask)</span><span class="bg-meta dark">30px grid + radial mask</span></div>
+<div class="bg-tile bg-orbs">
+<div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+<span class="bg-name dark" style="position:relative;z-index:2">Floating orbs (animated)</span><span class="bg-meta dark">3 orbs · 8-12s loop</span>
+</div>
+<div class="bg-tile" style="background:linear-gradient(135deg,#deeef8,#fff);position:relative">
+<svg style="position:absolute;width:100%;height:100%;opacity:0.3" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice"><defs><pattern id="grid" width="40" height="35" patternUnits="userSpaceOnUse"><polygon points="20,2 38,12 38,30 20,40 2,30 2,12" fill="none" stroke="#006096" stroke-width="0.8"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)"/></svg>
+<span class="bg-name">Hex grid + wash</span><span class="bg-meta">combinable layers</span>
+</div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">03 — Parallax stack</div>
+<h2 class="ds-section-h">Capas hero</h2>
+<p class="ds-section-p">Tres capas con z-index escalonado: tipografía gigante al fondo, ícono ilustrado al medio, contenido textual al frente.</p>
+<div class="par-wrap">
+<div class="par">
+<div class="par-orb"></div>
+<span class="par-bg">TETRA</span>
+<div class="par-mid"><img src="assets/Icons_Inicio/Diana.png" alt=""></div>
+<div class="par-fg"><span class="par-eye">A LA MEDIDA</span><h3>Soluciones diseñadas para tu operación</h3><p>No vendemos catálogo cerrado: construimos lo que necesitas.</p></div>
+</div>
+<div class="par-legend">
+<div class="par-legend-h">Capas (back → front)</div>
+<div class="par-step"><div class="par-step-num">1</div><div class="par-step-body"><strong>Background</strong><span>Gradient navy + grid sutil + tipografía outline a 230px (opacity 0.10)</span></div></div>
+<div class="par-step"><div class="par-step-num">2</div><div class="par-step-body"><strong>Atmósfera</strong><span>Orb radial difuso (blur 20px) en azul brillante para profundidad</span></div></div>
+<div class="par-step"><div class="par-step-num">3</div><div class="par-step-body"><strong>Midground</strong><span>Ícono ilustrado 160px con drop-shadow azul intenso</span></div></div>
+<div class="par-step"><div class="par-step-num">4</div><div class="par-step-body"><strong>Foreground</strong><span>Eyebrow + título + sub-copy bottom-left, z-index máximo</span></div></div>
+</div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">04 — Motion primitives</div>
+<h2 class="ds-section-h">Curvas y duraciones</h2>
+<p class="ds-section-p">Cuatro patrones cubren el 95% de las animaciones del sistema.</p>
+<div class="motion-grid">
+<div class="motion-tile"><h4>Hover lift</h4><div class="motion-demo"><div class="demo-box lift"></div></div><code>transition: all 0.3s var(--ease-out);<br>transform: translateY(-8px);</code><p>Cards y botones al pasar el mouse. Subida sutil, sin escala.</p></div>
+<div class="motion-tile"><h4>Spring scale</h4><div class="motion-demo"><div class="demo-box spring"></div></div><code>cubic-bezier(0.34, 1.56, 0.64, 1)<br>--ease-spring</code><p>Microinteracciones de íconos y badges. Sensación de "rebote".</p></div>
+<div class="motion-tile"><h4>Fade-up</h4><div class="motion-demo"><div class="demo-box fade"></div></div><code>opacity 0→1 + translateY(20→0)<br>--dur-slow · --ease-out</code><p>Entrada de contenido al hacer scroll. IntersectionObserver.</p></div>
+<div class="motion-tile"><h4>Float idle</h4><div class="motion-demo"><div class="demo-box float"></div></div><code>animation: floatY 3s ease-in-out infinite<br>translateY(0 ↔ -12px)</code><p>Elementos hero (orbes, íconos sin acción). Idle perpetuo.</p></div>
+</div>
+</section>
+
+<section class="ds-section">
+<div class="ds-section-title">05 — Reglas</div>
+<div class="row row-2">
+<div class="motion-tile"><h4>Duración</h4><code>--dur-fast: 0.2s<br>--dur-base: 0.3s<br>--dur-slow: 0.4s</code><p>Más de 0.5s solo para idle/loop, nunca para feedback de interacción.</p></div>
+<div class="motion-tile"><h4>Reduced motion</h4><code>@media (prefers-reduced-motion)<br>animation: none !important</code><p>Respetar siempre la preferencia de sistema. Orbes y floats se detienen.</p></div>
+</div>
+</section>
+
+</body></html>
